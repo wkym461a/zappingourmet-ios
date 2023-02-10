@@ -8,12 +8,34 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    // MARK: - Outlet
+    
+    @IBOutlet private weak var label: UILabel!
+    
+    // MARK: - Property
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        self.setupUI()
     }
-
+    
+    // MARK: - Public
+    
+    // MARK: - Private
+    
+    private func setupUI() {
+        self.label.text = "Hello, Zappingourmet!"
+        self.label.textColor = .orange
+    }
+    
+    private func updateUI() {
+    }
+    
+    // MARK: - Action
 
 }
 
