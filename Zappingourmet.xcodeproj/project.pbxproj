@@ -17,6 +17,12 @@
 		D13A2E662995A66800373F9F /* ZappingourmetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E652995A66800373F9F /* ZappingourmetTests.swift */; };
 		D13A2E702995A66800373F9F /* ZappingourmetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E6F2995A66800373F9F /* ZappingourmetUITests.swift */; };
 		D13A2E722995A66800373F9F /* ZappingourmetUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E712995A66800373F9F /* ZappingourmetUITestsLaunchTests.swift */; };
+		D17ACC472995C97800E056B6 /* HotPepperAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC462995C97800E056B6 /* HotPepperAPI.swift */; };
+		D17ACC6129964C0400E056B6 /* HotPepperGourmetSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */; };
+		D17ACC6329964DDB00E056B6 /* HotPepperTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */; };
+		D17ACC692996F21C00E056B6 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = D17ACC682996F21C00E056B6 /* CombineMoya */; };
+		D17ACC6E2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6D2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift */; };
+		D17ACC7929973D6400E056B6 /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC7829973D6400E056B6 /* Shop.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +57,11 @@
 		D13A2E6B2995A66800373F9F /* ZappingourmetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZappingourmetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D13A2E6F2995A66800373F9F /* ZappingourmetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZappingourmetUITests.swift; sourceTree = "<group>"; };
 		D13A2E712995A66800373F9F /* ZappingourmetUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZappingourmetUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D17ACC462995C97800E056B6 /* HotPepperAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperAPI.swift; sourceTree = "<group>"; };
+		D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperGourmetSearch.swift; sourceTree = "<group>"; };
+		D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperTargetType.swift; sourceTree = "<group>"; };
+		D17ACC6D2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperGourmetSearchResults.swift; sourceTree = "<group>"; };
+		D17ACC7829973D6400E056B6 /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D17ACC692996F21C00E056B6 /* CombineMoya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +115,7 @@
 			children = (
 				D13A2E4B2995A66500373F9F /* AppDelegate.swift */,
 				D13A2E4D2995A66500373F9F /* SceneDelegate.swift */,
+				D17ACC452995C91100E056B6 /* Model */,
 				D13A2E4F2995A66500373F9F /* ViewController.swift */,
 				D13A2E512995A66500373F9F /* Main.storyboard */,
 				D13A2E572995A66700373F9F /* Assets.xcassets */,
@@ -130,6 +143,34 @@
 			path = ZappingourmetUITests;
 			sourceTree = "<group>";
 		};
+		D17ACC452995C91100E056B6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D17ACC5A29964A9400E056B6 /* API */,
+				D17ACC73299712EB00E056B6 /* Entity */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D17ACC5A29964A9400E056B6 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				D17ACC462995C97800E056B6 /* HotPepperAPI.swift */,
+				D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */,
+				D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */,
+				D17ACC6D2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		D17ACC73299712EB00E056B6 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				D17ACC7829973D6400E056B6 /* Shop.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -146,6 +187,9 @@
 			dependencies = (
 			);
 			name = Zappingourmet;
+			packageProductDependencies = (
+				D17ACC682996F21C00E056B6 /* CombineMoya */,
+			);
 			productName = Zappingourmet;
 			productReference = D13A2E482995A66500373F9F /* Zappingourmet.app */;
 			productType = "com.apple.product-type.application";
@@ -218,6 +262,9 @@
 				Base,
 			);
 			mainGroup = D13A2E3F2995A66500373F9F;
+			packageReferences = (
+				D17ACC672996F21C00E056B6 /* XCRemoteSwiftPackageReference "Moya" */,
+			);
 			productRefGroup = D13A2E492995A66500373F9F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -261,10 +308,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D17ACC6E2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift in Sources */,
 				D13A2E502995A66500373F9F /* ViewController.swift in Sources */,
+				D17ACC472995C97800E056B6 /* HotPepperAPI.swift in Sources */,
 				D13A2E4C2995A66500373F9F /* AppDelegate.swift in Sources */,
 				D13A2E4E2995A66500373F9F /* SceneDelegate.swift in Sources */,
 				D13A2E562995A66500373F9F /* Zappingourmet.xcdatamodeld in Sources */,
+				D17ACC7929973D6400E056B6 /* Shop.swift in Sources */,
+				D17ACC6129964C0400E056B6 /* HotPepperGourmetSearch.swift in Sources */,
+				D17ACC6329964DDB00E056B6 /* HotPepperTargetType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,6 +658,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D17ACC672996F21C00E056B6 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D17ACC682996F21C00E056B6 /* CombineMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D17ACC672996F21C00E056B6 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = CombineMoya;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		D13A2E542995A66500373F9F /* Zappingourmet.xcdatamodeld */ = {
