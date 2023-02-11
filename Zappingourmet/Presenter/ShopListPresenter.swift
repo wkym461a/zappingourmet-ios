@@ -19,7 +19,11 @@ final class ShopListPresenter {
     
     private weak var view: ShopListViewable?
     private var shops: [Shop]
+    
     private var cancellable: AnyCancellable?
+    private var totalShopsCount: Int?
+    private var fetchStartIndex: Int = 1
+    private let fetchCount: Int = 10
     
     init(_ view: ShopListViewable) {
         self.view = view
@@ -34,12 +38,16 @@ final class ShopListPresenter {
 extension ShopListPresenter: ShopListPresentable {
     
     func fetchShops() {
+        if let count = self.totalShopsCount, count < self.fetchStartIndex {
+            return
+        }
+        
         self.cancellable = HotPepperAPI.shared.request(
             target: HotPepperGourmetSearch(
                 lat: 35.17454481366307,
                 lng: 136.91228418325178,
-                start: 1,
-                count: 100
+                start: self.fetchStartIndex,
+                count: self.fetchCount
             )
         ).sink { completion in
             print(completion)
@@ -53,13 +61,24 @@ extension ShopListPresenter: ShopListPresentable {
                 return
             }
             
-            guard let hpShops = results.shop else {
+            guard
+                let hpShops = results.shop,
+                let resultsAvailable = results.resultsAvailable,
+                let resultsReturned = results.resultsReturned,
+                let resultsStart = results.resultsStart
+            
+            else {
                 fatalError("Unexpect Error: Unknown Response \(results)")
             }
             
-            self.shops = hpShops.map { Shop.fromHotPepperShop($0) }
-            
+            self.shops.append(contentsOf: hpShops.map { Shop.fromHotPepperShop($0) })
             self.view?.updateUI()
+            
+            if self.totalShopsCount == nil {
+                self.totalShopsCount = resultsAvailable
+            }
+            
+            self.fetchStartIndex = resultsStart + (Int(resultsReturned) ?? hpShops.count)
         }
     }
     

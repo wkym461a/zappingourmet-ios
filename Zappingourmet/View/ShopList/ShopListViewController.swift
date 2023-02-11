@@ -121,6 +121,20 @@ extension ShopListViewController: UICollectionViewDataSource {
 
 extension ShopListViewController: UICollectionViewDelegate {
     
+    private func nextFetchThreshold(_ scrollView: UIScrollView) -> CGFloat {
+        return scrollView.frame.height * 2.0
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let currentOffsetY = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
+        let distanceToBottom = maximumOffset - currentOffsetY
+        
+        if distanceToBottom < self.nextFetchThreshold(scrollView) {
+            self.presenter?.fetchShops()
+        }
+    }
+    
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
