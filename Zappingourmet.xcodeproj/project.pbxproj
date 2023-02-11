@@ -17,9 +17,11 @@
 		D13A2E662995A66800373F9F /* ZappingourmetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E652995A66800373F9F /* ZappingourmetTests.swift */; };
 		D13A2E702995A66800373F9F /* ZappingourmetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E6F2995A66800373F9F /* ZappingourmetUITests.swift */; };
 		D13A2E722995A66800373F9F /* ZappingourmetUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E712995A66800373F9F /* ZappingourmetUITestsLaunchTests.swift */; };
-		D17ACC422995C85E00E056B6 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = D17ACC412995C85E00E056B6 /* CombineMoya */; };
-		D17ACC442995C85E00E056B6 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = D17ACC432995C85E00E056B6 /* Moya */; };
 		D17ACC472995C97800E056B6 /* HotPepperAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC462995C97800E056B6 /* HotPepperAPI.swift */; };
+		D17ACC6129964C0400E056B6 /* HotPepperGourmetSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */; };
+		D17ACC6329964DDB00E056B6 /* HotPepperTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */; };
+		D17ACC692996F21C00E056B6 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = D17ACC682996F21C00E056B6 /* CombineMoya */; };
+		D17ACC6E2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6D2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,9 @@
 		D13A2E6F2995A66800373F9F /* ZappingourmetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZappingourmetUITests.swift; sourceTree = "<group>"; };
 		D13A2E712995A66800373F9F /* ZappingourmetUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZappingourmetUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D17ACC462995C97800E056B6 /* HotPepperAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperAPI.swift; sourceTree = "<group>"; };
+		D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperGourmetSearch.swift; sourceTree = "<group>"; };
+		D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperTargetType.swift; sourceTree = "<group>"; };
+		D17ACC6D2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperGourmetSearchResults.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,8 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D17ACC442995C85E00E056B6 /* Moya in Frameworks */,
-				D17ACC422995C85E00E056B6 /* CombineMoya in Frameworks */,
+				D17ACC692996F21C00E056B6 /* CombineMoya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,9 +144,20 @@
 		D17ACC452995C91100E056B6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D17ACC462995C97800E056B6 /* HotPepperAPI.swift */,
+				D17ACC5A29964A9400E056B6 /* API */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		D17ACC5A29964A9400E056B6 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				D17ACC462995C97800E056B6 /* HotPepperAPI.swift */,
+				D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */,
+				D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */,
+				D17ACC6D2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,8 +177,7 @@
 			);
 			name = Zappingourmet;
 			packageProductDependencies = (
-				D17ACC412995C85E00E056B6 /* CombineMoya */,
-				D17ACC432995C85E00E056B6 /* Moya */,
+				D17ACC682996F21C00E056B6 /* CombineMoya */,
 			);
 			productName = Zappingourmet;
 			productReference = D13A2E482995A66500373F9F /* Zappingourmet.app */;
@@ -238,7 +252,7 @@
 			);
 			mainGroup = D13A2E3F2995A66500373F9F;
 			packageReferences = (
-				D17ACC402995C85E00E056B6 /* XCRemoteSwiftPackageReference "Moya" */,
+				D17ACC672996F21C00E056B6 /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = D13A2E492995A66500373F9F /* Products */;
 			projectDirPath = "";
@@ -283,11 +297,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D17ACC6E2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift in Sources */,
 				D13A2E502995A66500373F9F /* ViewController.swift in Sources */,
 				D17ACC472995C97800E056B6 /* HotPepperAPI.swift in Sources */,
 				D13A2E4C2995A66500373F9F /* AppDelegate.swift in Sources */,
 				D13A2E4E2995A66500373F9F /* SceneDelegate.swift in Sources */,
 				D13A2E562995A66500373F9F /* Zappingourmet.xcdatamodeld in Sources */,
+				D17ACC6129964C0400E056B6 /* HotPepperGourmetSearch.swift in Sources */,
+				D17ACC6329964DDB00E056B6 /* HotPepperTargetType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,7 +648,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D17ACC402995C85E00E056B6 /* XCRemoteSwiftPackageReference "Moya" */ = {
+		D17ACC672996F21C00E056B6 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya";
 			requirement = {
@@ -642,15 +659,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D17ACC412995C85E00E056B6 /* CombineMoya */ = {
+		D17ACC682996F21C00E056B6 /* CombineMoya */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D17ACC402995C85E00E056B6 /* XCRemoteSwiftPackageReference "Moya" */;
+			package = D17ACC672996F21C00E056B6 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = CombineMoya;
-		};
-		D17ACC432995C85E00E056B6 /* Moya */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D17ACC402995C85E00E056B6 /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = Moya;
 		};
 /* End XCSwiftPackageProductDependency section */
 

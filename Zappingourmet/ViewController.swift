@@ -7,6 +7,7 @@
 
 import UIKit
 import Moya
+import Combine
 
 class ViewController: UIViewController {
     
@@ -17,6 +18,7 @@ class ViewController: UIViewController {
     // MARK: - Property
     
     private var labelText: String = "Hello, Zappingourmet!"
+    private var cancellable: AnyCancellable?
     
     // MARK: - Lifecycle
     
@@ -26,27 +28,21 @@ class ViewController: UIViewController {
         self.setupUI()
         self.updateUI()
         
-        let provider = MoyaProvider<HotPepperAPI>()
-        let homeLatitude: Double = 35.17454481366307
-        let homeLongitude: Double = 136.91228418325178
-        provider.request(.gourmetSearch(latitude: homeLatitude, longitude: homeLongitude, range: .oneThousand)) { [weak self] result in
-            guard let self = self else { return }
+        self.cancellable = HotPepperAPI.shared.request(
+            target: HotPepperGourmetSearch(
+                lat: 35.17454481366307,
+                lng: 136.91228418325178,
+                start: 501,
+                count: 100
+            )
+        ).sink { completion in
+            print(completion)
+
+        } receiveValue: { response in
+            print(response.results)
             
-            switch result {
-            case let .success(response):
-                do {
-                    let json = try response.mapJSON()
-                    print(json)
-                    self.labelText = "Success HotPepperAPI!"
-                    self.updateUI()
-                    
-                } catch {
-                    print(error)
-                }
-                
-            case let .failure(moyaError):
-                print(moyaError)
-            }
+            self.labelText = "Success HotPepperAPI!"
+            self.updateUI()
         }
     }
     
@@ -55,10 +51,12 @@ class ViewController: UIViewController {
     // MARK: - Private
     
     private func setupUI() {
+        print(#function)
         self.label.textColor = .orange
     }
     
     private func updateUI() {
+        print(#function)
         self.label.text = self.labelText
     }
     
