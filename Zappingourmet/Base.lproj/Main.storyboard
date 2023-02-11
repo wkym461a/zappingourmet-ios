@@ -23,12 +23,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X2x-zd-5R2">
+                                <rect key="frame" x="173.5" y="474" width="67" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <action selector="goShopListVC:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uKG-nl-9Xq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="B9N-J0-XhR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7ER-yY-roy"/>
+                            <constraint firstItem="X2x-zd-5R2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="clp-N0-prV"/>
                             <constraint firstItem="B9N-J0-XhR" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="qka-uc-dD1"/>
+                            <constraint firstItem="X2x-zd-5R2" firstAttribute="top" secondItem="B9N-J0-XhR" secondAttribute="bottom" constant="16" id="xyz-gs-jdF"/>
                         </constraints>
                     </view>
                     <connections>
