@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Moya
 import Combine
 
 class ViewController: UIViewController {
@@ -39,9 +38,21 @@ class ViewController: UIViewController {
             print(completion)
 
         } receiveValue: { response in
-            print(response.results)
+            let results = response.results
+            if let error = results.error {
+                error.forEach {
+                    print("HOT PEPPER API Error: \($0.message) (code: \($0.code)")
+                }
+                return
+            }
             
-            self.labelText = "Success HotPepperAPI!"
+            guard let hpShops = results.shop else {
+                fatalError("Unexpect Error: Unknown Response \(results)")
+            }
+            let shops = hpShops.map { Shop.fromHotPepperShop($0) }
+            
+            let shop = shops[0]
+            self.labelText = "\(shop.name)\n\(shop.address)"
             self.updateUI()
         }
     }

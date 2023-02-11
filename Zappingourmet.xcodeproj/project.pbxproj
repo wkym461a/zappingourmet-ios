@@ -22,6 +22,7 @@
 		D17ACC6329964DDB00E056B6 /* HotPepperTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */; };
 		D17ACC692996F21C00E056B6 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = D17ACC682996F21C00E056B6 /* CombineMoya */; };
 		D17ACC6E2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6D2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift */; };
+		D17ACC7929973D6400E056B6 /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC7829973D6400E056B6 /* Shop.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperGourmetSearch.swift; sourceTree = "<group>"; };
 		D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperTargetType.swift; sourceTree = "<group>"; };
 		D17ACC6D2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperGourmetSearchResults.swift; sourceTree = "<group>"; };
+		D17ACC7829973D6400E056B6 /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				D17ACC5A29964A9400E056B6 /* API */,
+				D17ACC73299712EB00E056B6 /* Entity */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -158,6 +161,14 @@
 				D17ACC6D2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		D17ACC73299712EB00E056B6 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				D17ACC7829973D6400E056B6 /* Shop.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,6 +314,7 @@
 				D13A2E4C2995A66500373F9F /* AppDelegate.swift in Sources */,
 				D13A2E4E2995A66500373F9F /* SceneDelegate.swift in Sources */,
 				D13A2E562995A66500373F9F /* Zappingourmet.xcdatamodeld in Sources */,
+				D17ACC7929973D6400E056B6 /* Shop.swift in Sources */,
 				D17ACC6129964C0400E056B6 /* HotPepperGourmetSearch.swift in Sources */,
 				D17ACC6329964DDB00E056B6 /* HotPepperTargetType.swift in Sources */,
 			);
