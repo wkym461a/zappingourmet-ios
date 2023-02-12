@@ -30,7 +30,7 @@ final class ShopListCollectionViewCell: UICollectionViewCell {
     func updateUI(shop: Shop) {
         self.nameLabel.text = shop.name
         self.accessLabel.text = shop.access
-        self.shopImageView.image = UIImage(data: self.getImageData(fromURL: shop.photoURL))
+        self.shopImageView.image = UIImage(data: .fromURL(shop.photoURL))
     }
     
     // MARK: - Private
@@ -48,19 +48,6 @@ final class ShopListCollectionViewCell: UICollectionViewCell {
         self.accessLabel.numberOfLines = 2
         
         self.shopImageView.contentMode = .scaleAspectFill
-    }
-    
-    private func getImageData(fromURL url: URL) -> Data {
-        do {
-            let data = try Data(contentsOf: url)
-            
-            return data
-            
-        } catch {
-            print("\(#function) Error: \(error.localizedDescription)")
-        }
-        
-        return Data()
     }
     
     // MARK: - Action

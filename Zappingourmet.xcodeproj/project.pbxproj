@@ -34,6 +34,7 @@
 		D1E5081829984FAB006E5AA3 /* ShopDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E5081729984FAB006E5AA3 /* ShopDetailPresenter.swift */; };
 		D1E5081B299855BA006E5AA3 /* ExUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E5081A299855BA006E5AA3 /* ExUserDefaults.swift */; };
 		D1E5081D29986479006E5AA3 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E5081C29986479006E5AA3 /* Constant.swift */; };
+		D1FB09A329987A63009E4527 /* ExData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FB09A229987A63009E4527 /* ExData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		D1E5081729984FAB006E5AA3 /* ShopDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailPresenter.swift; sourceTree = "<group>"; };
 		D1E5081A299855BA006E5AA3 /* ExUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUserDefaults.swift; sourceTree = "<group>"; };
 		D1E5081C29986479006E5AA3 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		D1FB09A229987A63009E4527 /* ExData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				D1E5081A299855BA006E5AA3 /* ExUserDefaults.swift */,
+				D1FB09A229987A63009E4527 /* ExData.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				D13A2E502995A66500373F9F /* ViewController.swift in Sources */,
 				D1E5081B299855BA006E5AA3 /* ExUserDefaults.swift in Sources */,
 				D17ACC472995C97800E056B6 /* HotPepperAPI.swift in Sources */,
+				D1FB09A329987A63009E4527 /* ExData.swift in Sources */,
 				D13A2E4C2995A66500373F9F /* AppDelegate.swift in Sources */,
 				D13A2E4E2995A66500373F9F /* SceneDelegate.swift in Sources */,
 				D1E5081829984FAB006E5AA3 /* ShopDetailPresenter.swift in Sources */,

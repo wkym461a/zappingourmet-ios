@@ -43,7 +43,7 @@ class ViewController: UIViewController {
     // MARK: - Action
     
     @IBAction private func goShopListVC(_ sender: UIButton) {
-        let shopListVC = UIStoryboard(name: "ShopList", bundle: nil).instantiateInitialViewController() as! ShopListViewController
+        let shopListVC = UIStoryboard(name: "ShopList", bundle: nil).instantiateInitialViewController()!
         self.present(shopListVC, animated: true, completion: nil)
     }
     
