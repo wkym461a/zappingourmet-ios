@@ -5,6 +5,7 @@
 //  Created by 若山大和 on 2023/02/11.
 //
 
+import Foundation
 import Combine
 
 protocol ShopListPresentable: AnyObject {
@@ -12,6 +13,7 @@ protocol ShopListPresentable: AnyObject {
     func fetchShops()
     func getShopsCount() -> Int
     func getShop(index: Int) -> Shop
+    func setShopDetailItem(index: Int)
     
 }
 
@@ -88,6 +90,10 @@ extension ShopListPresenter: ShopListPresentable {
     
     func getShop(index: Int) -> Shop {
         return self.shops[index]
+    }
+    
+    func setShopDetailItem(index: Int) {
+        UserDefaults.standard.save(self.shops[index], key: Constant.ShopDetailItemKey)
     }
     
 }

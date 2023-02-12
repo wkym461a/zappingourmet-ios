@@ -67,6 +67,8 @@ final class ShopListViewController: UIViewController {
     // MARK: - Private
     
     private func setupUI() {
+        self.navigationItem.title = "検索結果"
+        
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.register(
@@ -133,6 +135,15 @@ extension ShopListViewController: UICollectionViewDelegate {
         if distanceToBottom < self.nextFetchThreshold(scrollView) {
             self.presenter?.fetchShops()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.presenter?.setShopDetailItem(index: indexPath.row)
+        
+        let shopDetail = UIStoryboard(name: "ShopDetail", bundle: nil).instantiateInitialViewController()!
+        self.navigationController?.pushViewController(shopDetail, animated: true)
+        
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
     
 }
