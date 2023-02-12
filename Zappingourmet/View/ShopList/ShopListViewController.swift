@@ -135,6 +135,15 @@ extension ShopListViewController: UICollectionViewDelegate {
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.presenter?.setShopDetailItem(index: indexPath.row)
+        
+        let shopDetail = UIStoryboard(name: "ShopDetail", bundle: nil).instantiateInitialViewController() as! ShopDetailViewController
+        self.present(shopDetail, animated: true)
+        
+        collectionView.deselectItem(at: indexPath, animated: true)
+    }
+    
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
