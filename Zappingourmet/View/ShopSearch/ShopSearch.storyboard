@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Shop Search View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController id="Y6W-OH-hqX" customClass="ShopSearchViewController" customModule="Zappingourmet" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EOR-cH-3ve">
+                                <rect key="frame" x="138" y="766" width="138" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="pOA-IJ-HFa"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="検索">
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="searchShops:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="qpb-tc-9mC"/>
+                                </connections>
+                            </button>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="N18-2t-Rr7">
+                                <rect key="frame" x="32" y="108" width="350" height="594"/>
+                            </mapView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wMl-mq-QlY" userLabel="Button Leading View">
+                                <rect key="frame" x="0.0" y="798" width="138" height="0.0"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="qAl-ep-Qdr"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dLe-X1-RiP" userLabel="Button Trailing View">
+                                <rect key="frame" x="276" y="798" width="138" height="0.0"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="XEc-au-Y7S"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VAs-o5-uWP">
+                                <rect key="frame" x="302" y="622" width="64" height="64"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="VAs-o5-uWP" secondAttribute="height" id="3J8-Yr-tPq"/>
+                                    <constraint firstAttribute="width" constant="64" id="VCI-JB-OoK"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="">
+                                    <imageReference key="image" image="location.fill" catalog="system" symbolScale="large"/>
+                                </buttonConfiguration>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="dLe-X1-RiP" firstAttribute="leading" secondItem="EOR-cH-3ve" secondAttribute="trailing" id="1u1-uA-lls"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="dLe-X1-RiP" secondAttribute="bottom" constant="64" id="AKI-9p-85v"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="wMl-mq-QlY" secondAttribute="bottom" constant="64" id="Bnv-Ik-xKu"/>
+                            <constraint firstItem="N18-2t-Rr7" firstAttribute="bottom" secondItem="VAs-o5-uWP" secondAttribute="bottom" constant="16" id="F5b-OQ-SsM"/>
+                            <constraint firstItem="EOR-cH-3ve" firstAttribute="top" secondItem="N18-2t-Rr7" secondAttribute="bottom" constant="64" id="INs-CV-0wx"/>
+                            <constraint firstItem="N18-2t-Rr7" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="32" id="ITH-Vj-3oj"/>
+                            <constraint firstItem="N18-2t-Rr7" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="64" id="LOj-hY-58K"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="dLe-X1-RiP" secondAttribute="trailing" id="LqW-Pk-3EX"/>
+                            <constraint firstItem="dLe-X1-RiP" firstAttribute="width" secondItem="EOR-cH-3ve" secondAttribute="width" id="dOH-Qu-lpJ"/>
+                            <constraint firstItem="EOR-cH-3ve" firstAttribute="leading" secondItem="wMl-mq-QlY" secondAttribute="trailing" id="gqq-B2-9It"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="EOR-cH-3ve" secondAttribute="bottom" constant="64" id="nas-UR-Noj"/>
+                            <constraint firstItem="wMl-mq-QlY" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="sPi-4k-7aS"/>
+                            <constraint firstItem="wMl-mq-QlY" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="tAG-Pm-Ym3"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="N18-2t-Rr7" secondAttribute="trailing" constant="32" id="uEf-SV-xL8"/>
+                            <constraint firstItem="N18-2t-Rr7" firstAttribute="trailing" secondItem="VAs-o5-uWP" secondAttribute="trailing" constant="16" id="xPP-Fm-XeI"/>
+                            <constraint firstItem="EOR-cH-3ve" firstAttribute="width" secondItem="wMl-mq-QlY" secondAttribute="width" id="xfA-Qc-6Ct"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="centeringCurrentLocationButton" destination="VAs-o5-uWP" id="Obr-XN-p0k"/>
+                        <outlet property="mapView" destination="N18-2t-Rr7" id="0hu-1e-TVp"/>
+                        <outlet property="searchButton" destination="EOR-cH-3ve" id="77D-tD-ZJt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-7.2463768115942031" y="95.758928571428569"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="location.fill" catalog="system" width="128" height="121"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

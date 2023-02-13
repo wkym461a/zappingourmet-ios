@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CoreLocation
 
 protocol ShopListPresentable: AnyObject {
     
@@ -46,8 +47,8 @@ extension ShopListPresenter: ShopListPresentable {
         
         self.cancellable = HotPepperAPI.shared.request(
             target: HotPepperGourmetSearch(
-                lat: 35.17454481366307,
-                lng: 136.91228418325178,
+                lat: UserDefaults.standard.double(forKey: Constant.HotPepperGourmetSearchLatitudeKey),
+                lng: UserDefaults.standard.double(forKey: Constant.HotPepperGourmetSearchLongitudeKey),
                 start: self.fetchStartIndex,
                 count: self.fetchCount
             )

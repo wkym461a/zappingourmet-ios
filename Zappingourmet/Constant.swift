@@ -8,5 +8,7 @@
 struct Constant {
     
     static let ShopDetailItemKey = "ShopDetail.shop"
+    static let HotPepperGourmetSearchLatitudeKey = "HotPepperGourmetSearch.lat"
+    static let HotPepperGourmetSearchLongitudeKey = "HotPepperGourmetSearch.lng"
     
 }
