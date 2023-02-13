@@ -16,6 +16,8 @@ protocol ShopListPresentable: AnyObject {
     func getShop(index: Int) -> Shop
     func setShopDetailItem(index: Int)
     
+    func getSearchRangeName() -> String?
+    
 }
 
 final class ShopListPresenter {
@@ -45,11 +47,12 @@ extension ShopListPresenter: ShopListPresentable {
             return
         }
         
+        let searchRangeIndex = UserDefaults.standard.integer(forKey: Constant.HotPepperGourmetSearchRangeKey)
         self.cancellable = HotPepperAPI.shared.request(
             target: HotPepperGourmetSearch(
                 lat: UserDefaults.standard.double(forKey: Constant.HotPepperGourmetSearchLatitudeKey),
                 lng: UserDefaults.standard.double(forKey: Constant.HotPepperGourmetSearchLongitudeKey),
-                range: HotPepperGourmetSearch.SearchRange(rawValue: UserDefaults.standard.integer(forKey: Constant.HotPepperGourmetSearchRangeKey)),
+                range: HotPepperGourmetSearchRange.allCases[searchRangeIndex],
                 start: self.fetchStartIndex,
                 count: self.fetchCount
             )
@@ -96,6 +99,11 @@ extension ShopListPresenter: ShopListPresentable {
     
     func setShopDetailItem(index: Int) {
         UserDefaults.standard.save(self.shops[index], key: Constant.ShopDetailItemKey)
+    }
+    
+    func getSearchRangeName() -> String? {
+        let searchRangeIndex = UserDefaults.standard.integer(forKey: Constant.HotPepperGourmetSearchRangeKey)
+        return HotPepperGourmetSearchRange.allCases[searchRangeIndex].name
     }
     
 }

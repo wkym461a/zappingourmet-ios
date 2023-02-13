@@ -13,6 +13,9 @@ protocol ShopSearchPresentable: AnyObject {
     func startUpdatingLocation()
     func stopUpdatingLocation()
     func getCurrentLocation() -> CLLocation?
+    func getHotPepperGourmetSearchRangeName(index: Int) -> String?
+    func getHotPepperGourmetSearchRangesCount() -> Int
+    func getHotPepperGourmetSearchRangeValue(index: Int) -> Int?
     
     func setHotPepperGourmetSearchCoordinate()
     func setHotPepperGourmetSearchRange(selectedIndex: Int)
@@ -61,6 +64,18 @@ extension ShopSearchPresenter: ShopSearchPresentable {
         return self.currentLocation
     }
     
+    func getHotPepperGourmetSearchRangeName(index: Int) -> String? {
+        return HotPepperGourmetSearchRange.allCases[index].name
+    }
+    
+    func getHotPepperGourmetSearchRangesCount() -> Int {
+        return HotPepperGourmetSearchRange.allCases.count
+    }
+    
+    func getHotPepperGourmetSearchRangeValue(index: Int) -> Int? {
+        return HotPepperGourmetSearchRange.allCases[index].rangeValue
+    }
+    
     func setHotPepperGourmetSearchCoordinate() {
         if let location = self.currentLocation {
             UserDefaults.standard.set(Double(location.coordinate.latitude), forKey: Constant.HotPepperGourmetSearchLatitudeKey)
@@ -69,7 +84,7 @@ extension ShopSearchPresenter: ShopSearchPresentable {
     }
     
     func setHotPepperGourmetSearchRange(selectedIndex: Int) {
-        UserDefaults.standard.set(selectedIndex + 1, forKey: Constant.HotPepperGourmetSearchRangeKey)
+        UserDefaults.standard.set(selectedIndex, forKey: Constant.HotPepperGourmetSearchRangeKey)
     }
     
 }

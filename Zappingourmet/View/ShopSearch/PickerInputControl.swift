@@ -84,6 +84,8 @@ final class PickerInputControl: UIControl {
     // MARK: - Private
     
     private func setup() {
+        self.layer.borderColor = UIColor.systemGray.cgColor
+        
         self.addAction(
             .init() { [weak self] _ in
                 self?.isSelected.toggle()

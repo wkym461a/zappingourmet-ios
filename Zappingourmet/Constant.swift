@@ -5,6 +5,8 @@
 //  Created by 若山大和 on 2023/02/12.
 //
 
+import UIKit
+
 struct Constant {
     
     static let ShopDetailItemKey = "ShopDetail.shop"
@@ -12,6 +14,10 @@ struct Constant {
     static let HotPepperGourmetSearchLongitudeKey = "HotPepperGourmetSearch.lng"
     static let HotPepperGourmetSearchRangeKey = "HotPepperGourmetSearch.range"
     
-    static let HotPepperGourmetSearchRanges = ["300m", "500m", "1,000m", "2,000m", "3,000m"]
+    struct Storyboard {
+        static let ShopSearch = UIStoryboard(name: "ShopSearch", bundle: nil).instantiateInitialViewController()!
+        static let ShopList = UIStoryboard(name: "ShopList", bundle: nil).instantiateInitialViewController()!
+        static let ShopDetail = UIStoryboard(name: "ShopDetail", bundle: nil).instantiateInitialViewController()!
+    }
     
 }

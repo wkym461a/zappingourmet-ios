@@ -30,6 +30,7 @@ final class ShopSearchViewController: UIViewController {
     // MARK: - Property
     
     private var presenter: ShopSearchPresentable?
+    private var circle: MKCircle?
     
     private var isSetRegion: Bool = false
     
@@ -62,6 +63,8 @@ final class ShopSearchViewController: UIViewController {
         gesture.cancelsTouchesInView = false
         self.view.addGestureRecognizer(gesture)
         
+        self.navigationItem.title = "周辺検索"
+        
         self.mapView.delegate = self
         self.mapView.showsUserLocation = true
         self.mapView.layer.cornerRadius = 8
@@ -77,7 +80,7 @@ final class ShopSearchViewController: UIViewController {
         self.rangePickerControl.dataSource = self
         self.rangePickerControl.delegate = self
         self.rangeTitleLabel.text = "検索範囲"
-        self.rangeValueLabel.text = Constant.HotPepperGourmetSearchRanges.first
+        self.rangeValueLabel.text = self.presenter?.getHotPepperGourmetSearchRangeName(index: 0)
         
         self.searchButton.layer.cornerRadius = 8
         self.searchButton.backgroundColor = .systemOrange
@@ -86,14 +89,13 @@ final class ShopSearchViewController: UIViewController {
     private func mapViewSetRegion() {
         var region = self.mapView.region
         region.center = self.mapView.userLocation.coordinate
-        region.span.latitudeDelta = 0.02
-        region.span.longitudeDelta = 0.02
+        region.span.latitudeDelta = 0.01
+        region.span.longitudeDelta = 0.01
         self.mapView.setRegion(region, animated: true)
     }
     
     private func goShopList() {
-        let shopList = UIStoryboard(name: "ShopList", bundle: nil).instantiateInitialViewController()!
-        self.present(shopList, animated: true, completion: nil)
+        self.navigationController?.pushViewController(Constant.Storyboard.ShopList, animated: true)
     }
     
     // MARK: - Action
@@ -128,6 +130,13 @@ final class ShopSearchViewController: UIViewController {
 extension ShopSearchViewController: ShopSearchViewable {
     
     func updateUI() {
+        self.mapView.removeOverlays(self.mapView.overlays)
+        
+        let circle = MKCircle(
+            center: self.mapView.userLocation.coordinate,
+            radius: CLLocationDistance(self.presenter?.getHotPepperGourmetSearchRangeValue(index: self.rangePickerControl.getPickerSelectedRow(inComponent: 0)) ?? 0)
+        )
+        self.mapView.addOverlay(circle)
     }
     
 }
@@ -144,6 +153,16 @@ extension ShopSearchViewController: MKMapViewDelegate {
             
             self.isSetRegion = true
         }
+        
+        self.updateUI()
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let circleView: MKCircleRenderer = MKCircleRenderer(overlay: overlay)
+        circleView.fillColor = .systemOrange
+        circleView.alpha = 0.4
+
+        return circleView
     }
     
 }
@@ -157,11 +176,11 @@ extension ShopSearchViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Constant.HotPepperGourmetSearchRanges.count
+        return self.presenter?.getHotPepperGourmetSearchRangesCount() ?? 0
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return Constant.HotPepperGourmetSearchRanges[row]
+        return self.presenter?.getHotPepperGourmetSearchRangeName(index: row)
     }
     
 }
@@ -171,7 +190,9 @@ extension ShopSearchViewController: UIPickerViewDataSource {
 extension ShopSearchViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.rangeValueLabel.text = Constant.HotPepperGourmetSearchRanges[row]
+        self.rangeValueLabel.text = self.presenter?.getHotPepperGourmetSearchRangeName(index: row)
+        
+        self.updateUI()
     }
     
 }

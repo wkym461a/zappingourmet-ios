@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="26B-JK-9eC">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -10,6 +10,22 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="jQr-tD-6XR">
+            <objects>
+                <navigationController id="26B-JK-9eC" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Tvg-KH-r6B">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="WDc-aI-oVB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QjQ-GW-ySz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-923" y="96"/>
+        </scene>
         <!--Shop Search View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
@@ -19,14 +35,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EOR-cH-3ve">
-                                <rect key="frame" x="138" y="766" width="138" height="32"/>
+                                <rect key="frame" x="138" y="790" width="138" height="40"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="pOA-IJ-HFa"/>
+                                    <constraint firstAttribute="height" constant="40" id="pOA-IJ-HFa"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="検索">
-                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="24"/>
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
@@ -34,7 +50,7 @@
                                 </connections>
                             </button>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="N18-2t-Rr7">
-                                <rect key="frame" x="32" y="108" width="350" height="466"/>
+                                <rect key="frame" x="32" y="120" width="350" height="542"/>
                             </mapView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wMl-mq-QlY" userLabel="Button Leading View">
                                 <rect key="frame" x="0.0" y="798" width="138" height="0.0"/>
@@ -51,7 +67,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VAs-o5-uWP">
-                                <rect key="frame" x="302" y="494" width="64" height="64"/>
+                                <rect key="frame" x="302" y="582" width="64" height="64"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="VAs-o5-uWP" secondAttribute="height" id="3J8-Yr-tPq"/>
@@ -67,7 +83,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8OE-se-HAt" customClass="PickerInputControl" customModule="Zappingourmet" customModuleProvider="target">
-                                <rect key="frame" x="32" y="638" width="350" height="64"/>
+                                <rect key="frame" x="32" y="694" width="350" height="64"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rangeTitleLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIa-hd-EdK">
                                         <rect key="frame" x="16" y="21.5" width="116.5" height="21"/>
@@ -102,13 +118,13 @@
                             <constraint firstItem="N18-2t-Rr7" firstAttribute="bottom" secondItem="VAs-o5-uWP" secondAttribute="bottom" constant="16" id="F5b-OQ-SsM"/>
                             <constraint firstItem="8OE-se-HAt" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="32" id="FZV-7Q-8RY"/>
                             <constraint firstItem="N18-2t-Rr7" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="32" id="ITH-Vj-3oj"/>
-                            <constraint firstItem="N18-2t-Rr7" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="64" id="LOj-hY-58K"/>
+                            <constraint firstItem="N18-2t-Rr7" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="32" id="LOj-hY-58K"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="dLe-X1-RiP" secondAttribute="trailing" id="LqW-Pk-3EX"/>
-                            <constraint firstItem="8OE-se-HAt" firstAttribute="top" secondItem="N18-2t-Rr7" secondAttribute="bottom" constant="64" id="Tw2-kX-cbp"/>
+                            <constraint firstItem="8OE-se-HAt" firstAttribute="top" secondItem="N18-2t-Rr7" secondAttribute="bottom" constant="32" id="Tw2-kX-cbp"/>
                             <constraint firstItem="dLe-X1-RiP" firstAttribute="width" secondItem="EOR-cH-3ve" secondAttribute="width" id="dOH-Qu-lpJ"/>
                             <constraint firstItem="EOR-cH-3ve" firstAttribute="leading" secondItem="wMl-mq-QlY" secondAttribute="trailing" id="gqq-B2-9It"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="EOR-cH-3ve" secondAttribute="bottom" constant="64" id="nas-UR-Noj"/>
-                            <constraint firstItem="EOR-cH-3ve" firstAttribute="top" secondItem="8OE-se-HAt" secondAttribute="bottom" constant="64" id="oJS-L1-gk4"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="EOR-cH-3ve" secondAttribute="bottom" constant="32" id="nas-UR-Noj"/>
+                            <constraint firstItem="EOR-cH-3ve" firstAttribute="top" secondItem="8OE-se-HAt" secondAttribute="bottom" constant="32" id="oJS-L1-gk4"/>
                             <constraint firstItem="wMl-mq-QlY" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="sPi-4k-7aS"/>
                             <constraint firstItem="wMl-mq-QlY" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="tAG-Pm-Ym3"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="N18-2t-Rr7" secondAttribute="trailing" constant="32" id="uEf-SV-xL8"/>
@@ -116,6 +132,7 @@
                             <constraint firstItem="EOR-cH-3ve" firstAttribute="width" secondItem="wMl-mq-QlY" secondAttribute="width" id="xfA-Qc-6Ct"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="TPC-AE-RPC"/>
                     <connections>
                         <outlet property="centeringCurrentLocationButton" destination="VAs-o5-uWP" id="Obr-XN-p0k"/>
                         <outlet property="mapView" destination="N18-2t-Rr7" id="0hu-1e-TVp"/>
