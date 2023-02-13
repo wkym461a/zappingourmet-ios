@@ -16,10 +16,10 @@ struct Constant {
         static let SearchRange_Int = "HotPepperGourmetSearch.range"
     }
     
-    struct StoryboardInitialViewController {
-        static let ShopSearch = UIStoryboard(name: "ShopSearch", bundle: nil).instantiateInitialViewController()!
-        static let ShopList = UIStoryboard(name: "ShopList", bundle: nil).instantiateInitialViewController()!
-        static let ShopDetail = UIStoryboard(name: "ShopDetail", bundle: nil).instantiateInitialViewController()!
+    struct StoryboardName {
+        static let ShopSearch = "ShopSearch"
+        static let ShopList = "ShopList"
+        static let ShopDetail = "ShopDetail"
     }
     
 }

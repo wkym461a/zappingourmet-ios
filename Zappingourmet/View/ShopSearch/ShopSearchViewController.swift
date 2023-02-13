@@ -95,7 +95,8 @@ final class ShopSearchViewController: UIViewController {
     }
     
     private func goShopList() {
-        self.navigationController?.pushViewController(Constant.StoryboardInitialViewController.ShopList, animated: true)
+        let shopList = UIStoryboard(name: Constant.StoryboardName.ShopList, bundle: nil).instantiateInitialViewController()!
+        self.navigationController?.pushViewController(shopList, animated: true)
     }
     
     // MARK: - Action
