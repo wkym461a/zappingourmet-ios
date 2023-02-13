@@ -13,19 +13,11 @@ struct HotPepperGourmetSearch: HotPepperTargetType {
     var keyword: String?
     var lat: Double?
     var lng: Double?
-    var range: SearchRange?
+    var range: HotPepperGourmetSearchRange?
     
     var type: OutputType?
     var start: Int?
     var count: Int?
-    
-    enum SearchRange: Int {
-        case threeHundred = 1
-        case fiveHundred = 2
-        case oneThousand = 3
-        case twoThousand = 4
-        case threeThousand = 5
-    }
     
     enum OutputType: String {
         case lite = "lite"
@@ -67,7 +59,7 @@ extension HotPepperGourmetSearch {
         }
         
         if self.range != nil {
-            params["range"] = self.range?.rawValue
+            params["range"] = self.range?.code
         }
         
         if self.type != nil {
@@ -83,6 +75,102 @@ extension HotPepperGourmetSearch {
         }
         
         return params
+    }
+    
+}
+
+enum HotPepperGourmetSearchRangeCode: Int, CaseIterable {
+    
+    case threeHundredMeters = 1
+    case fiveHundredMeters = 2
+    case oneThousandMeters = 3
+    case twoThousandMeters = 4
+    case threeThousandMeters = 5
+    
+    var code: Int { self.rawValue }
+    
+}
+
+enum HotPepperGourmetSearchRangeName: String, CaseIterable {
+    
+    case threeHundredMeters = "300m"
+    case fiveHundredMeters = "500m"
+    case oneThousandMeters = "1000m"
+    case twoThousandMeters = "2000m"
+    case threeThousandMeters = "3000m"
+    
+    var name: String { self.rawValue }
+    
+}
+
+@dynamicMemberLookup
+enum HotPepperGourmetSearchRange: CaseIterable {
+    
+    case threeHundredMeters
+    case fiveHundredMeters
+    case oneThousandMeters
+    case twoThousandMeters
+    case threeThousandMeters
+    
+    var rangeValue: Int {
+        switch self {
+        case .threeHundredMeters:
+            return 300
+            
+        case .fiveHundredMeters:
+            return 500
+            
+        case .oneThousandMeters:
+            return 1000
+            
+        case .twoThousandMeters:
+            return 2000
+            
+        case .threeThousandMeters:
+            return 3000
+        }
+    }
+    
+}
+
+extension HotPepperGourmetSearchRange {
+    
+    init?(code: Int) {
+        self.init(HotPepperGourmetSearchRangeCode(rawValue: code))
+    }
+    
+    init?(name: String) {
+        self.init(HotPepperGourmetSearchRangeName(rawValue: name))
+    }
+    
+    private init?<T>(_ object: T?) where T: CaseIterable, T.AllCases.Index == AllCases.Index, T: Equatable {
+        switch object {
+        case let object? where object.offset < Self.allCases.endIndex:
+            self = Self.allCases[object.offset]
+
+        case _:
+            return nil
+        }
+    }
+    
+    subscript<V>(dynamicMember keyPath: KeyPath<HotPepperGourmetSearchRangeCode, V>) -> V? {
+        return self[keyPath]
+    }
+
+    subscript<V>(dynamicMember keyPath: KeyPath<HotPepperGourmetSearchRangeName, V>) -> V? {
+        return self[keyPath]
+    }
+
+    private subscript<T, V>(_ keyPath: KeyPath<T, V>) -> V? where T: CaseIterable, T.AllCases.Index == AllCases.Index {
+        return (offset < T.allCases.endIndex) ? T.allCases[offset][keyPath: keyPath] : nil
+    }
+    
+}
+
+extension CaseIterable where Self: Equatable {
+    
+    var offset: AllCases.Index {
+        return Self.allCases.firstIndex(of: self)!
     }
     
 }
