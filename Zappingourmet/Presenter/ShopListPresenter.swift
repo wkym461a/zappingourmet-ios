@@ -25,6 +25,7 @@ final class ShopListPresenter {
     private weak var view: ShopListViewable?
     private var shops: [Shop]
     
+    private var isFetching: Bool = false
     private var cancellable: AnyCancellable?
     private var totalShopsCount: Int?
     private var fetchStartIndex: Int = 1
@@ -47,6 +48,11 @@ extension ShopListPresenter: ShopListPresentable {
             return
         }
         
+        if self.isFetching {
+            return
+        }
+        self.isFetching = true
+        
         let searchRangeIndex = UserDefaults.standard.integer(forKey: Constant.HotPepperGourmetSearchRangeKey)
         self.cancellable = HotPepperAPI.shared.request(
             target: HotPepperGourmetSearch(
@@ -58,6 +64,8 @@ extension ShopListPresenter: ShopListPresentable {
             )
         ).sink { completion in
             print(completion)
+            
+            self.isFetching = false
 
         } receiveValue: { response in
             let results = response.results
@@ -86,6 +94,8 @@ extension ShopListPresenter: ShopListPresentable {
             }
             
             self.fetchStartIndex = resultsStart + (Int(resultsReturned) ?? hpShops.count)
+            
+            self.isFetching = false
         }
     }
     
