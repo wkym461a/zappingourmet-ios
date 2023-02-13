@@ -53,11 +53,11 @@ extension ShopListPresenter: ShopListPresentable {
         }
         self.isFetching = true
         
-        let searchRangeIndex = UserDefaults.standard.integer(forKey: Constant.HotPepperGourmetSearchRangeKey)
+        let searchRangeIndex = UserDefaults.standard.integer(forKey: Constant.UserDefaultsReservedKey.SearchRange_Int)
         self.cancellable = HotPepperAPI.shared.request(
             target: HotPepperGourmetSearch(
-                lat: UserDefaults.standard.double(forKey: Constant.HotPepperGourmetSearchLatitudeKey),
-                lng: UserDefaults.standard.double(forKey: Constant.HotPepperGourmetSearchLongitudeKey),
+                lat: UserDefaults.standard.double(forKey: Constant.UserDefaultsReservedKey.SearchLatitude_Double),
+                lng: UserDefaults.standard.double(forKey: Constant.UserDefaultsReservedKey.SearchLongitude_Double),
                 range: HotPepperGourmetSearchRange.allCases[searchRangeIndex],
                 start: self.fetchStartIndex,
                 count: self.fetchCount
@@ -108,11 +108,11 @@ extension ShopListPresenter: ShopListPresentable {
     }
     
     func setShopDetailItem(index: Int) {
-        UserDefaults.standard.save(self.shops[index], key: Constant.ShopDetailItemKey)
+        UserDefaults.standard.save(self.shops[index], key: Constant.UserDefaultsReservedKey.ShopDetailItem_Shop)
     }
     
     func getSearchRangeName() -> String? {
-        let searchRangeIndex = UserDefaults.standard.integer(forKey: Constant.HotPepperGourmetSearchRangeKey)
+        let searchRangeIndex = UserDefaults.standard.integer(forKey: Constant.UserDefaultsReservedKey.SearchRange_Int)
         return HotPepperGourmetSearchRange.allCases[searchRangeIndex].name
     }
     

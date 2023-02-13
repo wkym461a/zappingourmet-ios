@@ -22,7 +22,7 @@ final class ShopDetailPresenter {
     init(_ view: ShopDetailViewable) {
         self.view = view
         
-        self.item = UserDefaults.standard.load(Shop.self, key: Constant.ShopDetailItemKey) ?? .default
+        self.item = UserDefaults.standard.load(Shop.self, key: Constant.UserDefaultsReservedKey.ShopDetailItem_Shop) ?? .default
     }
     
 }
@@ -36,7 +36,7 @@ extension ShopDetailPresenter: ShopDetailPresentable {
     }
     
     func removeShopDetailItem() {
-        UserDefaults.standard.removeObject(forKey: Constant.ShopDetailItemKey)
+        UserDefaults.standard.removeObject(forKey: Constant.UserDefaultsReservedKey.ShopDetailItem_Shop)
     }
     
 }

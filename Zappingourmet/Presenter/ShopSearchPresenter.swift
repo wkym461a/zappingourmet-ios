@@ -78,13 +78,13 @@ extension ShopSearchPresenter: ShopSearchPresentable {
     
     func setHotPepperGourmetSearchCoordinate() {
         if let location = self.currentLocation {
-            UserDefaults.standard.set(Double(location.coordinate.latitude), forKey: Constant.HotPepperGourmetSearchLatitudeKey)
-            UserDefaults.standard.set(Double(location.coordinate.longitude), forKey: Constant.HotPepperGourmetSearchLongitudeKey)
+            UserDefaults.standard.set(Double(location.coordinate.latitude), forKey: Constant.UserDefaultsReservedKey.SearchLatitude_Double)
+            UserDefaults.standard.set(Double(location.coordinate.longitude), forKey: Constant.UserDefaultsReservedKey.SearchLongitude_Double)
         }
     }
     
     func setHotPepperGourmetSearchRange(selectedIndex: Int) {
-        UserDefaults.standard.set(selectedIndex, forKey: Constant.HotPepperGourmetSearchRangeKey)
+        UserDefaults.standard.set(selectedIndex, forKey: Constant.UserDefaultsReservedKey.SearchRange_Int)
     }
     
 }

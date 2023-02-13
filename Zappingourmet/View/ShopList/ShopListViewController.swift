@@ -146,7 +146,7 @@ extension ShopListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.presenter?.setShopDetailItem(index: indexPath.row)
         
-        self.navigationController?.pushViewController(Constant.Storyboard.ShopDetail, animated: true)
+        self.navigationController?.pushViewController(Constant.StoryboardInitialViewController.ShopDetail, animated: true)
         
         collectionView.deselectItem(at: indexPath, animated: true)
     }
