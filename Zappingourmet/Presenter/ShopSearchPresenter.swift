@@ -15,6 +15,7 @@ protocol ShopSearchPresentable: AnyObject {
     func getCurrentLocation() -> CLLocation?
     
     func setHotPepperGourmetSearchCoordinate()
+    func setHotPepperGourmetSearchRange(selectedIndex: Int)
     
 }
 
@@ -65,6 +66,10 @@ extension ShopSearchPresenter: ShopSearchPresentable {
             UserDefaults.standard.set(Double(location.coordinate.latitude), forKey: Constant.HotPepperGourmetSearchLatitudeKey)
             UserDefaults.standard.set(Double(location.coordinate.longitude), forKey: Constant.HotPepperGourmetSearchLongitudeKey)
         }
+    }
+    
+    func setHotPepperGourmetSearchRange(selectedIndex: Int) {
+        UserDefaults.standard.set(selectedIndex + 1, forKey: Constant.HotPepperGourmetSearchRangeKey)
     }
     
 }

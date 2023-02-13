@@ -49,6 +49,7 @@ extension ShopListPresenter: ShopListPresentable {
             target: HotPepperGourmetSearch(
                 lat: UserDefaults.standard.double(forKey: Constant.HotPepperGourmetSearchLatitudeKey),
                 lng: UserDefaults.standard.double(forKey: Constant.HotPepperGourmetSearchLongitudeKey),
+                range: HotPepperGourmetSearch.SearchRange(rawValue: UserDefaults.standard.integer(forKey: Constant.HotPepperGourmetSearchRangeKey)),
                 start: self.fetchStartIndex,
                 count: self.fetchCount
             )

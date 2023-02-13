@@ -20,6 +20,11 @@ final class ShopSearchViewController: UIViewController {
     
     @IBOutlet private weak var mapView: MKMapView!
     @IBOutlet private weak var centeringCurrentLocationButton: UIButton!
+    
+    @IBOutlet private weak var rangePickerControl: PickerInputControl!
+    @IBOutlet private weak var rangeTitleLabel: UILabel!
+    @IBOutlet private weak var rangeValueLabel: UILabel!
+    
     @IBOutlet private weak var searchButton: UIButton!
     
     // MARK: - Property
@@ -50,6 +55,13 @@ final class ShopSearchViewController: UIViewController {
     // MARK: - Private
     
     private func setupUI() {
+        let gesture: UITapGestureRecognizer = .init(
+            target: self,
+            action: #selector(self.dismissPickerInput)
+        )
+        gesture.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(gesture)
+        
         self.mapView.delegate = self
         self.mapView.showsUserLocation = true
         self.mapView.layer.cornerRadius = 8
@@ -60,7 +72,14 @@ final class ShopSearchViewController: UIViewController {
         self.centeringCurrentLocationButton.layer.shadowOpacity = 0.6
         self.centeringCurrentLocationButton.layer.shadowRadius = 4
         
-        self.searchButton.layer.cornerRadius = 16
+        self.rangePickerControl.layer.cornerRadius = 8
+        self.rangePickerControl.layer.borderWidth = 2
+        self.rangePickerControl.dataSource = self
+        self.rangePickerControl.delegate = self
+        self.rangeTitleLabel.text = "検索範囲"
+        self.rangeValueLabel.text = Constant.HotPepperGourmetSearchRanges.first
+        
+        self.searchButton.layer.cornerRadius = 8
         self.searchButton.backgroundColor = .systemOrange
     }
     
@@ -78,15 +97,30 @@ final class ShopSearchViewController: UIViewController {
     }
     
     // MARK: - Action
+    
+    @objc
+    private func dismissPickerInput() {
+        self.view.endEditing(true)
+    }
 
-    @IBAction func searchShops(_ sender: UIButton) {
+    @IBAction private func searchShops(_ sender: UIButton) {
         if let location = self.presenter?.getCurrentLocation() {
             print("ShopSearch: { lat: \(location.coordinate.latitude), lng: \(location.coordinate.longitude) }")
         }
         self.presenter?.setHotPepperGourmetSearchCoordinate()
+        self.presenter?.setHotPepperGourmetSearchRange(
+            selectedIndex: self.rangePickerControl.getPickerSelectedRow(inComponent: 0)
+        )
         
         self.goShopList()
     }
+    
+    @IBAction private func centeringCurrentLocation(_ sender: UIButton) {
+        var region = self.mapView.region
+        region.center = self.mapView.userLocation.coordinate
+        self.mapView.setRegion(region, animated: true)
+    }
+    
 }
 
 // MARK: - ShopSearchViewable
@@ -110,6 +144,34 @@ extension ShopSearchViewController: MKMapViewDelegate {
             
             self.isSetRegion = true
         }
+    }
+    
+}
+
+// MARK: - UIPickerViewDataSource
+
+extension ShopSearchViewController: UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return Constant.HotPepperGourmetSearchRanges.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return Constant.HotPepperGourmetSearchRanges[row]
+    }
+    
+}
+
+// MARK: - UIPickerViewDelegate
+
+extension ShopSearchViewController: UIPickerViewDelegate {
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.rangeValueLabel.text = Constant.HotPepperGourmetSearchRanges[row]
     }
     
 }
