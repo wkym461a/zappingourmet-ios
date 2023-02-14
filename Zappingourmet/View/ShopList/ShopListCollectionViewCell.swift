@@ -11,9 +11,11 @@ final class ShopListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Outlet
     
+    @IBOutlet private weak var shopImageView: ShopImageView!
+    @IBOutlet private weak var catchLabel: UILabel!
+    
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var accessLabel: UILabel!
-    @IBOutlet private weak var shopImageView: ShopImageView!
     
     // MARK: - Property
     
@@ -28,26 +30,24 @@ final class ShopListCollectionViewCell: UICollectionViewCell {
     // MARK: - Public
     
     func updateUI(shop: Shop) {
+        self.shopImageView.image = UIImage(data: .fromURL(shop.photoURL))
+        self.catchLabel.text = shop.`catch`
+        
         self.nameLabel.text = shop.name
         self.accessLabel.text = shop.access
-        self.shopImageView.image = UIImage(data: .fromURL(shop.photoURL))
     }
     
     // MARK: - Private
     
     private func setupUI() {
-        self.contentView.backgroundColor = .white
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOffset = .init(width: 4, height: 4)
+        self.layer.shadowRadius = 8
+        self.layer.shadowOpacity = 0.3
+        self.layer.masksToBounds = false
+        
         self.contentView.layer.cornerRadius = 8
         self.contentView.clipsToBounds = true
-        
-        self.nameLabel.font = .boldSystemFont(ofSize: 22)
-        self.nameLabel.textColor = .white
-        self.nameLabel.text = "Unknown Shop Name"
-        
-        self.accessLabel.font = .systemFont(ofSize: 16)
-        self.accessLabel.numberOfLines = 2
-        
-        self.shopImageView.contentMode = .scaleAspectFill
     }
     
     // MARK: - Action
