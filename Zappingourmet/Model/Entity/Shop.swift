@@ -13,8 +13,8 @@ struct Shop: Codable {
         id: "J999999999",
         name: "居酒屋 ホットペッパー",
         address: "東京都中央区銀座８－４－１７",
-//        accessShort: "銀座一丁目駅10番出口徒歩3分",
         access: "銀座駅A2出口でて､みゆき通り右折､徒歩1分",
+        accessShort: "銀座一丁目駅10番出口徒歩3分",
         photoURL: URL(string: "https://play-lh.googleusercontent.com/pnGn7ehfH_swLzEUNr7o7M1IMDHGAay5smAU59thcHcZChSt5S5rhg6zW1bYMKdckY4")!,
         open: "月～金／11：30～14：00",
         close: "日",
@@ -69,7 +69,7 @@ struct Shop: Codable {
             name: shop.name,
             address: shop.address,
             access: shop.access,
-//            accessShort: shop.mobileAccess,
+            accessShort: shop.mobileAccess,
             photoURL: photoURL,
             open: open,
             close: close,
@@ -87,7 +87,7 @@ struct Shop: Codable {
     var name: String
     var address: String
     var access: String
-//    var accessShort: String?
+    var accessShort: String?
     var photoURL: URL
     var open: String
     var close: String
@@ -99,6 +99,14 @@ struct Shop: Codable {
     var `catch`: String
     var tags: [String]
     var detailMemo: String
+    
+    func getAccessPreferShort() -> String {
+        guard let short = self.accessShort?.trimmingCharacters(in: .whitespacesAndNewlines), short.count > 0 else {
+            return self.access
+        }
+        
+        return short
+    }
     
     private static func createTags(from shop: HotPepperGourmetSearchResults.Shop) -> [String] {
         var tags: [String] = []

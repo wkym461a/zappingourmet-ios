@@ -34,7 +34,7 @@ final class ShopListCollectionViewCell: UICollectionViewCell {
         self.catchLabel.text = shop.`catch`
         
         self.nameLabel.text = shop.name
-        self.accessLabel.text = shop.access
+        self.accessLabel.text = shop.accessShort ?? shop.access
     }
     
     // MARK: - Private
