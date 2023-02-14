@@ -22,8 +22,9 @@ final class ShopDetailViewController: UIViewController {
     @IBOutlet private weak var headerImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var openLabel: UILabel!
-//    @IBOutlet private weak var shopURLLabel: UILabel!
     @IBOutlet private weak var shopURLButton: UIButton!
+    @IBOutlet private weak var tagCollectionView: UICollectionView!
+    @IBOutlet private weak var tagCollectionViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var accessTitleLabel: UILabel!
     @IBOutlet private weak var accessLabel: UILabel!
@@ -46,6 +47,12 @@ final class ShopDetailViewController: UIViewController {
         self.presenter = ShopDetailPresenter(self)
         
         self.setupUI()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        self.tagCollectionViewHeightConstraint.constant = self.tagCollectionView.contentSize.height
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,6 +86,20 @@ final class ShopDetailViewController: UIViewController {
         self.shopURLButton.setTitleColor(.systemBlue, for: .normal)
         self.shopURLButton.titleLabel?.font = .systemFont(ofSize: 12)
         self.shopURLButton.titleLabel?.numberOfLines = -1
+        
+        self.tagCollectionView.dataSource = self
+        self.tagCollectionView.delegate = self
+        self.tagCollectionView.register(
+            UINib(nibName: "ShopDetailTagCollectionViewCell", bundle: nil),
+            forCellWithReuseIdentifier: "tagCell"
+        )
+        let layout = ShopDetailTagCollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layout.minimumInteritemSpacing = 8
+        layout.minimumLineSpacing = 8
+        layout.sectionInset = .zero
+        self.tagCollectionView.collectionViewLayout = layout
         
         self.accessTitleLabel.font = .boldSystemFont(ofSize: 18)
         
@@ -190,6 +211,46 @@ extension ShopDetailViewController: ShopDetailViewable {
         self.accessLabel.text = shop.access
         
         self.addressLabel.text = shop.address
+    }
+    
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension ShopDetailViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.presenter?.getItem().tags.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard
+            let tag = self.presenter?.getItem().tags[indexPath.row],
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: indexPath) as? ShopDetailTagCollectionViewCell
+                
+        else {
+            return UICollectionViewCell()
+        }
+        
+        cell.updateUI(tag: tag, maxWidth: collectionView.contentSize.width)
+        
+        return cell
+    }
+    
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension ShopDetailViewController: UICollectionViewDelegate {
+    
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension ShopDetailViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize.zero
     }
     
 }
