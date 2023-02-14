@@ -38,13 +38,9 @@ final class ShopDetailTagCollectionViewCell: UICollectionViewCell {
     // MARK: - Private
     
     private func setupUI() {
-        self.contentView.backgroundColor = Constant.Color.baseOrange
+        self.contentView.backgroundColor = .systemGray5
         self.contentView.layer.cornerRadius = 8
         self.contentView.clipsToBounds = true
-        
-        self.tagLabel.font = .systemFont(ofSize: 12)
-        self.tagLabel.numberOfLines = -1
-        self.tagLabel.lineBreakMode = .byWordWrapping
     }
     
     // MARK: - Action

@@ -18,15 +18,15 @@ final class ShopDetailViewController: UIViewController {
     
     // MARK: - Outlet
     
-    @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var headerImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var openLabel: UILabel!
-    @IBOutlet private weak var shopURLButton: UIButton!
+    
     @IBOutlet private weak var tagCollectionView: UICollectionView!
     @IBOutlet private weak var tagCollectionViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var detailMemoLabel: UILabel!
+    @IBOutlet private weak var shopURLButton: UIButton!
     
-    @IBOutlet private weak var accessTitleLabel: UILabel!
     @IBOutlet private weak var accessLabel: UILabel!
     @IBOutlet private weak var mapView: MKMapView!
     @IBOutlet private weak var addressLabel: UILabel!
@@ -34,6 +34,16 @@ final class ShopDetailViewController: UIViewController {
     // MARK: - Property
     
     private var presenter: ShopDetailPresentable?
+    
+    private var tagCollectionViewFlowLayout: ShopDetailTagCollectionViewFlowLayout {
+        let layout = ShopDetailTagCollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layout.minimumInteritemSpacing = 8
+        layout.minimumLineSpacing = 8
+        layout.sectionInset = .zero
+        return layout
+    }
     
     private var mapViewOverlaysEdgePadding: UIEdgeInsets {
         return .init(top: 80, left: 80, bottom: 80, right: 80)
@@ -72,49 +82,18 @@ final class ShopDetailViewController: UIViewController {
     // MARK: - Private
     
     private func setupUI() {
-        self.contentView.backgroundColor = .clear
-        
-        self.headerImageView.contentMode = .scaleAspectFill
-        
-        self.nameLabel.font = .boldSystemFont(ofSize: 24)
-        self.nameLabel.numberOfLines = -1
-        
-        self.openLabel.textColor = .darkGray
-        self.openLabel.font = .systemFont(ofSize: 12)
-        self.openLabel.numberOfLines = -1
-        
-        self.shopURLButton.setTitleColor(.systemBlue, for: .normal)
-        self.shopURLButton.titleLabel?.font = .systemFont(ofSize: 12)
-        self.shopURLButton.titleLabel?.numberOfLines = -1
-        
         self.tagCollectionView.dataSource = self
         self.tagCollectionView.delegate = self
         self.tagCollectionView.register(
             UINib(nibName: "ShopDetailTagCollectionViewCell", bundle: nil),
             forCellWithReuseIdentifier: "tagCell"
         )
-        let layout = ShopDetailTagCollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.minimumInteritemSpacing = 8
-        layout.minimumLineSpacing = 8
-        layout.sectionInset = .zero
-        self.tagCollectionView.collectionViewLayout = layout
-        
-        self.accessTitleLabel.font = .boldSystemFont(ofSize: 18)
-        
-        self.accessLabel.font = .systemFont(ofSize: 14)
-        self.accessLabel.numberOfLines = -1
+        self.tagCollectionView.collectionViewLayout = self.tagCollectionViewFlowLayout
         
         self.mapView.delegate = self
         self.mapView.showsUserLocation = true
         self.mapView.layer.cornerRadius = 8
-        self.mapView.clipsToBounds = true
         self.createMapViewRoute()
-        
-        self.addressLabel.textColor = .darkGray
-        self.addressLabel.font = .systemFont(ofSize: 12)
-        self.addressLabel.numberOfLines = -1
     }
     
     private func createMapViewRoute() {
@@ -198,6 +177,9 @@ extension ShopDetailViewController: ShopDetailViewable {
         self.headerImageView.image = UIImage(data: .fromURL(shop.photoURL))
         self.nameLabel.text = shop.name
         self.openLabel.text = shop.open
+        
+        self.accessLabel.text = shop.access
+        self.detailMemoLabel.text = (shop.detailMemo.count > 0) ? shop.detailMemo : "なし"
         let shopURLString = shop.url.absoluteString
         let attributeShopURLString: NSMutableAttributedString = .init(string: shopURLString)
         attributeShopURLString.addAttribute(
@@ -206,9 +188,6 @@ extension ShopDetailViewController: ShopDetailViewable {
             range: .init(location: 0, length: shopURLString.count)
         )
         self.shopURLButton.setAttributedTitle(attributeShopURLString, for: .normal)
-        
-        self.accessTitleLabel.text = "アクセス"
-        self.accessLabel.text = shop.access
         
         self.addressLabel.text = shop.address
     }

@@ -23,11 +23,10 @@ struct Constant {
     }
     
     struct Color {
-        static let baseOrange: UIColor = .init(red: 225 / 255, green: 126 / 255, blue: 27 / 255, alpha: 1.0)
-//        static let baseOrange = UIColor.dynamicColor(
-//            light: .init(red: 225 / 255, green: 126 / 255, blue: 27 / 255, alpha: 1.0),
-//            dark: .init(red: 189 / 255, green: 108 / 255, blue: 27 / 255, alpha: 1.0)
-//        )
+        static let baseOrange = UIColor.dynamicColor(
+            light: .init(red: 225 / 255, green: 126 / 255, blue: 27 / 255, alpha: 1.0),
+            dark: .init(red: 189 / 255, green: 108 / 255, blue: 27 / 255, alpha: 1.0)
+        )
     }
     
 }

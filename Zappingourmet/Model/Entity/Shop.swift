@@ -22,7 +22,7 @@ struct Shop: Codable {
         longitude: 139.7754267645,
         url: URL(string: "https://webservice.recruit.co.jp/doc/hotpepper/reference.html")!,
 //        logoURL: URL(string: "https://play-lh.googleusercontent.com/pnGn7ehfH_swLzEUNr7o7M1IMDHGAay5smAU59thcHcZChSt5S5rhg6zW1bYMKdckY4")!,
-//        catch: "TVの口コミランキングで堂々1位に輝いた一口餃子専門店！！",
+        catch: "TVの口コミランキングで堂々1位に輝いた一口餃子専門店！！",
         tags: [
             "Wi-Fi：あり、なし、未確認 のいずれか",
             "ウェディング･二次会：応相談",
@@ -50,9 +50,8 @@ struct Shop: Codable {
             "お子様連れ：お子様連れ歓迎",
             "ランチ：あり",
             "23時以降営業：営業している",
-        ]
-//        detailMemo: "プロジェクター利用可",
-//        equipmentMemo: "プロジェクターあります。"
+        ],
+        detailMemo: "プロジェクター利用可"
     )
     
     static func fromHotPepperShop(_ shop: HotPepperGourmetSearchResults.Shop) -> Self {
@@ -63,8 +62,7 @@ struct Shop: Codable {
         let shopURL = shop.urls.pc
 //        let logoURL = shop.logoImage
         let tags = self.createTags(from: shop)
-//        let detailMemo = shop.shopDetailMemo ?? "なし"
-//        let equipmentMemo = shop.otherMemo ?? "なし"
+        let detailMemo = shop.shopDetailMemo ?? "なし"
         
         return Shop(
             id: shop.id,
@@ -79,10 +77,9 @@ struct Shop: Codable {
             longitude: shop.lng,
             url: shopURL,
 //            logoURL: logoURL,
-//            catch: shop.catch,
-            tags: tags
-//            detailMemo: detailMemo,
-//            equipmentMemo: equipmentMemo
+            catch: shop.catch,
+            tags: tags,
+            detailMemo: detailMemo
         )
     }
     
@@ -99,10 +96,9 @@ struct Shop: Codable {
     var longitude: Double
     var url: URL
 //    var logoURL: URL?
-//    var `catch`: String
+    var `catch`: String
     var tags: [String]
-//    var detailMemo: String
-//    var equipmentMemo: String
+    var detailMemo: String
     
     private static func createTags(from shop: HotPepperGourmetSearchResults.Shop) -> [String] {
         var tags: [String] = []
@@ -138,11 +134,7 @@ struct Shop: Codable {
     }
     
     private static func tagFilter(_ text: String?, completion: (String) -> ()) {
-        guard
-            let text = text?.components(separatedBy: "：")[0],
-            text != ""
-        
-        else {
+        guard let text = text?.trimmingCharacters(in: .whitespacesAndNewlines), text != "" else {
             return
         }
         
