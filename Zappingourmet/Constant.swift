@@ -22,4 +22,8 @@ struct Constant {
         static let ShopDetail = "ShopDetail"
     }
     
+    struct Color {
+        static let baseOrange: UIColor = .init(red: 225 / 255, green: 126 / 255, blue: 27 / 255, alpha: 1.0)
+    }
+    
 }
