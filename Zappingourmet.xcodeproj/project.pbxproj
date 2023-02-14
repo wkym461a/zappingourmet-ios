@@ -26,6 +26,9 @@
 		D17ACC692996F21C00E056B6 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = D17ACC682996F21C00E056B6 /* CombineMoya */; };
 		D17ACC6E2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6D2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift */; };
 		D17ACC7929973D6400E056B6 /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC7829973D6400E056B6 /* Shop.swift */; };
+		D19C6430299BB4A30000C576 /* HotPepperGenreMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19C642F299BB4A30000C576 /* HotPepperGenreMaster.swift */; };
+		D19C6432299BB7250000C576 /* HotPepperGenreMasterResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19C6431299BB7250000C576 /* HotPepperGenreMasterResults.swift */; };
+		D19C6434299BBCEF0000C576 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19C6433299BBCEF0000C576 /* Genre.swift */; };
 		D19CF887299B2ED10096C1B2 /* ShopDetailTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19CF885299B2ED10096C1B2 /* ShopDetailTagCollectionViewCell.swift */; };
 		D19CF888299B2ED10096C1B2 /* ShopDetailTagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D19CF886299B2ED10096C1B2 /* ShopDetailTagCollectionViewCell.xib */; };
 		D19CF88A299B32060096C1B2 /* ShopDetailTagCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19CF889299B32060096C1B2 /* ShopDetailTagCollectionViewFlowLayout.swift */; };
@@ -86,6 +89,9 @@
 		D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperTargetType.swift; sourceTree = "<group>"; };
 		D17ACC6D2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperGourmetSearchResults.swift; sourceTree = "<group>"; };
 		D17ACC7829973D6400E056B6 /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
+		D19C642F299BB4A30000C576 /* HotPepperGenreMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperGenreMaster.swift; sourceTree = "<group>"; };
+		D19C6431299BB7250000C576 /* HotPepperGenreMasterResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperGenreMasterResults.swift; sourceTree = "<group>"; };
+		D19C6433299BBCEF0000C576 /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		D19CF885299B2ED10096C1B2 /* ShopDetailTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailTagCollectionViewCell.swift; sourceTree = "<group>"; };
 		D19CF886299B2ED10096C1B2 /* ShopDetailTagCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopDetailTagCollectionViewCell.xib; sourceTree = "<group>"; };
 		D19CF889299B32060096C1B2 /* ShopDetailTagCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailTagCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -215,6 +221,8 @@
 				D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */,
 				D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */,
 				D17ACC6D2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift */,
+				D19C642F299BB4A30000C576 /* HotPepperGenreMaster.swift */,
+				D19C6431299BB7250000C576 /* HotPepperGenreMasterResults.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -223,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				D17ACC7829973D6400E056B6 /* Shop.swift */,
+				D19C6433299BBCEF0000C576 /* Genre.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -433,6 +442,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D19C6434299BBCEF0000C576 /* Genre.swift in Sources */,
 				D17ACC6E2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift in Sources */,
 				D1E5081D29986479006E5AA3 /* Constant.swift in Sources */,
 				D1BEF183299769B300F6F851 /* ShopListPresenter.swift in Sources */,
@@ -451,10 +461,12 @@
 				D1BEF18629976EF400F6F851 /* ShopListCollectionViewCell.swift in Sources */,
 				D1BEF1892997BA5800F6F851 /* ShopImageView.swift in Sources */,
 				D17ACC6129964C0400E056B6 /* HotPepperGourmetSearch.swift in Sources */,
+				D19C6432299BB7250000C576 /* HotPepperGenreMasterResults.swift in Sources */,
 				D14BE6232999B7F800F0B774 /* PickerInputControl.swift in Sources */,
 				D19CF88A299B32060096C1B2 /* ShopDetailTagCollectionViewFlowLayout.swift in Sources */,
 				D1EF48F129989DDC00A5AF8D /* ShopSearchPresenter.swift in Sources */,
 				D1E5081629984E5E006E5AA3 /* ShopDetailViewController.swift in Sources */,
+				D19C6430299BB4A30000C576 /* HotPepperGenreMaster.swift in Sources */,
 				D1C320CA2997665B00D5C7EA /* ShopListViewController.swift in Sources */,
 				D17ACC6329964DDB00E056B6 /* HotPepperTargetType.swift in Sources */,
 			);

@@ -17,6 +17,7 @@ protocol ShopListPresentable: AnyObject {
     func setShopDetailItem(index: Int)
     
     func getSearchRangeName() -> String?
+    func getSearchGenreName() -> String?
     
 }
 
@@ -53,12 +54,14 @@ extension ShopListPresenter: ShopListPresentable {
         }
         self.isFetching = true
         
-        let searchRangeIndex = UserDefaults.standard.integer(forKey: Constant.UserDefaultsReservedKey.SearchRange_Int)
+        let searchRangeCode = UserDefaults.standard.integer(forKey: Constant.UserDefaultsReservedKey.SearchRange_Int)
+        let searchGenre = UserDefaults.standard.load(Genre.self, key: Constant.UserDefaultsReservedKey.SearchGenre_Genre)
         self.cancellable = HotPepperAPI.shared.request(
             target: HotPepperGourmetSearch(
                 lat: UserDefaults.standard.double(forKey: Constant.UserDefaultsReservedKey.SearchLatitude_Double),
                 lng: UserDefaults.standard.double(forKey: Constant.UserDefaultsReservedKey.SearchLongitude_Double),
-                range: HotPepperGourmetSearchRange.allCases[searchRangeIndex],
+                range: HotPepperGourmetSearchRange(code: searchRangeCode),
+                genre: (searchGenre?.code != Genre.none.code) ? searchGenre?.code : nil,
                 start: self.fetchStartIndex,
                 count: self.fetchCount
             )
@@ -112,8 +115,13 @@ extension ShopListPresenter: ShopListPresentable {
     }
     
     func getSearchRangeName() -> String? {
-        let searchRangeIndex = UserDefaults.standard.integer(forKey: Constant.UserDefaultsReservedKey.SearchRange_Int)
-        return HotPepperGourmetSearchRange.allCases[searchRangeIndex].name
+        let searchRangeCode = UserDefaults.standard.integer(forKey: Constant.UserDefaultsReservedKey.SearchRange_Int)
+        return HotPepperGourmetSearchRange(code: searchRangeCode)?.name
+    }
+    
+    func getSearchGenreName() -> String? {
+        let searchGenre = UserDefaults.standard.load(Genre.self, key: Constant.UserDefaultsReservedKey.SearchGenre_Genre)
+        return (searchGenre?.code != Genre.none.code) ? searchGenre?.name : nil
     }
     
 }

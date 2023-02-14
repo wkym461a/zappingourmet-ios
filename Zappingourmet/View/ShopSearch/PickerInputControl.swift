@@ -11,25 +11,7 @@ final class PickerInputControl: UIControl {
     
     // MARK: - Property
     
-    private var picker = UIPickerView()
-    weak var dataSource: UIPickerViewDataSource? {
-        get {
-            return self.picker.dataSource
-        }
-        
-        set {
-            self.picker.dataSource = newValue
-        }
-    }
-    weak var delegate: UIPickerViewDelegate? {
-        get {
-            return self.picker.delegate
-        }
-        
-        set {
-            self.picker.delegate = newValue
-        }
-    }
+    private(set) var picker = UIPickerView()
     
     override var inputView: UIView? {
         return self.picker
@@ -75,10 +57,6 @@ final class PickerInputControl: UIControl {
         let value = super.resignFirstResponder()
         self.isSelected = self.isFirstResponder
         return value
-    }
-    
-    func getPickerSelectedRow(inComponent: Int) -> Int {
-        return self.picker.selectedRow(inComponent: inComponent)
     }
     
     // MARK: - Private

@@ -68,7 +68,12 @@ final class ShopListViewController: UIViewController {
     
     private func setupUI() {
         if let searchRangeName = self.presenter?.getSearchRangeName() {
-            self.navigationItem.title = "\(searchRangeName)以内の検索結果"
+            if let searchGenreName = self.presenter?.getSearchGenreName() {
+                self.navigationItem.title = "\(searchRangeName)以内の\(searchGenreName)"
+                
+            } else {
+                self.navigationItem.title = "\(searchRangeName)以内の検索結果"
+            }
             
         } else {
             self.navigationItem.title = "検索結果"
