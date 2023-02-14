@@ -647,7 +647,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Zappingourmet/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "ザッピングルメ";
+				INFOPLIST_KEY_CFBundleDisplayName = "ザッピングルメ！";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "周辺の飲食店を検索するために位置情報を使用します";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -678,7 +678,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Zappingourmet/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "ザッピングルメ";
+				INFOPLIST_KEY_CFBundleDisplayName = "ザッピングルメ！";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "周辺の飲食店を検索するために位置情報を使用します";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
