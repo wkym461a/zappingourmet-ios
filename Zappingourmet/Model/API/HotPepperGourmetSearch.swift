@@ -14,6 +14,7 @@ struct HotPepperGourmetSearch: HotPepperTargetType {
     var lat: Double?
     var lng: Double?
     var range: HotPepperGourmetSearchRange?
+    var genre: String?
     
     var type: OutputType?
     var start: Int?
@@ -36,11 +37,11 @@ extension HotPepperGourmetSearch {
     }
     
     var path: String {
-        "/gourmet/v1"
+        return "/gourmet/v1"
     }
     
     var method: Moya.Method {
-        .get
+        return .get
     }
     
     var parameters: Parameters {
@@ -60,6 +61,10 @@ extension HotPepperGourmetSearch {
         
         if self.range != nil {
             params["range"] = self.range?.code
+        }
+        
+        if self.genre != nil {
+            params["genre"] = self.genre
         }
         
         if self.type != nil {

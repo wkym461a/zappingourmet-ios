@@ -26,9 +26,9 @@ final class ShopListViewController: UIViewController {
     private struct CollectionViewConstants {
 
         static let numberOfCellColumns: Int = 1
-        static let interCellColumnSpacing: CGFloat = 8
-        static let interCellRowSpacing: CGFloat = 8
-        static let contentsEdgeInsets: UIEdgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
+        static let interCellColumnSpacing: CGFloat = 16
+        static let interCellRowSpacing: CGFloat = 16
+        static let contentsEdgeInsets: UIEdgeInsets = .init(top: 16, left: 16, bottom: 16, right: 16)
 
     }
     
@@ -68,7 +68,12 @@ final class ShopListViewController: UIViewController {
     
     private func setupUI() {
         if let searchRangeName = self.presenter?.getSearchRangeName() {
-            self.navigationItem.title = "\(searchRangeName)以内の検索結果"
+            if let searchGenreName = self.presenter?.getSearchGenreName() {
+                self.navigationItem.title = "\(searchRangeName)以内の\(searchGenreName)"
+                
+            } else {
+                self.navigationItem.title = "\(searchRangeName)以内の検索結果"
+            }
             
         } else {
             self.navigationItem.title = "検索結果"
@@ -81,7 +86,6 @@ final class ShopListViewController: UIViewController {
             UINib(nibName: "ShopListCollectionViewCell", bundle: nil),
             forCellWithReuseIdentifier: "shopCell"
         )
-        self.collectionView.backgroundColor = .darkGray
         
         let flowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         flowLayout.estimatedItemSize = .zero
@@ -146,7 +150,8 @@ extension ShopListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.presenter?.setShopDetailItem(index: indexPath.row)
         
-        self.navigationController?.pushViewController(Constant.Storyboard.ShopDetail, animated: true)
+        let shopDetail = UIStoryboard(name: Constant.StoryboardName.ShopDetail, bundle: nil).instantiateInitialViewController()!
+        self.navigationController?.pushViewController(shopDetail, animated: true)
         
         collectionView.deselectItem(at: indexPath, animated: true)
     }

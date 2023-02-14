@@ -17,6 +17,7 @@ protocol ShopListPresentable: AnyObject {
     func setShopDetailItem(index: Int)
     
     func getSearchRangeName() -> String?
+    func getSearchGenreName() -> String?
     
 }
 
@@ -25,6 +26,7 @@ final class ShopListPresenter {
     private weak var view: ShopListViewable?
     private var shops: [Shop]
     
+    private var isFetching: Bool = false
     private var cancellable: AnyCancellable?
     private var totalShopsCount: Int?
     private var fetchStartIndex: Int = 1
@@ -47,17 +49,26 @@ extension ShopListPresenter: ShopListPresentable {
             return
         }
         
-        let searchRangeIndex = UserDefaults.standard.integer(forKey: Constant.HotPepperGourmetSearchRangeKey)
+        if self.isFetching {
+            return
+        }
+        self.isFetching = true
+        
+        let searchRangeCode = UserDefaults.standard.integer(forKey: Constant.UserDefaultsReservedKey.SearchRange_Int)
+        let searchGenre = UserDefaults.standard.load(Genre.self, key: Constant.UserDefaultsReservedKey.SearchGenre_Genre)
         self.cancellable = HotPepperAPI.shared.request(
             target: HotPepperGourmetSearch(
-                lat: UserDefaults.standard.double(forKey: Constant.HotPepperGourmetSearchLatitudeKey),
-                lng: UserDefaults.standard.double(forKey: Constant.HotPepperGourmetSearchLongitudeKey),
-                range: HotPepperGourmetSearchRange.allCases[searchRangeIndex],
+                lat: UserDefaults.standard.double(forKey: Constant.UserDefaultsReservedKey.SearchLatitude_Double),
+                lng: UserDefaults.standard.double(forKey: Constant.UserDefaultsReservedKey.SearchLongitude_Double),
+                range: HotPepperGourmetSearchRange(code: searchRangeCode),
+                genre: (searchGenre?.code != Genre.none.code) ? searchGenre?.code : nil,
                 start: self.fetchStartIndex,
                 count: self.fetchCount
             )
         ).sink { completion in
             print(completion)
+            
+            self.isFetching = false
 
         } receiveValue: { response in
             let results = response.results
@@ -86,6 +97,8 @@ extension ShopListPresenter: ShopListPresentable {
             }
             
             self.fetchStartIndex = resultsStart + (Int(resultsReturned) ?? hpShops.count)
+            
+            self.isFetching = false
         }
     }
     
@@ -98,12 +111,17 @@ extension ShopListPresenter: ShopListPresentable {
     }
     
     func setShopDetailItem(index: Int) {
-        UserDefaults.standard.save(self.shops[index], key: Constant.ShopDetailItemKey)
+        UserDefaults.standard.save(self.shops[index], key: Constant.UserDefaultsReservedKey.ShopDetailItem_Shop)
     }
     
     func getSearchRangeName() -> String? {
-        let searchRangeIndex = UserDefaults.standard.integer(forKey: Constant.HotPepperGourmetSearchRangeKey)
-        return HotPepperGourmetSearchRange.allCases[searchRangeIndex].name
+        let searchRangeCode = UserDefaults.standard.integer(forKey: Constant.UserDefaultsReservedKey.SearchRange_Int)
+        return HotPepperGourmetSearchRange(code: searchRangeCode)?.name
+    }
+    
+    func getSearchGenreName() -> String? {
+        let searchGenre = UserDefaults.standard.load(Genre.self, key: Constant.UserDefaultsReservedKey.SearchGenre_Genre)
+        return (searchGenre?.code != Genre.none.code) ? searchGenre?.name : nil
     }
     
 }

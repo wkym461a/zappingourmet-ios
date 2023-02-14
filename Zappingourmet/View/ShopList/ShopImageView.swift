@@ -19,7 +19,7 @@ final class ShopImageView: UIImageView {
             UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1).cgColor,
         ]
 
-        gradientLayer.startPoint = .init(x: 0.5, y: 0.7)
+        gradientLayer.startPoint = .init(x: 0.5, y: 0.5)
         gradientLayer.endPoint = .init(x: 0.5, y: 1)
 
         return gradientLayer

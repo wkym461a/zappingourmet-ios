@@ -7,30 +7,41 @@
 
 import Foundation
 import CoreLocation
+import Combine
 
 protocol ShopSearchPresentable: AnyObject {
     
     func startUpdatingLocation()
     func stopUpdatingLocation()
     func getCurrentLocation() -> CLLocation?
+    
     func getHotPepperGourmetSearchRangeName(index: Int) -> String?
     func getHotPepperGourmetSearchRangesCount() -> Int
     func getHotPepperGourmetSearchRangeValue(index: Int) -> Int?
     
+    func fetchHotPepperGenres()
+    func getHotPepperGenre(index: Int) -> Genre
+    func getHotPepperGenresCount() -> Int
+    
     func setHotPepperGourmetSearchCoordinate()
     func setHotPepperGourmetSearchRange(selectedIndex: Int)
+    func setHotPepperGourmetSearchGenre(selectedIndex: Int)
     
 }
 
 final class ShopSearchPresenter: NSObject {
     
     private weak var view: ShopSearchViewable?
+    private var genres: [Genre]
     
+    private var cancellable: AnyCancellable?
     private var locationManager: CLLocationManager?
     private var currentLocation: CLLocation?
     
     init(_ view: ShopSearchViewable) {
         self.view = view
+        
+        self.genres = []
     }
     
 }
@@ -76,15 +87,60 @@ extension ShopSearchPresenter: ShopSearchPresentable {
         return HotPepperGourmetSearchRange.allCases[index].rangeValue
     }
     
+    func fetchHotPepperGenres() {
+        self.cancellable = HotPepperAPI.shared.request(
+            target: HotPepperGenreMaster()
+            
+        ).sink { completion in
+            print(completion)
+            
+        } receiveValue: { response in
+            let results = response.results
+            if let error = results.error {
+                error.forEach {
+                    print("HOT PEPPER API Error: \($0.message) (code: \($0.code)")
+                }
+                return
+            }
+            
+            guard
+                let hpGenres = results.genre,
+                let _ = results.resultsAvailable,
+                let _ = results.resultsReturned,
+                let _ = results.resultsStart
+            
+            else {
+                fatalError("Unexpect Error: Unknown Response \(results)")
+            }
+            
+            self.genres = hpGenres.map { Genre.fromHotPepperGenre($0) }
+            self.genres.insert(Genre.none, at: 0)
+            
+            self.view?.updateUI()
+        }
+    }
+    
+    func getHotPepperGenre(index: Int) -> Genre {
+        return self.genres[index]
+    }
+    
+    func getHotPepperGenresCount() -> Int {
+        return self.genres.count
+    }
+    
     func setHotPepperGourmetSearchCoordinate() {
         if let location = self.currentLocation {
-            UserDefaults.standard.set(Double(location.coordinate.latitude), forKey: Constant.HotPepperGourmetSearchLatitudeKey)
-            UserDefaults.standard.set(Double(location.coordinate.longitude), forKey: Constant.HotPepperGourmetSearchLongitudeKey)
+            UserDefaults.standard.set(Double(location.coordinate.latitude), forKey: Constant.UserDefaultsReservedKey.SearchLatitude_Double)
+            UserDefaults.standard.set(Double(location.coordinate.longitude), forKey: Constant.UserDefaultsReservedKey.SearchLongitude_Double)
         }
     }
     
     func setHotPepperGourmetSearchRange(selectedIndex: Int) {
-        UserDefaults.standard.set(selectedIndex, forKey: Constant.HotPepperGourmetSearchRangeKey)
+        UserDefaults.standard.set(HotPepperGourmetSearchRange.allCases[selectedIndex].code, forKey: Constant.UserDefaultsReservedKey.SearchRange_Int)
+    }
+    
+    func setHotPepperGourmetSearchGenre(selectedIndex: Int) {
+        UserDefaults.standard.save(self.genres[selectedIndex], key: Constant.UserDefaultsReservedKey.SearchGenre_Genre)
     }
     
 }
