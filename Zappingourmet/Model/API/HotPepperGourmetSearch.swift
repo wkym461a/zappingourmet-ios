@@ -36,11 +36,11 @@ extension HotPepperGourmetSearch {
     }
     
     var path: String {
-        "/gourmet/v1"
+        return "/gourmet/v1"
     }
     
     var method: Moya.Method {
-        .get
+        return .get
     }
     
     var parameters: Parameters {
