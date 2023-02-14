@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXq-00-A1u">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nzz-MQ-5wp">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="1252"/>
@@ -201,7 +201,7 @@
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="BXq-00-A1u" secondAttribute="bottom" id="JVh-BI-P5R"/>
+                            <constraint firstAttribute="bottom" secondItem="BXq-00-A1u" secondAttribute="bottom" id="JVh-BI-P5R"/>
                             <constraint firstItem="BXq-00-A1u" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="ZQF-kL-KDT"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="BXq-00-A1u" secondAttribute="trailing" id="zJB-Fi-agf"/>
                             <constraint firstItem="BXq-00-A1u" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="zR7-eY-Q5D"/>
