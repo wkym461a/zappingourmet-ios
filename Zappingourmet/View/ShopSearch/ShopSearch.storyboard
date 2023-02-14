@@ -26,7 +26,7 @@
             </objects>
             <point key="canvasLocation" x="-923" y="96"/>
         </scene>
-        <!--Shop Search View Controller-->
+        <!--周辺検索-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
                 <viewController id="Y6W-OH-hqX" customClass="ShopSearchViewController" customModule="Zappingourmet" customModuleProvider="target" sceneMemberID="viewController">
@@ -35,22 +35,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EOR-cH-3ve">
-                                <rect key="frame" x="138" y="790" width="138" height="40"/>
+                                <rect key="frame" x="138" y="786" width="138" height="32"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="pOA-IJ-HFa"/>
+                                    <constraint firstAttribute="height" constant="32" id="pOA-IJ-HFa"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="検索">
-                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="24"/>
-                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </buttonConfiguration>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="検索">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="searchShops:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="qpb-tc-9mC"/>
                                 </connections>
                             </button>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="N18-2t-Rr7">
-                                <rect key="frame" x="32" y="120" width="350" height="542"/>
+                                <rect key="frame" x="32" y="120" width="350" height="558"/>
                             </mapView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wMl-mq-QlY" userLabel="Button Leading View">
                                 <rect key="frame" x="0.0" y="798" width="138" height="0.0"/>
@@ -67,33 +67,33 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VAs-o5-uWP">
-                                <rect key="frame" x="302" y="582" width="64" height="64"/>
+                                <rect key="frame" x="302" y="598" width="64" height="64"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="VAs-o5-uWP" secondAttribute="height" id="3J8-Yr-tPq"/>
                                     <constraint firstAttribute="width" constant="64" id="VCI-JB-OoK"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="">
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="">
                                     <imageReference key="image" image="location.fill" catalog="system" symbolScale="large"/>
-                                </buttonConfiguration>
+                                </state>
                                 <connections>
                                     <action selector="centeringCurrentLocation:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="9bX-7h-wph"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8OE-se-HAt" customClass="PickerInputControl" customModule="Zappingourmet" customModuleProvider="target">
-                                <rect key="frame" x="32" y="694" width="350" height="64"/>
+                                <rect key="frame" x="32" y="710" width="350" height="44"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rangeTitleLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIa-hd-EdK">
-                                        <rect key="frame" x="16" y="21.5" width="116.5" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="検索範囲" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIa-hd-EdK">
+                                        <rect key="frame" x="16" y="11.5" width="73.5" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rangeValueLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Av-wz-xJe">
-                                        <rect key="frame" x="208" y="21.5" width="126" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="201" y="11.5" width="133" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -102,7 +102,7 @@
                                 <constraints>
                                     <constraint firstItem="4Av-wz-xJe" firstAttribute="centerY" secondItem="8OE-se-HAt" secondAttribute="centerY" id="P0H-pE-naE"/>
                                     <constraint firstAttribute="trailing" secondItem="4Av-wz-xJe" secondAttribute="trailing" constant="16" id="UE9-yp-fu6"/>
-                                    <constraint firstAttribute="height" constant="64" id="XoG-XC-Ere"/>
+                                    <constraint firstAttribute="height" constant="44" id="XoG-XC-Ere"/>
                                     <constraint firstItem="HIa-hd-EdK" firstAttribute="leading" secondItem="8OE-se-HAt" secondAttribute="leading" constant="16" id="Yac-sl-lcg"/>
                                     <constraint firstItem="HIa-hd-EdK" firstAttribute="centerY" secondItem="8OE-se-HAt" secondAttribute="centerY" id="hxx-X2-Lcu"/>
                                 </constraints>
@@ -123,7 +123,7 @@
                             <constraint firstItem="8OE-se-HAt" firstAttribute="top" secondItem="N18-2t-Rr7" secondAttribute="bottom" constant="32" id="Tw2-kX-cbp"/>
                             <constraint firstItem="dLe-X1-RiP" firstAttribute="width" secondItem="EOR-cH-3ve" secondAttribute="width" id="dOH-Qu-lpJ"/>
                             <constraint firstItem="EOR-cH-3ve" firstAttribute="leading" secondItem="wMl-mq-QlY" secondAttribute="trailing" id="gqq-B2-9It"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="EOR-cH-3ve" secondAttribute="bottom" constant="32" id="nas-UR-Noj"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="EOR-cH-3ve" secondAttribute="bottom" constant="44" id="nas-UR-Noj"/>
                             <constraint firstItem="EOR-cH-3ve" firstAttribute="top" secondItem="8OE-se-HAt" secondAttribute="bottom" constant="32" id="oJS-L1-gk4"/>
                             <constraint firstItem="wMl-mq-QlY" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="sPi-4k-7aS"/>
                             <constraint firstItem="wMl-mq-QlY" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="tAG-Pm-Ym3"/>
@@ -132,12 +132,11 @@
                             <constraint firstItem="EOR-cH-3ve" firstAttribute="width" secondItem="wMl-mq-QlY" secondAttribute="width" id="xfA-Qc-6Ct"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="TPC-AE-RPC"/>
+                    <navigationItem key="navigationItem" title="周辺検索" id="TPC-AE-RPC"/>
                     <connections>
                         <outlet property="centeringCurrentLocationButton" destination="VAs-o5-uWP" id="Obr-XN-p0k"/>
                         <outlet property="mapView" destination="N18-2t-Rr7" id="0hu-1e-TVp"/>
                         <outlet property="rangePickerControl" destination="8OE-se-HAt" id="xZV-dY-V3k"/>
-                        <outlet property="rangeTitleLabel" destination="HIa-hd-EdK" id="Ll5-6G-JBw"/>
                         <outlet property="rangeValueLabel" destination="4Av-wz-xJe" id="nSF-Ml-Eml"/>
                         <outlet property="searchButton" destination="EOR-cH-3ve" id="77D-tD-ZJt"/>
                     </connections>
