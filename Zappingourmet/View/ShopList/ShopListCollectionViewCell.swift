@@ -11,11 +11,19 @@ final class ShopListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Outlet
     
+    @IBOutlet private weak var shopImageView: ShopImageView!
+    @IBOutlet private weak var catchLabel: UILabel!
+    
+    @IBOutlet private weak var logoImageView: UIImageView!
+    @IBOutlet private weak var logoImageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var accessLabel: UILabel!
-    @IBOutlet private weak var shopImageView: ShopImageView!
     
     // MARK: - Property
+    
+    private var logoImageViewMaxWidth: CGFloat {
+        return self.logoImageView.frame.height * 2
+    }
     
     // MARK: - Lifecycle
     
@@ -28,26 +36,31 @@ final class ShopListCollectionViewCell: UICollectionViewCell {
     // MARK: - Public
     
     func updateUI(shop: Shop) {
-        self.nameLabel.text = shop.name
-        self.accessLabel.text = shop.access
         self.shopImageView.image = UIImage(data: .fromURL(shop.photoURL))
+        self.catchLabel.text = shop.`catch`
+        
+        if let logoImage = (shop.logoURL != nil) ? UIImage(data: .fromURL(shop.logoURL!)) : UIImage(named: "AppIcon") {
+            self.logoImageView.image = logoImage
+            let estimatedWidth = self.logoImageView.frame.height / logoImage.size.height * logoImage.size.width
+            self.logoImageViewWidthConstraint.constant = min(estimatedWidth, self.logoImageViewMaxWidth)
+        }
+        self.nameLabel.text = shop.name
+        self.accessLabel.text = shop.accessShort ?? shop.access
     }
     
     // MARK: - Private
     
     private func setupUI() {
-        self.contentView.backgroundColor = .white
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOffset = .init(width: 4, height: 4)
+        self.layer.shadowRadius = 8
+        self.layer.shadowOpacity = 0.3
+        self.layer.masksToBounds = false
+        
         self.contentView.layer.cornerRadius = 8
         self.contentView.clipsToBounds = true
         
-        self.nameLabel.font = .boldSystemFont(ofSize: 22)
-        self.nameLabel.textColor = .white
-        self.nameLabel.text = "Unknown Shop Name"
-        
-        self.accessLabel.font = .systemFont(ofSize: 16)
-        self.accessLabel.numberOfLines = 2
-        
-        self.shopImageView.contentMode = .scaleAspectFill
+        self.logoImageView.layer.cornerRadius = 8
     }
     
     // MARK: - Action

@@ -13,15 +13,15 @@ struct Shop: Codable {
         id: "J999999999",
         name: "居酒屋 ホットペッパー",
         address: "東京都中央区銀座８－４－１７",
-//        accessShort: "銀座一丁目駅10番出口徒歩3分",
         access: "銀座駅A2出口でて､みゆき通り右折､徒歩1分",
+        accessShort: "銀座一丁目駅10番出口徒歩3分",
         photoURL: URL(string: "https://play-lh.googleusercontent.com/pnGn7ehfH_swLzEUNr7o7M1IMDHGAay5smAU59thcHcZChSt5S5rhg6zW1bYMKdckY4")!,
         open: "月～金／11：30～14：00",
         close: "日",
         latitude: 35.6608183454,
         longitude: 139.7754267645,
         url: URL(string: "https://webservice.recruit.co.jp/doc/hotpepper/reference.html")!,
-//        logoURL: URL(string: "https://play-lh.googleusercontent.com/pnGn7ehfH_swLzEUNr7o7M1IMDHGAay5smAU59thcHcZChSt5S5rhg6zW1bYMKdckY4")!,
+        logoURL: URL(string: "https://play-lh.googleusercontent.com/pnGn7ehfH_swLzEUNr7o7M1IMDHGAay5smAU59thcHcZChSt5S5rhg6zW1bYMKdckY4")!,
         catch: "TVの口コミランキングで堂々1位に輝いた一口餃子専門店！！",
         tags: [
             "Wi-Fi：あり、なし、未確認 のいずれか",
@@ -60,7 +60,7 @@ struct Shop: Codable {
         let close = shop.close ?? ""
         
         let shopURL = shop.urls.pc
-//        let logoURL = shop.logoImage
+        let logoURL = shop.logoImage
         let tags = self.createTags(from: shop)
         let detailMemo = shop.shopDetailMemo ?? "なし"
         
@@ -69,36 +69,19 @@ struct Shop: Codable {
             name: shop.name,
             address: shop.address,
             access: shop.access,
-//            accessShort: shop.mobileAccess,
+            accessShort: shop.mobileAccess,
             photoURL: photoURL,
             open: open,
             close: close,
             latitude: shop.lat,
             longitude: shop.lng,
             url: shopURL,
-//            logoURL: logoURL,
+            logoURL: logoURL,
             catch: shop.catch,
             tags: tags,
             detailMemo: detailMemo
         )
     }
-    
-    var id: String
-    var name: String
-    var address: String
-    var access: String
-//    var accessShort: String?
-    var photoURL: URL
-    var open: String
-    var close: String
-    
-    var latitude: Double
-    var longitude: Double
-    var url: URL
-//    var logoURL: URL?
-    var `catch`: String
-    var tags: [String]
-    var detailMemo: String
     
     private static func createTags(from shop: HotPepperGourmetSearchResults.Shop) -> [String] {
         var tags: [String] = []
@@ -139,6 +122,31 @@ struct Shop: Codable {
         }
         
         completion(text)
+    }
+    
+    var id: String
+    var name: String
+    var address: String
+    var access: String
+    var accessShort: String?
+    var photoURL: URL
+    var open: String
+    var close: String
+    
+    var latitude: Double
+    var longitude: Double
+    var url: URL
+    var logoURL: URL?
+    var `catch`: String
+    var tags: [String]
+    var detailMemo: String
+    
+    func getAccessPreferShort() -> String {
+        guard let short = self.accessShort?.trimmingCharacters(in: .whitespacesAndNewlines), short.count > 0 else {
+            return self.access
+        }
+        
+        return short
     }
     
 }

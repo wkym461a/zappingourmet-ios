@@ -26,9 +26,9 @@ final class ShopListViewController: UIViewController {
     private struct CollectionViewConstants {
 
         static let numberOfCellColumns: Int = 1
-        static let interCellColumnSpacing: CGFloat = 8
-        static let interCellRowSpacing: CGFloat = 8
-        static let contentsEdgeInsets: UIEdgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
+        static let interCellColumnSpacing: CGFloat = 16
+        static let interCellRowSpacing: CGFloat = 16
+        static let contentsEdgeInsets: UIEdgeInsets = .init(top: 16, left: 16, bottom: 16, right: 16)
 
     }
     
@@ -81,7 +81,6 @@ final class ShopListViewController: UIViewController {
             UINib(nibName: "ShopListCollectionViewCell", bundle: nil),
             forCellWithReuseIdentifier: "shopCell"
         )
-        self.collectionView.backgroundColor = .darkGray
         
         let flowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         flowLayout.estimatedItemSize = .zero
