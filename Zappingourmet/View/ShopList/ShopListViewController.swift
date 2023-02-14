@@ -81,7 +81,6 @@ final class ShopListViewController: UIViewController {
             UINib(nibName: "ShopListCollectionViewCell", bundle: nil),
             forCellWithReuseIdentifier: "shopCell"
         )
-        self.collectionView.backgroundColor = .darkGray
         
         let flowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         flowLayout.estimatedItemSize = .zero

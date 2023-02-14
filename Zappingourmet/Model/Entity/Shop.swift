@@ -21,7 +21,7 @@ struct Shop: Codable {
         latitude: 35.6608183454,
         longitude: 139.7754267645,
         url: URL(string: "https://webservice.recruit.co.jp/doc/hotpepper/reference.html")!,
-//        logoURL: URL(string: "https://play-lh.googleusercontent.com/pnGn7ehfH_swLzEUNr7o7M1IMDHGAay5smAU59thcHcZChSt5S5rhg6zW1bYMKdckY4")!,
+        logoURL: URL(string: "https://play-lh.googleusercontent.com/pnGn7ehfH_swLzEUNr7o7M1IMDHGAay5smAU59thcHcZChSt5S5rhg6zW1bYMKdckY4")!,
         catch: "TVの口コミランキングで堂々1位に輝いた一口餃子専門店！！",
         tags: [
             "Wi-Fi：あり、なし、未確認 のいずれか",
@@ -60,7 +60,7 @@ struct Shop: Codable {
         let close = shop.close ?? ""
         
         let shopURL = shop.urls.pc
-//        let logoURL = shop.logoImage
+        let logoURL = shop.logoImage
         let tags = self.createTags(from: shop)
         let detailMemo = shop.shopDetailMemo ?? "なし"
         
@@ -76,36 +76,11 @@ struct Shop: Codable {
             latitude: shop.lat,
             longitude: shop.lng,
             url: shopURL,
-//            logoURL: logoURL,
+            logoURL: logoURL,
             catch: shop.catch,
             tags: tags,
             detailMemo: detailMemo
         )
-    }
-    
-    var id: String
-    var name: String
-    var address: String
-    var access: String
-    var accessShort: String?
-    var photoURL: URL
-    var open: String
-    var close: String
-    
-    var latitude: Double
-    var longitude: Double
-    var url: URL
-//    var logoURL: URL?
-    var `catch`: String
-    var tags: [String]
-    var detailMemo: String
-    
-    func getAccessPreferShort() -> String {
-        guard let short = self.accessShort?.trimmingCharacters(in: .whitespacesAndNewlines), short.count > 0 else {
-            return self.access
-        }
-        
-        return short
     }
     
     private static func createTags(from shop: HotPepperGourmetSearchResults.Shop) -> [String] {
@@ -147,6 +122,31 @@ struct Shop: Codable {
         }
         
         completion(text)
+    }
+    
+    var id: String
+    var name: String
+    var address: String
+    var access: String
+    var accessShort: String?
+    var photoURL: URL
+    var open: String
+    var close: String
+    
+    var latitude: Double
+    var longitude: Double
+    var url: URL
+    var logoURL: URL?
+    var `catch`: String
+    var tags: [String]
+    var detailMemo: String
+    
+    func getAccessPreferShort() -> String {
+        guard let short = self.accessShort?.trimmingCharacters(in: .whitespacesAndNewlines), short.count > 0 else {
+            return self.access
+        }
+        
+        return short
     }
     
 }

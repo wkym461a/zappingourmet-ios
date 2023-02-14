@@ -14,10 +14,16 @@ final class ShopListCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var shopImageView: ShopImageView!
     @IBOutlet private weak var catchLabel: UILabel!
     
+    @IBOutlet private weak var logoImageView: UIImageView!
+    @IBOutlet private weak var logoImageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var accessLabel: UILabel!
     
     // MARK: - Property
+    
+    private var logoImageViewMaxWidth: CGFloat {
+        return self.logoImageView.frame.height * 2
+    }
     
     // MARK: - Lifecycle
     
@@ -33,6 +39,11 @@ final class ShopListCollectionViewCell: UICollectionViewCell {
         self.shopImageView.image = UIImage(data: .fromURL(shop.photoURL))
         self.catchLabel.text = shop.`catch`
         
+        if let logoImage = (shop.logoURL != nil) ? UIImage(data: .fromURL(shop.logoURL!)) : UIImage(named: "AppIcon") {
+            self.logoImageView.image = logoImage
+            let estimatedWidth = self.logoImageView.frame.height / logoImage.size.height * logoImage.size.width
+            self.logoImageViewWidthConstraint.constant = min(estimatedWidth, self.logoImageViewMaxWidth)
+        }
         self.nameLabel.text = shop.name
         self.accessLabel.text = shop.accessShort ?? shop.access
     }
@@ -48,6 +59,8 @@ final class ShopListCollectionViewCell: UICollectionViewCell {
         
         self.contentView.layer.cornerRadius = 8
         self.contentView.clipsToBounds = true
+        
+        self.logoImageView.layer.cornerRadius = 8
     }
     
     // MARK: - Action
