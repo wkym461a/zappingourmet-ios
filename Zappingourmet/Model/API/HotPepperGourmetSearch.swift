@@ -14,6 +14,7 @@ struct HotPepperGourmetSearch: HotPepperTargetType {
     var lat: Double?
     var lng: Double?
     var range: HotPepperGourmetSearchRange?
+    var genre: String?
     
     var type: OutputType?
     var start: Int?
@@ -60,6 +61,10 @@ extension HotPepperGourmetSearch {
         
         if self.range != nil {
             params["range"] = self.range?.code
+        }
+        
+        if self.genre != nil {
+            params["genre"] = self.genre
         }
         
         if self.type != nil {

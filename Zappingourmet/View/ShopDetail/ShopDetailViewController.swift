@@ -46,7 +46,7 @@ final class ShopDetailViewController: UIViewController {
     }
     
     private var mapViewOverlaysEdgePadding: UIEdgeInsets {
-        return .init(top: 80, left: 80, bottom: 80, right: 80)
+        return .init(top: 24, left: 24, bottom: 24, right: 24)
     }
     
     // MARK: - Lifecycle

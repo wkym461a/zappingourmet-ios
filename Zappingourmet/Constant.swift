@@ -14,6 +14,7 @@ struct Constant {
         static let SearchLatitude_Double = "HotPepperGourmetSearch.lat"
         static let SearchLongitude_Double = "HotPepperGourmetSearch.lng"
         static let SearchRange_Int = "HotPepperGourmetSearch.range"
+        static let SearchGenre_Genre = "HotPepperGourmetSearch.genre"
     }
     
     struct StoryboardName {
