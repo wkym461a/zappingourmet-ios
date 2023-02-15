@@ -11,6 +11,7 @@ import MapKit
 protocol ShopSearchViewable: AnyObject {
     
     func updateUI()
+    func openSettings()
     
 }
 
@@ -86,7 +87,6 @@ final class ShopSearchViewController: UIViewController {
         self.rangePickerControl.layer.borderWidth = 2
         self.rangePickerControl.picker.dataSource = self
         self.rangePickerControl.picker.delegate = self
-//        self.rangeValueLabel.text = self.presenter?.getHotPepperGourmetSearchRangeName(index: 0)
         
         self.genrePickerControl.picker.tag = 2
         self.genrePickerControl.layer.cornerRadius = 8
@@ -129,18 +129,17 @@ final class ShopSearchViewController: UIViewController {
     }
 
     @IBAction private func searchShops(_ sender: UIButton) {
-        if let location = self.presenter?.getCurrentLocation() {
-            print("ShopSearch: { lat: \(location.coordinate.latitude), lng: \(location.coordinate.longitude) }")
+        self.presenter?.locationAuthFilter { _ in
+            self.presenter?.setHotPepperGourmetSearchCoordinate()
+            self.presenter?.setHotPepperGourmetSearchRange(
+                selectedIndex: self.rangePickerControl.picker.selectedRow(inComponent: 0)
+            )
+            self.presenter?.setHotPepperGourmetSearchGenre(
+                selectedIndex: self.genrePickerControl.picker.selectedRow(inComponent: 0)
+            )
+            
+            self.goShopList()
         }
-        self.presenter?.setHotPepperGourmetSearchCoordinate()
-        self.presenter?.setHotPepperGourmetSearchRange(
-            selectedIndex: self.rangePickerControl.picker.selectedRow(inComponent: 0)
-        )
-        self.presenter?.setHotPepperGourmetSearchGenre(
-            selectedIndex: self.genrePickerControl.picker.selectedRow(inComponent: 0)
-        )
-        
-        self.goShopList()
     }
     
     @IBAction private func centeringCurrentLocation(_ sender: UIButton) {
@@ -163,6 +162,28 @@ extension ShopSearchViewController: ShopSearchViewable {
         if let count = self.presenter?.getHotPepperGenresCount(), count > 0 {
             self.genreValueLabel.text = self.presenter?.getHotPepperGenre(index: selectedGenreIndex).name
         }
+    }
+    
+    func openSettings() {
+        let alertController = UIAlertController(
+            title: "位置情報の設定",
+            message: "周辺のレストランを検索するためには\n位置情報の使用を許可してください",
+            preferredStyle: .alert
+        )
+        
+        let openSettingsAction = UIAlertAction(title: "設定を開く", style: .default) { _ in
+            guard let url = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            
+            UIApplication.shared.open(url)
+        }
+        alertController.addAction(openSettingsAction)
+        
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
 }
@@ -244,7 +265,6 @@ extension ShopSearchViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch pickerView.tag {
         case 1:
-//            self.rangeValueLabel.text = self.presenter?.getHotPepperGourmetSearchRangeName(index: row)
             self.updateUI()
             
             self.refreshMapViewOverlays()

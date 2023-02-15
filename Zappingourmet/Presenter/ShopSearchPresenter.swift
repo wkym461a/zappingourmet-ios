@@ -27,6 +27,8 @@ protocol ShopSearchPresentable: AnyObject {
     func setHotPepperGourmetSearchRange(selectedIndex: Int)
     func setHotPepperGourmetSearchGenre(selectedIndex: Int)
     
+    func locationAuthFilter(_ authAction: ((CLAuthorizationStatus) -> Void)?)
+    
 }
 
 final class ShopSearchPresenter: NSObject {
@@ -44,6 +46,12 @@ final class ShopSearchPresenter: NSObject {
         self.genres = []
     }
     
+    private func startUpdatingLocationWithAuth() {
+        self.locationAuthFilter { _ in
+            self.locationManager?.startUpdatingLocation()
+        }
+    }
+    
 }
 
 // MARK: - ShopSearchPresentable
@@ -54,17 +62,9 @@ extension ShopSearchPresenter: ShopSearchPresentable {
         self.locationManager?.stopUpdatingLocation()
         
         self.locationManager = CLLocationManager()
+        self.locationManager?.delegate = self
         
-        self.locationManager?.requestWhenInUseAuthorization()
-        
-        switch locationManager?.authorizationStatus {
-        case .authorizedAlways, .authorizedWhenInUse:
-            self.locationManager?.delegate = self
-            self.locationManager?.startUpdatingLocation()
-            
-        default:
-            return
-        }
+        self.startUpdatingLocationWithAuth()
     }
     
     func stopUpdatingLocation() {
@@ -143,11 +143,28 @@ extension ShopSearchPresenter: ShopSearchPresentable {
         UserDefaults.standard.save(self.genres[selectedIndex], key: Constant.UserDefaultsReservedKey.SearchGenre_Genre)
     }
     
+    func locationAuthFilter(_ authAction: ((CLAuthorizationStatus) -> Void)?) {
+        switch self.locationManager?.authorizationStatus {
+        case .notDetermined:
+            self.locationManager?.requestWhenInUseAuthorization()
+            
+        case .authorizedAlways, .authorizedWhenInUse:
+            authAction?(self.locationManager!.authorizationStatus)
+        
+        default:
+            self.view?.openSettings()
+        }
+    }
+    
 }
 
 // MARK: - CLLocationManagerDelegate
 
 extension ShopSearchPresenter: CLLocationManagerDelegate {
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        self.startUpdatingLocationWithAuth()
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.currentLocation = locations.first
