@@ -23,9 +23,19 @@ final class PickerInputControl: UIControl {
 
     override var isSelected: Bool {
         didSet {
-            self.layer.borderColor = self.isSelected
-                ? UIColor.systemBlue.cgColor
-                : UIColor.systemGray.cgColor
+            self.updateUI()
+        }
+    }
+    
+    var selectedColor: CGColor = UIColor.systemBlue.cgColor {
+        didSet {
+            self.updateUI()
+        }
+    }
+    
+    var notSelectedColor: CGColor = UIColor.systemGray.cgColor {
+        didSet {
+            self.updateUI()
         }
     }
     
@@ -77,5 +87,11 @@ final class PickerInputControl: UIControl {
             },
             for: .touchUpInside
         )
+    }
+    
+    private func updateUI() {
+        self.layer.borderColor = self.isSelected
+            ? self.selectedColor
+            : self.notSelectedColor
     }
 }
