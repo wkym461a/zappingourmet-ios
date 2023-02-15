@@ -118,6 +118,19 @@ final class ShopSearchViewController: UIViewController {
         }
     }
     
+    private func goAlertWhenFailedToGetLocation() {
+        let alertController = UIAlertController(
+            title: "位置情報の取得に失敗",
+            message: "位置情報サービスを有効化するか、位置情報が取得できる場所で使用してください。",
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(title: "閉じる", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
     private func goShopList() {
         let shopList = UIStoryboard(name: Constant.StoryboardName.ShopList, bundle: nil).instantiateInitialViewController()!
         self.navigationController?.pushViewController(shopList, animated: true)
@@ -132,7 +145,11 @@ final class ShopSearchViewController: UIViewController {
 
     @IBAction private func searchShops(_ sender: UIButton) {
         self.presenter?.locationAuthFilter { _ in
-            self.presenter?.setHotPepperGourmetSearchCoordinate()
+            guard self.presenter?.setHotPepperGourmetSearchCoordinate() == true else {
+                self.goAlertWhenFailedToGetLocation()
+                return
+            }
+            
             self.presenter?.setHotPepperGourmetSearchRange(
                 selectedIndex: self.rangePickerControl.picker.selectedRow(inComponent: 0)
             )
@@ -169,7 +186,7 @@ extension ShopSearchViewController: ShopSearchViewable {
     func openSettings() {
         let alertController = UIAlertController(
             title: "位置情報の設定",
-            message: "周辺のレストランを検索するためには\n位置情報の使用を許可してください",
+            message: "周辺のレストランを検索するためには、位置情報の使用を許可してください。",
             preferredStyle: .alert
         )
         

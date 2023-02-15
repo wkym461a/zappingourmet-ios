@@ -23,7 +23,7 @@ protocol ShopSearchPresentable: AnyObject {
     func getHotPepperGenre(index: Int) -> Genre
     func getHotPepperGenresCount() -> Int
     
-    func setHotPepperGourmetSearchCoordinate()
+    func setHotPepperGourmetSearchCoordinate() -> Bool
     func setHotPepperGourmetSearchRange(selectedIndex: Int)
     func setHotPepperGourmetSearchGenre(selectedIndex: Int)
     
@@ -128,10 +128,15 @@ extension ShopSearchPresenter: ShopSearchPresentable {
         return self.genres.count
     }
     
-    func setHotPepperGourmetSearchCoordinate() {
+    func setHotPepperGourmetSearchCoordinate() -> Bool {
         if let location = self.currentLocation {
             UserDefaults.standard.set(Double(location.coordinate.latitude), forKey: Constant.UserDefaultsReservedKey.SearchLatitude_Double)
             UserDefaults.standard.set(Double(location.coordinate.longitude), forKey: Constant.UserDefaultsReservedKey.SearchLongitude_Double)
+            
+            return true
+        
+        } else {
+            return false
         }
     }
     
