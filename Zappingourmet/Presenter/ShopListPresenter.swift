@@ -101,7 +101,7 @@ extension ShopListPresenter: ShopListPresentable {
             
             self.fetchStartIndex = resultsStart + (Int(resultsReturned) ?? hpShops.count)
             
-            if resultsAvailable < self.fetchStartIndex {
+            if resultsAvailable < self.fetchStartIndex || resultsAvailable == 0 {
                 self.isFetchedAllAvailableShops = true
             }
             
