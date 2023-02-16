@@ -55,15 +55,13 @@ final class PickerInputControl: UIControl {
     
     // MARK: - Public
     
-    @discardableResult
-    override func becomeFirstResponder() -> Bool {
+    @discardableResult override func becomeFirstResponder() -> Bool {
         let value = super.becomeFirstResponder()
         self.isSelected = self.isFirstResponder
         return value
     }
 
-    @discardableResult
-    override func resignFirstResponder() -> Bool {
+    @discardableResult override func resignFirstResponder() -> Bool {
         let value = super.resignFirstResponder()
         self.isSelected = self.isFirstResponder
         return value
@@ -72,7 +70,7 @@ final class PickerInputControl: UIControl {
     // MARK: - Private
     
     private func setup() {
-        self.layer.borderColor = UIColor.systemGray.cgColor
+        self.layer.borderColor = self.notSelectedColor.cgColor
         
         self.addAction(
             .init() { [weak self] _ in

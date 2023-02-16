@@ -18,6 +18,7 @@ protocol ShopSearchViewable: AnyObject {
 final class ShopSearchViewController: UIViewController {
     
     // MARK: - Outlet
+    
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var creditButton: UIButton!
     @IBOutlet private weak var subtitleAndCreditBottomConstraint: NSLayoutConstraint!
@@ -181,8 +182,7 @@ final class ShopSearchViewController: UIViewController {
     
     // MARK: - Action
     
-    @objc
-    private func dismissPickerInput() {
+    @objc private func dismissPickerInput() {
         self.view.endEditing(true)
     }
     
@@ -267,8 +267,6 @@ extension ShopSearchViewController: ShopSearchViewable {
 extension ShopSearchViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        print(mapView.userLocation.coordinate.latitude, mapView.userLocation.coordinate.longitude)
-        
         self.refreshMapViewOverlays()
         
         if !self.isInitializedMapView {

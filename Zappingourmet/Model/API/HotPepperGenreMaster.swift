@@ -5,7 +5,6 @@
 //  Created by 若山大和 on 2023/02/14.
 //
 
-import Foundation
 import Moya
 
 struct HotPepperGenreMaster {

@@ -20,6 +20,7 @@
 		D14F9916299B3F830070E555 /* ExUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14F9915299B3F830070E555 /* ExUIColor.swift */; };
 		D150C96B299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D150C969299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift */; };
 		D150C96C299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = D150C96A299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib */; };
+		D150C96E299E495900CF95B1 /* HotPepperResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D150C96D299E495900CF95B1 /* HotPepperResponse.swift */; };
 		D17ACC472995C97800E056B6 /* HotPepperAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC462995C97800E056B6 /* HotPepperAPI.swift */; };
 		D17ACC6129964C0400E056B6 /* HotPepperGourmetSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */; };
 		D17ACC6329964DDB00E056B6 /* HotPepperTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */; };
@@ -84,6 +85,7 @@
 		D14F9915299B3F830070E555 /* ExUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUIColor.swift; sourceTree = "<group>"; };
 		D150C969299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListCollectionViewFooter.swift; sourceTree = "<group>"; };
 		D150C96A299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopListCollectionViewFooter.xib; sourceTree = "<group>"; };
+		D150C96D299E495900CF95B1 /* HotPepperResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperResponse.swift; sourceTree = "<group>"; };
 		D17ACC462995C97800E056B6 /* HotPepperAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperAPI.swift; sourceTree = "<group>"; };
 		D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperGourmetSearch.swift; sourceTree = "<group>"; };
 		D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperTargetType.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 			children = (
 				D17ACC462995C97800E056B6 /* HotPepperAPI.swift */,
 				D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */,
+				D150C96D299E495900CF95B1 /* HotPepperResponse.swift */,
 				D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */,
 				D17ACC6D2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift */,
 				D19C642F299BB4A30000C576 /* HotPepperGenreMaster.swift */,
@@ -442,6 +445,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D150C96E299E495900CF95B1 /* HotPepperResponse.swift in Sources */,
 				D19C6434299BBCEF0000C576 /* Genre.swift in Sources */,
 				D17ACC6E2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift in Sources */,
 				D1E5081D29986479006E5AA3 /* Constant.swift in Sources */,

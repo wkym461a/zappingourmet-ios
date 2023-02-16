@@ -92,7 +92,7 @@ extension ShopSearchPresenter: ShopSearchPresentable {
             target: HotPepperGenreMaster()
             
         ).sink { completion in
-            print(completion)
+            print("HotPepperAPI.GenreMaster", completion)
             
         } receiveValue: { response in
             let results = response.results
@@ -173,13 +173,6 @@ extension ShopSearchPresenter: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.currentLocation = locations.first
-        
-        if let location = self.currentLocation {
-            print("currentLocation: { lat: \(location.coordinate.latitude), lng: \(location.coordinate.longitude) }")
-            
-        } else {
-            print("currentLocation: nil")
-        }
         
         self.view?.updateUI()
     }

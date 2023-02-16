@@ -69,7 +69,7 @@ extension ShopListPresenter: ShopListPresentable {
                 count: self.fetchCount
             )
         ).sink { completion in
-            print(completion)
+            print("HotPepperAPI.GourmetSearch", completion)
             
             self.isFetching = false
 
