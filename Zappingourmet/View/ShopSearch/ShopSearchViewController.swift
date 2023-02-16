@@ -64,6 +64,8 @@ final class ShopSearchViewController: UIViewController {
     // MARK: - Private
     
     private func setupUI() {
+        self.navigationController?.navigationBar.tintColor = Constant.Color.baseOrange
+        
         let gesture: UITapGestureRecognizer = .init(
             target: self,
             action: #selector(self.dismissPickerInput)
@@ -76,21 +78,21 @@ final class ShopSearchViewController: UIViewController {
         self.mapView.layer.cornerRadius = 8
         
         self.centeringCurrentLocationButton.backgroundColor = Constant.Color.baseOrange
-        self.centeringCurrentLocationButton.layer.cornerRadius = 32
+        self.centeringCurrentLocationButton.layer.cornerRadius = 22
         self.centeringCurrentLocationButton.layer.shadowOffset = .init(width: 0.0, height: 2.0)
         self.centeringCurrentLocationButton.layer.shadowColor = UIColor.black.cgColor
         self.centeringCurrentLocationButton.layer.shadowOpacity = 0.6
         self.centeringCurrentLocationButton.layer.shadowRadius = 4
         
         self.rangePickerControl.picker.tag = 1
-        self.rangePickerControl.selectedColor = Constant.Color.baseOrange.cgColor
+        self.rangePickerControl.selectedColor = Constant.Color.baseOrange
         self.rangePickerControl.layer.cornerRadius = 8
         self.rangePickerControl.layer.borderWidth = 2
         self.rangePickerControl.picker.dataSource = self
         self.rangePickerControl.picker.delegate = self
         
         self.genrePickerControl.picker.tag = 2
-        self.genrePickerControl.selectedColor = Constant.Color.baseOrange.cgColor
+        self.genrePickerControl.selectedColor = Constant.Color.baseOrange
         self.genrePickerControl.layer.cornerRadius = 8
         self.genrePickerControl.layer.borderWidth = 2
         self.genrePickerControl.picker.dataSource = self
