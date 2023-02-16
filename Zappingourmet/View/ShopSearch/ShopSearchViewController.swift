@@ -85,14 +85,14 @@ final class ShopSearchViewController: UIViewController {
         self.centeringCurrentLocationButton.layer.shadowRadius = 4
         
         self.rangePickerControl.picker.tag = 1
-        self.rangePickerControl.selectedColor = Constant.Color.baseOrange.cgColor
+        self.rangePickerControl.selectedColor = Constant.Color.baseOrange
         self.rangePickerControl.layer.cornerRadius = 8
         self.rangePickerControl.layer.borderWidth = 2
         self.rangePickerControl.picker.dataSource = self
         self.rangePickerControl.picker.delegate = self
         
         self.genrePickerControl.picker.tag = 2
-        self.genrePickerControl.selectedColor = Constant.Color.baseOrange.cgColor
+        self.genrePickerControl.selectedColor = Constant.Color.baseOrange
         self.genrePickerControl.layer.cornerRadius = 8
         self.genrePickerControl.layer.borderWidth = 2
         self.genrePickerControl.picker.dataSource = self

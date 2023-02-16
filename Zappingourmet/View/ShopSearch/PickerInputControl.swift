@@ -27,13 +27,13 @@ final class PickerInputControl: UIControl {
         }
     }
     
-    var selectedColor: CGColor = UIColor.systemBlue.cgColor {
+    var selectedColor: UIColor = .systemBlue {
         didSet {
             self.updateUI()
         }
     }
     
-    var notSelectedColor: CGColor = UIColor.systemGray.cgColor {
+    var notSelectedColor: UIColor = .systemGray {
         didSet {
             self.updateUI()
         }
@@ -91,7 +91,7 @@ final class PickerInputControl: UIControl {
     
     private func updateUI() {
         self.layer.borderColor = self.isSelected
-            ? self.selectedColor
-            : self.notSelectedColor
+            ? self.selectedColor.cgColor
+            : self.notSelectedColor.cgColor
     }
 }
