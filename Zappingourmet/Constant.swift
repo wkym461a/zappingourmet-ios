@@ -30,4 +30,6 @@ struct Constant {
         )
     }
     
+    static let creditURL = URL(string: "http://webservice.recruit.co.jp/")
+    
 }
