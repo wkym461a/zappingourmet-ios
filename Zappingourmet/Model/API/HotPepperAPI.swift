@@ -10,27 +10,6 @@ import Combine
 import Moya
 import CombineMoya
 
-protocol HotPepperResponse: Codable {
-    
-    associatedtype Results: HotPepperResults
-    
-    var results: Results { get }
-    
-}
-
-struct HotPepperErrorResult: Codable {
-    
-    var message: String
-    var code: Int
-    
-}
-
-protocol HotPepperResults: Codable {
-    
-    var error: [HotPepperErrorResult]? { get }
-    
-}
-
 final class HotPepperAPI {
     
     // MARK: - Static
