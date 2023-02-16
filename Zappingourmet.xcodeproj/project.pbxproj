@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		D13A2E4C2995A66500373F9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E4B2995A66500373F9F /* AppDelegate.swift */; };
 		D13A2E4E2995A66500373F9F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E4D2995A66500373F9F /* SceneDelegate.swift */; };
-		D13A2E502995A66500373F9F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E4F2995A66500373F9F /* ViewController.swift */; };
-		D13A2E532995A66500373F9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D13A2E512995A66500373F9F /* Main.storyboard */; };
 		D13A2E562995A66500373F9F /* Zappingourmet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E542995A66500373F9F /* Zappingourmet.xcdatamodeld */; };
 		D13A2E582995A66700373F9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D13A2E572995A66700373F9F /* Assets.xcassets */; };
 		D13A2E5B2995A66700373F9F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D13A2E592995A66700373F9F /* LaunchScreen.storyboard */; };
@@ -72,8 +70,6 @@
 		D13A2E482995A66500373F9F /* Zappingourmet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zappingourmet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D13A2E4B2995A66500373F9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D13A2E4D2995A66500373F9F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D13A2E4F2995A66500373F9F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D13A2E522995A66500373F9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D13A2E552995A66500373F9F /* Zappingourmet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Zappingourmet.xcdatamodel; sourceTree = "<group>"; };
 		D13A2E572995A66700373F9F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D13A2E5A2995A66700373F9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -173,8 +169,6 @@
 				D17ACC452995C91100E056B6 /* Model */,
 				D1BEF1802997698400F6F851 /* Presenter */,
 				D1C320BF29974ED500D5C7EA /* View */,
-				D13A2E4F2995A66500373F9F /* ViewController.swift */,
-				D13A2E512995A66500373F9F /* Main.storyboard */,
 				D1E5081C29986479006E5AA3 /* Constant.swift */,
 				D13A2E572995A66700373F9F /* Assets.xcassets */,
 				D13A2E592995A66700373F9F /* LaunchScreen.storyboard */,
@@ -424,7 +418,6 @@
 				D1E5081429984E46006E5AA3 /* ShopDetail.storyboard in Resources */,
 				D13A2E582995A66700373F9F /* Assets.xcassets in Resources */,
 				D150C96C299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib in Resources */,
-				D13A2E532995A66500373F9F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,7 +446,6 @@
 				D17ACC6E2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift in Sources */,
 				D1E5081D29986479006E5AA3 /* Constant.swift in Sources */,
 				D1BEF183299769B300F6F851 /* ShopListPresenter.swift in Sources */,
-				D13A2E502995A66500373F9F /* ViewController.swift in Sources */,
 				D14F9916299B3F830070E555 /* ExUIColor.swift in Sources */,
 				D1E5081B299855BA006E5AA3 /* ExUserDefaults.swift in Sources */,
 				D1EF48EF29989D7F00A5AF8D /* ShopSearchViewController.swift in Sources */,
@@ -513,14 +505,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D13A2E512995A66500373F9F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D13A2E522995A66500373F9F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D13A2E592995A66700373F9F /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -659,7 +643,7 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "周辺の飲食店を検索するために位置情報を使用します";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = ShopSearch;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -690,7 +674,7 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "周辺の飲食店を検索するために位置情報を使用します";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = ShopSearch;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
