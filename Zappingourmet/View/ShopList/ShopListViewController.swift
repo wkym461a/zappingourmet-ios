@@ -78,13 +78,18 @@ final class ShopListViewController: UIViewController {
         } else {
             self.navigationItem.title = "検索結果"
         }
-        
+        self.navigationController?.navigationBar.tintColor = Constant.Color.baseOrange
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.register(
             UINib(nibName: "ShopListCollectionViewCell", bundle: nil),
             forCellWithReuseIdentifier: "shopCell"
+        )
+        self.collectionView.register(
+            UINib(nibName: "ShopListCollectionViewFooter", bundle: nil),
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: "shopListFooter"
         )
         
         let flowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -108,6 +113,11 @@ extension ShopListViewController: ShopListViewable {
 // MARK: - UICollectionViewDataSource
 
 extension ShopListViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.presenter?.getShopsCount() ?? 0
     }
@@ -125,6 +135,25 @@ extension ShopListViewController: UICollectionViewDataSource {
         cell.updateUI(shop: shop)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionFooter:
+            guard
+                let isFetchedAllAvailableShops = self.presenter?.getIsFetchedAllAvailableShops(),
+                let availableShopsCount = self.presenter?.getAvailableShopsCount(),
+                let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "shopListFooter", for: indexPath) as? ShopListCollectionViewFooter else {
+                return UICollectionReusableView()
+            }
+            
+            footer.updateUI(isLoading: !isFetchedAllAvailableShops, resultsAvailable: availableShopsCount)
+            
+            return footer
+            
+        default:
+            return UICollectionReusableView()
+        }
     }
     
 }

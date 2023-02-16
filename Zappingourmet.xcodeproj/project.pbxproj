@@ -20,6 +20,8 @@
 		D14BE621299910BE00F0B774 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D14BE61C2998E90300F0B774 /* CoreLocation.framework */; };
 		D14BE6232999B7F800F0B774 /* PickerInputControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14BE6222999B7F700F0B774 /* PickerInputControl.swift */; };
 		D14F9916299B3F830070E555 /* ExUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14F9915299B3F830070E555 /* ExUIColor.swift */; };
+		D150C96B299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D150C969299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift */; };
+		D150C96C299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = D150C96A299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib */; };
 		D17ACC472995C97800E056B6 /* HotPepperAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC462995C97800E056B6 /* HotPepperAPI.swift */; };
 		D17ACC6129964C0400E056B6 /* HotPepperGourmetSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */; };
 		D17ACC6329964DDB00E056B6 /* HotPepperTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */; };
@@ -84,6 +86,8 @@
 		D14BE61C2998E90300F0B774 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D14BE6222999B7F700F0B774 /* PickerInputControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerInputControl.swift; sourceTree = "<group>"; };
 		D14F9915299B3F830070E555 /* ExUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUIColor.swift; sourceTree = "<group>"; };
+		D150C969299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListCollectionViewFooter.swift; sourceTree = "<group>"; };
+		D150C96A299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopListCollectionViewFooter.xib; sourceTree = "<group>"; };
 		D17ACC462995C97800E056B6 /* HotPepperAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperAPI.swift; sourceTree = "<group>"; };
 		D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperGourmetSearch.swift; sourceTree = "<group>"; };
 		D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperTargetType.swift; sourceTree = "<group>"; };
@@ -263,6 +267,8 @@
 				D1C320C92997665B00D5C7EA /* ShopListViewController.swift */,
 				D1BEF18429976EF400F6F851 /* ShopListCollectionViewCell.swift */,
 				D1BEF18529976EF400F6F851 /* ShopListCollectionViewCell.xib */,
+				D150C969299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift */,
+				D150C96A299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib */,
 				D1BEF1882997BA5800F6F851 /* ShopImageView.swift */,
 			);
 			path = ShopList;
@@ -417,6 +423,7 @@
 				D19CF888299B2ED10096C1B2 /* ShopDetailTagCollectionViewCell.xib in Resources */,
 				D1E5081429984E46006E5AA3 /* ShopDetail.storyboard in Resources */,
 				D13A2E582995A66700373F9F /* Assets.xcassets in Resources */,
+				D150C96C299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib in Resources */,
 				D13A2E532995A66500373F9F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -467,6 +474,7 @@
 				D1EF48F129989DDC00A5AF8D /* ShopSearchPresenter.swift in Sources */,
 				D1E5081629984E5E006E5AA3 /* ShopDetailViewController.swift in Sources */,
 				D19C6430299BB4A30000C576 /* HotPepperGenreMaster.swift in Sources */,
+				D150C96B299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift in Sources */,
 				D1C320CA2997665B00D5C7EA /* ShopListViewController.swift in Sources */,
 				D17ACC6329964DDB00E056B6 /* HotPepperTargetType.swift in Sources */,
 			);
