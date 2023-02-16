@@ -18,6 +18,9 @@ protocol ShopSearchViewable: AnyObject {
 final class ShopSearchViewController: UIViewController {
     
     // MARK: - Outlet
+    @IBOutlet private weak var subtitleLabel: UILabel!
+    @IBOutlet private weak var creditButton: UIButton!
+    @IBOutlet private weak var subtitleAndCreditBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var mapView: MKMapView!
     @IBOutlet private weak var centeringCurrentLocationButton: UIButton!
@@ -33,8 +36,10 @@ final class ShopSearchViewController: UIViewController {
     // MARK: - Property
     
     private var presenter: ShopSearchPresentable?
-    private var circle: MKCircle?
     
+    private var subtitleBottomAndCreditTopConstraint: NSLayoutConstraint?
+    
+    private var circle: MKCircle?
     private var isInitializedMapView: Bool = false
     
     private var mapViewOverlaysEdgePadding: UIEdgeInsets {
@@ -65,6 +70,8 @@ final class ShopSearchViewController: UIViewController {
     
     private func setupUI() {
         self.navigationController?.navigationBar.tintColor = Constant.Color.baseOrange
+        
+        self.layoutSubtitleAndCredit()
         
         let gesture: UITapGestureRecognizer = .init(
             target: self,
@@ -100,6 +107,40 @@ final class ShopSearchViewController: UIViewController {
         
         self.searchButton.layer.cornerRadius = 8
         self.searchButton.backgroundColor = Constant.Color.baseOrange
+    }
+    
+    // Changing AutoLayout when Screen width is small.
+    private func layoutSubtitleAndCredit() {
+        let componentsWidth: CGFloat = self.subtitleLabel.frame.width + self.creditButton.frame.width + 16 * 2
+        let isOverlapped = componentsWidth > UIScreen.main.bounds.width
+        
+        if isOverlapped {
+            guard let subtitleLabel = self.subtitleLabel else {
+                return
+            }
+            
+            NSLayoutConstraint.deactivate([self.subtitleAndCreditBottomConstraint])
+            
+            self.subtitleBottomAndCreditTopConstraint = .init(
+                item: subtitleLabel,
+                attribute: .bottom,
+                relatedBy: .equal,
+                toItem: self.creditButton,
+                attribute: .top,
+                multiplier: 1.0,
+                constant: -4
+            )
+            if let constraint = self.subtitleBottomAndCreditTopConstraint {
+                NSLayoutConstraint.activate([constraint])
+            }
+            
+        } else {
+            if let constraint = self.subtitleBottomAndCreditTopConstraint {
+                NSLayoutConstraint.deactivate([constraint])
+            }
+            
+            NSLayoutConstraint.activate([self.subtitleAndCreditBottomConstraint])
+        }
     }
     
     private func refreshMapViewOverlays() {
@@ -144,7 +185,19 @@ final class ShopSearchViewController: UIViewController {
     private func dismissPickerInput() {
         self.view.endEditing(true)
     }
-
+    
+    @IBAction private func openCreditURL(_ sender: UIButton) {
+        guard
+            let url = Constant.creditURL,
+            UIApplication.shared.canOpenURL(url)
+            
+        else {
+            return
+        }
+        
+        UIApplication.shared.open(url)
+    }
+    
     @IBAction private func searchShops(_ sender: UIButton) {
         self.presenter?.locationAuthFilter { _ in
             guard self.presenter?.setHotPepperGourmetSearchCoordinate() == true else {
