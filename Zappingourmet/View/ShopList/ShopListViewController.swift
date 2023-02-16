@@ -78,7 +78,6 @@ final class ShopListViewController: UIViewController {
         } else {
             self.navigationItem.title = "検索結果"
         }
-        self.navigationController?.navigationBar.tintColor = Constant.Color.baseOrange
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self

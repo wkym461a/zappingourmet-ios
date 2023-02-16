@@ -64,6 +64,8 @@ final class ShopSearchViewController: UIViewController {
     // MARK: - Private
     
     private func setupUI() {
+        self.navigationController?.navigationBar.tintColor = Constant.Color.baseOrange
+        
         let gesture: UITapGestureRecognizer = .init(
             target: self,
             action: #selector(self.dismissPickerInput)
@@ -76,7 +78,7 @@ final class ShopSearchViewController: UIViewController {
         self.mapView.layer.cornerRadius = 8
         
         self.centeringCurrentLocationButton.backgroundColor = Constant.Color.baseOrange
-        self.centeringCurrentLocationButton.layer.cornerRadius = 32
+        self.centeringCurrentLocationButton.layer.cornerRadius = 22
         self.centeringCurrentLocationButton.layer.shadowOffset = .init(width: 0.0, height: 2.0)
         self.centeringCurrentLocationButton.layer.shadowColor = UIColor.black.cgColor
         self.centeringCurrentLocationButton.layer.shadowOpacity = 0.6
