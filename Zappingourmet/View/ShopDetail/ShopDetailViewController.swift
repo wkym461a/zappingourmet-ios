@@ -156,7 +156,6 @@ final class ShopDetailViewController: UIViewController {
             UIApplication.shared.canOpenURL(shopURL)
             
         else {
-            print(#function, "failed")
             return
         }
         

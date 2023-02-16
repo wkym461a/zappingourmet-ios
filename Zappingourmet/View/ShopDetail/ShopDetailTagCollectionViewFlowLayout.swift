@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ShopDetailTagCollectionViewFlowLayout: UICollectionViewFlowLayout {
+final class ShopDetailTagCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         let attributes = super.layoutAttributesForElements(in: rect)
