@@ -39,5 +39,5 @@ iOS 14.0 以上
 
 ### 使用しているAPI、ライブラリ
 
-- [ホットペッパーグルメサーチAPI](https://webservice.recruit.co.jp/doc/hotpepper/reference.html)
+- [ホットペッパーAPI](https://webservice.recruit.co.jp/doc/hotpepper/reference.html)
 - [Moya](https://github.com/Moya/Moya)
