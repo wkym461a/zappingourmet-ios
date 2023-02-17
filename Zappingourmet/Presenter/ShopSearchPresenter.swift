@@ -29,6 +29,7 @@ protocol ShopSearchPresentable: AnyObject {
     func setHotPepperGourmetSearchGenre(selectedIndex: Int)
     
     func locationManagerAuthStatusActions(authorized authAction: ((CLAuthorizationStatus) -> Void)?, unauthorized unauthAction: ((CLAuthorizationStatus?) -> Void)?)
+    func locationManagerAuthFilter(authorized authAction: ((CLAuthorizationStatus) -> Void)?)
     
 }
 
@@ -175,6 +176,16 @@ extension ShopSearchPresenter: ShopSearchPresentable {
         self.locationManagerUnauthorizedAction = unauthAction
         
         self.locationManagerAuthStatusActionsResolver()
+    }
+    
+    func locationManagerAuthFilter(authorized authAction: ((CLAuthorizationStatus) -> Void)?) {
+        switch self.locationManager?.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            authAction?(self.locationManager!.authorizationStatus)
+        
+        default:
+            return
+        }
     }
     
 }
