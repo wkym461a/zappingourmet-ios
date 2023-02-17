@@ -23,9 +23,19 @@ final class PickerInputControl: UIControl {
 
     override var isSelected: Bool {
         didSet {
-            self.layer.borderColor = self.isSelected
-                ? UIColor.systemBlue.cgColor
-                : UIColor.systemGray.cgColor
+            self.updateUI()
+        }
+    }
+    
+    var selectedColor: UIColor = .systemBlue {
+        didSet {
+            self.updateUI()
+        }
+    }
+    
+    var notSelectedColor: UIColor = .systemGray {
+        didSet {
+            self.updateUI()
         }
     }
     
@@ -45,15 +55,13 @@ final class PickerInputControl: UIControl {
     
     // MARK: - Public
     
-    @discardableResult
-    override func becomeFirstResponder() -> Bool {
+    @discardableResult override func becomeFirstResponder() -> Bool {
         let value = super.becomeFirstResponder()
         self.isSelected = self.isFirstResponder
         return value
     }
 
-    @discardableResult
-    override func resignFirstResponder() -> Bool {
+    @discardableResult override func resignFirstResponder() -> Bool {
         let value = super.resignFirstResponder()
         self.isSelected = self.isFirstResponder
         return value
@@ -62,7 +70,7 @@ final class PickerInputControl: UIControl {
     // MARK: - Private
     
     private func setup() {
-        self.layer.borderColor = UIColor.systemGray.cgColor
+        self.layer.borderColor = self.notSelectedColor.cgColor
         
         self.addAction(
             .init() { [weak self] _ in
@@ -77,5 +85,11 @@ final class PickerInputControl: UIControl {
             },
             for: .touchUpInside
         )
+    }
+    
+    private func updateUI() {
+        self.layer.borderColor = self.isSelected
+            ? self.selectedColor.cgColor
+            : self.notSelectedColor.cgColor
     }
 }

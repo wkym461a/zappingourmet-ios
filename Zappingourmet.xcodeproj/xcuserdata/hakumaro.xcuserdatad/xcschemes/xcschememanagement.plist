@@ -9,7 +9,7 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>5</integer>
+			<integer>6</integer>
 		</dict>
 		<key>ReactiveSwift (Playground) 10.xcscheme</key>
 		<dict>
@@ -30,7 +30,7 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>6</integer>
+			<integer>7</integer>
 		</dict>
 		<key>ReactiveSwift (Playground) 3.xcscheme</key>
 		<dict>
@@ -86,14 +86,14 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>5</integer>
 		</dict>
 		<key>ReactiveSwift-UIExamples (Playground) 1.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>2</integer>
 		</dict>
 		<key>ReactiveSwift-UIExamples (Playground) 10.xcscheme</key>
 		<dict>
@@ -114,7 +114,7 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>9</integer>
+			<integer>3</integer>
 		</dict>
 		<key>ReactiveSwift-UIExamples (Playground) 3.xcscheme</key>
 		<dict>
@@ -170,14 +170,14 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>7</integer>
+			<integer>0</integer>
 		</dict>
 		<key>Rx (Playground) 1.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>8</integer>
 		</dict>
 		<key>Rx (Playground) 10.xcscheme</key>
 		<dict>
@@ -198,7 +198,7 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>9</integer>
 		</dict>
 		<key>Rx (Playground) 3.xcscheme</key>
 		<dict>
@@ -254,12 +254,30 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>4</integer>
 		</dict>
 		<key>Zappingourmet.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>D13A2E472995A66500373F9F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D13A2E602995A66800373F9F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D13A2E6A2995A66800373F9F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

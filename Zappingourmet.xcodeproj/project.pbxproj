@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		D13A2E4C2995A66500373F9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E4B2995A66500373F9F /* AppDelegate.swift */; };
 		D13A2E4E2995A66500373F9F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E4D2995A66500373F9F /* SceneDelegate.swift */; };
-		D13A2E502995A66500373F9F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E4F2995A66500373F9F /* ViewController.swift */; };
-		D13A2E532995A66500373F9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D13A2E512995A66500373F9F /* Main.storyboard */; };
 		D13A2E562995A66500373F9F /* Zappingourmet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E542995A66500373F9F /* Zappingourmet.xcdatamodeld */; };
 		D13A2E582995A66700373F9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D13A2E572995A66700373F9F /* Assets.xcassets */; };
 		D13A2E5B2995A66700373F9F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D13A2E592995A66700373F9F /* LaunchScreen.storyboard */; };
@@ -20,6 +18,9 @@
 		D14BE621299910BE00F0B774 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D14BE61C2998E90300F0B774 /* CoreLocation.framework */; };
 		D14BE6232999B7F800F0B774 /* PickerInputControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14BE6222999B7F700F0B774 /* PickerInputControl.swift */; };
 		D14F9916299B3F830070E555 /* ExUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14F9915299B3F830070E555 /* ExUIColor.swift */; };
+		D150C96B299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D150C969299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift */; };
+		D150C96C299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = D150C96A299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib */; };
+		D150C96E299E495900CF95B1 /* HotPepperResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D150C96D299E495900CF95B1 /* HotPepperResponse.swift */; };
 		D17ACC472995C97800E056B6 /* HotPepperAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC462995C97800E056B6 /* HotPepperAPI.swift */; };
 		D17ACC6129964C0400E056B6 /* HotPepperGourmetSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */; };
 		D17ACC6329964DDB00E056B6 /* HotPepperTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */; };
@@ -70,8 +71,6 @@
 		D13A2E482995A66500373F9F /* Zappingourmet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zappingourmet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D13A2E4B2995A66500373F9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D13A2E4D2995A66500373F9F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D13A2E4F2995A66500373F9F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D13A2E522995A66500373F9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D13A2E552995A66500373F9F /* Zappingourmet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Zappingourmet.xcdatamodel; sourceTree = "<group>"; };
 		D13A2E572995A66700373F9F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D13A2E5A2995A66700373F9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -84,6 +83,9 @@
 		D14BE61C2998E90300F0B774 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D14BE6222999B7F700F0B774 /* PickerInputControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerInputControl.swift; sourceTree = "<group>"; };
 		D14F9915299B3F830070E555 /* ExUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUIColor.swift; sourceTree = "<group>"; };
+		D150C969299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListCollectionViewFooter.swift; sourceTree = "<group>"; };
+		D150C96A299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopListCollectionViewFooter.xib; sourceTree = "<group>"; };
+		D150C96D299E495900CF95B1 /* HotPepperResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperResponse.swift; sourceTree = "<group>"; };
 		D17ACC462995C97800E056B6 /* HotPepperAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperAPI.swift; sourceTree = "<group>"; };
 		D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperGourmetSearch.swift; sourceTree = "<group>"; };
 		D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperTargetType.swift; sourceTree = "<group>"; };
@@ -169,8 +171,6 @@
 				D17ACC452995C91100E056B6 /* Model */,
 				D1BEF1802997698400F6F851 /* Presenter */,
 				D1C320BF29974ED500D5C7EA /* View */,
-				D13A2E4F2995A66500373F9F /* ViewController.swift */,
-				D13A2E512995A66500373F9F /* Main.storyboard */,
 				D1E5081C29986479006E5AA3 /* Constant.swift */,
 				D13A2E572995A66700373F9F /* Assets.xcassets */,
 				D13A2E592995A66700373F9F /* LaunchScreen.storyboard */,
@@ -219,6 +219,7 @@
 			children = (
 				D17ACC462995C97800E056B6 /* HotPepperAPI.swift */,
 				D17ACC6229964DDB00E056B6 /* HotPepperTargetType.swift */,
+				D150C96D299E495900CF95B1 /* HotPepperResponse.swift */,
 				D17ACC6029964C0400E056B6 /* HotPepperGourmetSearch.swift */,
 				D17ACC6D2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift */,
 				D19C642F299BB4A30000C576 /* HotPepperGenreMaster.swift */,
@@ -263,6 +264,8 @@
 				D1C320C92997665B00D5C7EA /* ShopListViewController.swift */,
 				D1BEF18429976EF400F6F851 /* ShopListCollectionViewCell.swift */,
 				D1BEF18529976EF400F6F851 /* ShopListCollectionViewCell.xib */,
+				D150C969299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift */,
+				D150C96A299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib */,
 				D1BEF1882997BA5800F6F851 /* ShopImageView.swift */,
 			);
 			path = ShopList;
@@ -417,7 +420,7 @@
 				D19CF888299B2ED10096C1B2 /* ShopDetailTagCollectionViewCell.xib in Resources */,
 				D1E5081429984E46006E5AA3 /* ShopDetail.storyboard in Resources */,
 				D13A2E582995A66700373F9F /* Assets.xcassets in Resources */,
-				D13A2E532995A66500373F9F /* Main.storyboard in Resources */,
+				D150C96C299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,11 +445,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D150C96E299E495900CF95B1 /* HotPepperResponse.swift in Sources */,
 				D19C6434299BBCEF0000C576 /* Genre.swift in Sources */,
 				D17ACC6E2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift in Sources */,
 				D1E5081D29986479006E5AA3 /* Constant.swift in Sources */,
 				D1BEF183299769B300F6F851 /* ShopListPresenter.swift in Sources */,
-				D13A2E502995A66500373F9F /* ViewController.swift in Sources */,
 				D14F9916299B3F830070E555 /* ExUIColor.swift in Sources */,
 				D1E5081B299855BA006E5AA3 /* ExUserDefaults.swift in Sources */,
 				D1EF48EF29989D7F00A5AF8D /* ShopSearchViewController.swift in Sources */,
@@ -467,6 +470,7 @@
 				D1EF48F129989DDC00A5AF8D /* ShopSearchPresenter.swift in Sources */,
 				D1E5081629984E5E006E5AA3 /* ShopDetailViewController.swift in Sources */,
 				D19C6430299BB4A30000C576 /* HotPepperGenreMaster.swift in Sources */,
+				D150C96B299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift in Sources */,
 				D1C320CA2997665B00D5C7EA /* ShopListViewController.swift in Sources */,
 				D17ACC6329964DDB00E056B6 /* HotPepperTargetType.swift in Sources */,
 			);
@@ -505,14 +509,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D13A2E512995A66500373F9F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D13A2E522995A66500373F9F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D13A2E592995A66700373F9F /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -645,13 +641,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 33HJY4NF3H;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Zappingourmet/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "ザッピングルメ";
+				INFOPLIST_KEY_CFBundleDisplayName = "ザッピングルメ！";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "周辺の飲食店を検索するために位置情報を使用します";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = ShopSearch;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -660,7 +657,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.wkym461a.Zappingourmet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -676,13 +673,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 33HJY4NF3H;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Zappingourmet/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "ザッピングルメ";
+				INFOPLIST_KEY_CFBundleDisplayName = "ザッピングルメ！";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "周辺の飲食店を検索するために位置情報を使用します";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = ShopSearch;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -691,7 +689,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.wkym461a.Zappingourmet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -707,6 +705,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 33HJY4NF3H;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
@@ -726,6 +725,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 33HJY4NF3H;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
@@ -744,6 +744,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 33HJY4NF3H;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.wkym461a.ZappingourmetUITests;
@@ -761,6 +762,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 33HJY4NF3H;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.wkym461a.ZappingourmetUITests;

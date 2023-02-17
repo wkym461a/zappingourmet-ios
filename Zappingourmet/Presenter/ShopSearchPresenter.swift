@@ -11,6 +11,7 @@ import Combine
 
 protocol ShopSearchPresentable: AnyObject {
     
+    func setupLocationManager()
     func startUpdatingLocation()
     func stopUpdatingLocation()
     func getCurrentLocation() -> CLLocation?
@@ -23,9 +24,11 @@ protocol ShopSearchPresentable: AnyObject {
     func getHotPepperGenre(index: Int) -> Genre
     func getHotPepperGenresCount() -> Int
     
-    func setHotPepperGourmetSearchCoordinate()
+    func setHotPepperGourmetSearchCoordinate() -> Bool
     func setHotPepperGourmetSearchRange(selectedIndex: Int)
     func setHotPepperGourmetSearchGenre(selectedIndex: Int)
+    
+    func locationManagerAuthStatusActions(authorized authAction: ((CLAuthorizationStatus) -> Void)?, unauthorized unauthAction: ((CLAuthorizationStatus?) -> Void)?)
     
 }
 
@@ -38,10 +41,33 @@ final class ShopSearchPresenter: NSObject {
     private var locationManager: CLLocationManager?
     private var currentLocation: CLLocation?
     
+    private var locationManagerAuthorizedAction: ((CLAuthorizationStatus) -> Void)?
+    private var locationManagerUnauthorizedAction: ((CLAuthorizationStatus?) -> Void)?
+    
     init(_ view: ShopSearchViewable) {
         self.view = view
         
         self.genres = []
+    }
+    
+    private func locationManagerAuthStatusActionsResolver() {
+        switch self.locationManager?.authorizationStatus {
+        case .notDetermined:
+            self.locationManager?.requestWhenInUseAuthorization()
+            
+        case .authorizedAlways, .authorizedWhenInUse:
+            self.locationManager?.startUpdatingLocation()
+            self.locationManagerAuthorizedAction?(self.locationManager!.authorizationStatus)
+            
+            self.locationManagerAuthorizedAction = nil
+            self.locationManagerUnauthorizedAction = nil
+        
+        default:
+            self.locationManagerUnauthorizedAction?(self.locationManager?.authorizationStatus)
+            
+            self.locationManagerAuthorizedAction = nil
+            self.locationManagerUnauthorizedAction = nil
+        }
     }
     
 }
@@ -50,21 +76,17 @@ final class ShopSearchPresenter: NSObject {
 
 extension ShopSearchPresenter: ShopSearchPresentable {
     
-    func startUpdatingLocation() {
-        self.locationManager?.stopUpdatingLocation()
-        
-        self.locationManager = CLLocationManager()
-        
-        self.locationManager?.requestWhenInUseAuthorization()
-        
-        switch locationManager?.authorizationStatus {
-        case .authorizedAlways, .authorizedWhenInUse:
-            self.locationManager?.delegate = self
-            self.locationManager?.startUpdatingLocation()
-            
-        default:
+    func setupLocationManager() {
+        if self.locationManager != nil {
             return
         }
+        
+        self.locationManager = CLLocationManager()
+        self.locationManager?.delegate = self
+    }
+    
+    func startUpdatingLocation() {
+        self.locationManager?.startUpdatingLocation()
     }
     
     func stopUpdatingLocation() {
@@ -92,7 +114,7 @@ extension ShopSearchPresenter: ShopSearchPresentable {
             target: HotPepperGenreMaster()
             
         ).sink { completion in
-            print(completion)
+            print("HotPepperAPI.GenreMaster", completion)
             
         } receiveValue: { response in
             let results = response.results
@@ -128,10 +150,15 @@ extension ShopSearchPresenter: ShopSearchPresentable {
         return self.genres.count
     }
     
-    func setHotPepperGourmetSearchCoordinate() {
+    func setHotPepperGourmetSearchCoordinate() -> Bool {
         if let location = self.currentLocation {
             UserDefaults.standard.set(Double(location.coordinate.latitude), forKey: Constant.UserDefaultsReservedKey.SearchLatitude_Double)
             UserDefaults.standard.set(Double(location.coordinate.longitude), forKey: Constant.UserDefaultsReservedKey.SearchLongitude_Double)
+            
+            return true
+        
+        } else {
+            return false
         }
     }
     
@@ -143,23 +170,31 @@ extension ShopSearchPresenter: ShopSearchPresentable {
         UserDefaults.standard.save(self.genres[selectedIndex], key: Constant.UserDefaultsReservedKey.SearchGenre_Genre)
     }
     
+    func locationManagerAuthStatusActions(authorized authAction: ((CLAuthorizationStatus) -> Void)?, unauthorized unauthAction: ((CLAuthorizationStatus?) -> Void)? = nil) {
+        self.locationManagerAuthorizedAction = authAction
+        self.locationManagerUnauthorizedAction = unauthAction
+        
+        self.locationManagerAuthStatusActionsResolver()
+    }
+    
 }
 
 // MARK: - CLLocationManagerDelegate
 
 extension ShopSearchPresenter: CLLocationManagerDelegate {
     
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        self.locationManagerAuthStatusActionsResolver()
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.currentLocation = locations.first
         
-        if let location = self.currentLocation {
-            print("currentLocation: { lat: \(location.coordinate.latitude), lng: \(location.coordinate.longitude) }")
-            
-        } else {
-            print("currentLocation: nil")
-        }
-        
         self.view?.updateUI()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(#function, error)
     }
     
 }

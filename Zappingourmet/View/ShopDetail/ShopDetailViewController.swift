@@ -104,6 +104,15 @@ final class ShopDetailViewController: UIViewController {
             latitude: .init(shop.latitude),
             longitude: .init(shop.longitude)
         )
+        
+        var region = self.mapView.region
+        region.center = shopCoordinate
+        region.span = .init(
+            latitudeDelta: .init(0.02),
+            longitudeDelta: .init(0.02)
+        )
+        self.mapView.region = region
+        
         let userCoordinate = self.mapView.userLocation.coordinate
         
         let annotation = MKPointAnnotation()
@@ -156,7 +165,6 @@ final class ShopDetailViewController: UIViewController {
             UIApplication.shared.canOpenURL(shopURL)
             
         else {
-            print(#function, "failed")
             return
         }
         

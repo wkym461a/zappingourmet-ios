@@ -17,7 +17,7 @@ final class ShopListViewController: UIViewController {
     
     // MARK: - Outlet
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet private weak var collectionView: UICollectionView!
     
     // MARK: - Property
     
@@ -67,24 +67,23 @@ final class ShopListViewController: UIViewController {
     // MARK: - Private
     
     private func setupUI() {
+        var navigationItemTitle = ""
         if let searchRangeName = self.presenter?.getSearchRangeName() {
-            if let searchGenreName = self.presenter?.getSearchGenreName() {
-                self.navigationItem.title = "\(searchRangeName)以内の\(searchGenreName)"
-                
-            } else {
-                self.navigationItem.title = "\(searchRangeName)以内の検索結果"
-            }
-            
-        } else {
-            self.navigationItem.title = "検索結果"
+            navigationItemTitle += "\(searchRangeName)以内の"
         }
-        
+        navigationItemTitle += self.presenter?.getSearchGenreName() ?? "検索結果"
+        self.navigationItem.title = navigationItemTitle
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.register(
             UINib(nibName: "ShopListCollectionViewCell", bundle: nil),
             forCellWithReuseIdentifier: "shopCell"
+        )
+        self.collectionView.register(
+            UINib(nibName: "ShopListCollectionViewFooter", bundle: nil),
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: "shopListFooter"
         )
         
         let flowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -108,6 +107,11 @@ extension ShopListViewController: ShopListViewable {
 // MARK: - UICollectionViewDataSource
 
 extension ShopListViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.presenter?.getShopsCount() ?? 0
     }
@@ -125,6 +129,25 @@ extension ShopListViewController: UICollectionViewDataSource {
         cell.updateUI(shop: shop)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionFooter:
+            guard
+                let isFetchedAllAvailableShops = self.presenter?.getIsFetchedAllAvailableShops(),
+                let availableShopsCount = self.presenter?.getAvailableShopsCount(),
+                let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "shopListFooter", for: indexPath) as? ShopListCollectionViewFooter else {
+                return UICollectionReusableView()
+            }
+            
+            footer.updateUI(isLoading: !isFetchedAllAvailableShops, resultsAvailable: availableShopsCount)
+            
+            return footer
+            
+        default:
+            return UICollectionReusableView()
+        }
     }
     
 }

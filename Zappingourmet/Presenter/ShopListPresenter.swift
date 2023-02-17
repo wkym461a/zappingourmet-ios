@@ -18,6 +18,8 @@ protocol ShopListPresentable: AnyObject {
     
     func getSearchRangeName() -> String?
     func getSearchGenreName() -> String?
+    func getAvailableShopsCount() -> Int
+    func getIsFetchedAllAvailableShops() -> Bool
     
 }
 
@@ -28,9 +30,10 @@ final class ShopListPresenter {
     
     private var isFetching: Bool = false
     private var cancellable: AnyCancellable?
-    private var totalShopsCount: Int?
+    private var availableShopsCount: Int?
     private var fetchStartIndex: Int = 1
     private let fetchCount: Int = 10
+    private var isFetchedAllAvailableShops: Bool = false
     
     init(_ view: ShopListViewable) {
         self.view = view
@@ -45,7 +48,7 @@ final class ShopListPresenter {
 extension ShopListPresenter: ShopListPresentable {
     
     func fetchShops() {
-        if let count = self.totalShopsCount, count < self.fetchStartIndex {
+        if let count = self.availableShopsCount, count < self.fetchStartIndex {
             return
         }
         
@@ -66,7 +69,7 @@ extension ShopListPresenter: ShopListPresentable {
                 count: self.fetchCount
             )
         ).sink { completion in
-            print(completion)
+            print("HotPepperAPI.GourmetSearch", completion)
             
             self.isFetching = false
 
@@ -92,11 +95,15 @@ extension ShopListPresenter: ShopListPresentable {
             self.shops.append(contentsOf: hpShops.map { Shop.fromHotPepperShop($0) })
             self.view?.updateUI()
             
-            if self.totalShopsCount == nil {
-                self.totalShopsCount = resultsAvailable
+            if self.availableShopsCount == nil {
+                self.availableShopsCount = resultsAvailable
             }
             
             self.fetchStartIndex = resultsStart + (Int(resultsReturned) ?? hpShops.count)
+            
+            if resultsAvailable < self.fetchStartIndex || resultsAvailable == 0 {
+                self.isFetchedAllAvailableShops = true
+            }
             
             self.isFetching = false
         }
@@ -122,6 +129,14 @@ extension ShopListPresenter: ShopListPresentable {
     func getSearchGenreName() -> String? {
         let searchGenre = UserDefaults.standard.load(Genre.self, key: Constant.UserDefaultsReservedKey.SearchGenre_Genre)
         return (searchGenre?.code != Genre.none.code) ? searchGenre?.name : nil
+    }
+    
+    func getAvailableShopsCount() -> Int {
+        return self.availableShopsCount ?? 0
+    }
+    
+    func getIsFetchedAllAvailableShops() -> Bool {
+        return self.isFetchedAllAvailableShops
     }
     
 }
