@@ -1,4 +1,6 @@
-<img height="180" style="border-radius: 32px; display: block; margin: auto;" src="Zappingourmet.jpg" />
+<div align=center>
+  <img height="180" src="Zappingourmet.jpg" />
+</div>
 
 # ザッピングルメ！ (Zappingourmet-iOS)
 
