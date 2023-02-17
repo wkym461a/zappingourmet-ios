@@ -41,10 +41,33 @@ final class ShopSearchPresenter: NSObject {
     private var locationManager: CLLocationManager?
     private var currentLocation: CLLocation?
     
+    private var locationManagerAuthorizedAction: ((CLAuthorizationStatus) -> Void)?
+    private var locationManagerUnauthorizedAction: ((CLAuthorizationStatus?) -> Void)?
+    
     init(_ view: ShopSearchViewable) {
         self.view = view
         
         self.genres = []
+    }
+    
+    private func locationManagerAuthStatusActionsResolver() {
+        switch self.locationManager?.authorizationStatus {
+        case .notDetermined:
+            self.locationManager?.requestWhenInUseAuthorization()
+            
+        case .authorizedAlways, .authorizedWhenInUse:
+            self.locationManager?.startUpdatingLocation()
+            self.locationManagerAuthorizedAction?(self.locationManager!.authorizationStatus)
+            
+            self.locationManagerAuthorizedAction = nil
+            self.locationManagerUnauthorizedAction = nil
+        
+        default:
+            self.locationManagerUnauthorizedAction?(self.locationManager?.authorizationStatus)
+            
+            self.locationManagerAuthorizedAction = nil
+            self.locationManagerUnauthorizedAction = nil
+        }
     }
     
 }
@@ -63,12 +86,7 @@ extension ShopSearchPresenter: ShopSearchPresentable {
     }
     
     func startUpdatingLocation() {
-        self.locationManagerAuthStatusActions { _ in
-            self.locationManager?.startUpdatingLocation()
-            
-        } unauthorized: { _ in
-            self.view?.openSettings()
-        }
+        self.locationManager?.startUpdatingLocation()
     }
     
     func stopUpdatingLocation() {
@@ -153,16 +171,10 @@ extension ShopSearchPresenter: ShopSearchPresentable {
     }
     
     func locationManagerAuthStatusActions(authorized authAction: ((CLAuthorizationStatus) -> Void)?, unauthorized unauthAction: ((CLAuthorizationStatus?) -> Void)? = nil) {
-        switch self.locationManager?.authorizationStatus {
-        case .notDetermined:
-            self.locationManager?.requestWhenInUseAuthorization()
-            
-        case .authorizedAlways, .authorizedWhenInUse:
-            authAction?(self.locationManager!.authorizationStatus)
+        self.locationManagerAuthorizedAction = authAction
+        self.locationManagerUnauthorizedAction = unauthAction
         
-        default:
-            unauthAction?(self.locationManager?.authorizationStatus)
-        }
+        self.locationManagerAuthStatusActionsResolver()
     }
     
 }
@@ -172,7 +184,7 @@ extension ShopSearchPresenter: ShopSearchPresentable {
 extension ShopSearchPresenter: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        self.startUpdatingLocation()
+        self.locationManagerAuthStatusActionsResolver()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

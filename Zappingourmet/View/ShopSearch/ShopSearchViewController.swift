@@ -68,7 +68,13 @@ final class ShopSearchViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.presenter?.startUpdatingLocation()
+        self.presenter?.locationManagerAuthStatusActions { _ in
+            self.view.endEditing(true)
+            self.presenter?.startUpdatingLocation()
+            
+        } unauthorized: { _ in
+            self.openSettings()
+        }
     }
     
     // MARK: - Public
