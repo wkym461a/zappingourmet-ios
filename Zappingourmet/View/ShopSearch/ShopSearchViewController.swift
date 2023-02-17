@@ -234,7 +234,9 @@ final class ShopSearchViewController: UIViewController {
     }
     
     @IBAction private func centeringCurrentLocation(_ sender: UIButton) {
-        self.setVisibleMapViewOverlays(animated: true)
+        self.presenter?.locationManagerAuthFilter { _ in
+            self.setVisibleMapViewOverlays(animated: true)
+        }
     }
     
 }
@@ -357,9 +359,10 @@ extension ShopSearchViewController: UIPickerViewDelegate {
         case 1:
             self.updateUI()
             
-            self.refreshMapViewOverlays()
-            self.setVisibleMapViewOverlays(animated: true)
-            
+            self.presenter?.locationManagerAuthFilter { _ in
+                self.refreshMapViewOverlays()
+                self.setVisibleMapViewOverlays(animated: true)
+            }
             return
             
         case 2:
