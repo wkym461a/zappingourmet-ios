@@ -11,6 +11,7 @@ import Combine
 
 protocol ShopSearchPresentable: AnyObject {
     
+    func setupLocationManager()
     func startUpdatingLocation()
     func stopUpdatingLocation()
     func getCurrentLocation() -> CLLocation?
@@ -27,7 +28,7 @@ protocol ShopSearchPresentable: AnyObject {
     func setHotPepperGourmetSearchRange(selectedIndex: Int)
     func setHotPepperGourmetSearchGenre(selectedIndex: Int)
     
-    func locationAuthFilter(_ authAction: ((CLAuthorizationStatus) -> Void)?)
+    func locationManagerAuthStatusActions(authorized authAction: ((CLAuthorizationStatus) -> Void)?, unauthorized unauthAction: ((CLAuthorizationStatus?) -> Void)?)
     
 }
 
@@ -40,15 +41,32 @@ final class ShopSearchPresenter: NSObject {
     private var locationManager: CLLocationManager?
     private var currentLocation: CLLocation?
     
+    private var locationManagerAuthorizedAction: ((CLAuthorizationStatus) -> Void)?
+    private var locationManagerUnauthorizedAction: ((CLAuthorizationStatus?) -> Void)?
+    
     init(_ view: ShopSearchViewable) {
         self.view = view
         
         self.genres = []
     }
     
-    private func startUpdatingLocationWithAuth() {
-        self.locationAuthFilter { _ in
+    private func locationManagerAuthStatusActionsResolver() {
+        switch self.locationManager?.authorizationStatus {
+        case .notDetermined:
+            self.locationManager?.requestWhenInUseAuthorization()
+            
+        case .authorizedAlways, .authorizedWhenInUse:
             self.locationManager?.startUpdatingLocation()
+            self.locationManagerAuthorizedAction?(self.locationManager!.authorizationStatus)
+            
+            self.locationManagerAuthorizedAction = nil
+            self.locationManagerUnauthorizedAction = nil
+        
+        default:
+            self.locationManagerUnauthorizedAction?(self.locationManager?.authorizationStatus)
+            
+            self.locationManagerAuthorizedAction = nil
+            self.locationManagerUnauthorizedAction = nil
         }
     }
     
@@ -58,13 +76,17 @@ final class ShopSearchPresenter: NSObject {
 
 extension ShopSearchPresenter: ShopSearchPresentable {
     
-    func startUpdatingLocation() {
-        self.locationManager?.stopUpdatingLocation()
+    func setupLocationManager() {
+        if self.locationManager != nil {
+            return
+        }
         
         self.locationManager = CLLocationManager()
         self.locationManager?.delegate = self
-        
-        self.startUpdatingLocationWithAuth()
+    }
+    
+    func startUpdatingLocation() {
+        self.locationManager?.startUpdatingLocation()
     }
     
     func stopUpdatingLocation() {
@@ -148,17 +170,11 @@ extension ShopSearchPresenter: ShopSearchPresentable {
         UserDefaults.standard.save(self.genres[selectedIndex], key: Constant.UserDefaultsReservedKey.SearchGenre_Genre)
     }
     
-    func locationAuthFilter(_ authAction: ((CLAuthorizationStatus) -> Void)?) {
-        switch self.locationManager?.authorizationStatus {
-        case .notDetermined:
-            self.locationManager?.requestWhenInUseAuthorization()
-            
-        case .authorizedAlways, .authorizedWhenInUse:
-            authAction?(self.locationManager!.authorizationStatus)
+    func locationManagerAuthStatusActions(authorized authAction: ((CLAuthorizationStatus) -> Void)?, unauthorized unauthAction: ((CLAuthorizationStatus?) -> Void)? = nil) {
+        self.locationManagerAuthorizedAction = authAction
+        self.locationManagerUnauthorizedAction = unauthAction
         
-        default:
-            self.view?.openSettings()
-        }
+        self.locationManagerAuthStatusActionsResolver()
     }
     
 }
@@ -168,13 +184,17 @@ extension ShopSearchPresenter: ShopSearchPresentable {
 extension ShopSearchPresenter: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        self.startUpdatingLocationWithAuth()
+        self.locationManagerAuthStatusActionsResolver()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.currentLocation = locations.first
         
         self.view?.updateUI()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(#function, error)
     }
     
 }

@@ -53,7 +53,7 @@ final class ShopSearchViewController: UIViewController {
         super.viewDidLoad()
         
         self.presenter = ShopSearchPresenter(self)
-        self.presenter?.startUpdatingLocation()
+        self.presenter?.setupLocationManager()
         self.presenter?.fetchHotPepperGenres()
         
         self.setupUI()
@@ -63,6 +63,18 @@ final class ShopSearchViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.updateUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.presenter?.locationManagerAuthStatusActions { _ in
+            self.view.endEditing(true)
+            self.presenter?.startUpdatingLocation()
+            
+        } unauthorized: { _ in
+            self.openSettings()
+        }
     }
     
     // MARK: - Public
@@ -199,7 +211,7 @@ final class ShopSearchViewController: UIViewController {
     }
     
     @IBAction private func searchShops(_ sender: UIButton) {
-        self.presenter?.locationAuthFilter { _ in
+        self.presenter?.locationManagerAuthStatusActions { _ in
             guard self.presenter?.setHotPepperGourmetSearchCoordinate() == true else {
                 self.goAlertWhenFailedToGetLocation()
                 return
@@ -212,7 +224,12 @@ final class ShopSearchViewController: UIViewController {
                 selectedIndex: self.genrePickerControl.picker.selectedRow(inComponent: 0)
             )
             
+            self.presenter?.stopUpdatingLocation()
+            
             self.goShopList()
+            
+        } unauthorized: { _ in
+            self.openSettings()
         }
     }
     
@@ -244,19 +261,20 @@ extension ShopSearchViewController: ShopSearchViewable {
             message: "周辺のレストランを検索するためには、位置情報の使用を許可してください。",
             preferredStyle: .alert
         )
-        
+
         let openSettingsAction = UIAlertAction(title: "設定を開く", style: .default) { _ in
-            guard let url = URL(string: UIApplication.openSettingsURLString) else {
-                return
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+
+            } else {
+                print("Can't open Settings")
             }
-            
-            UIApplication.shared.open(url)
         }
         alertController.addAction(openSettingsAction)
-        
+
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
-        
+
         present(alertController, animated: true, completion: nil)
     }
     
