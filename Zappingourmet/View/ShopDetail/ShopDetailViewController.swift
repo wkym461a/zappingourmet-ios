@@ -97,7 +97,6 @@ final class ShopDetailViewController: UIViewController {
             forCellWithReuseIdentifier: "tagCell"
         )
         self.tagCollectionView.collectionViewLayout = self.tagCollectionViewFlowLayout
-        self.tagCollectionView.backgroundColor = .systemRed
         
         self.mapView.delegate = self
         self.mapView.showsUserLocation = true
@@ -191,7 +190,7 @@ extension ShopDetailViewController: ShopDetailViewable {
             return
         }
         
-        self.headerImageView.image = UIImage(data: .fromURL(shop.photoURL))
+        self.headerImageView.loadImage(contentOf: shop.photoURL)
         self.nameLabel.text = shop.name
         self.openLabel.text = shop.open
         
