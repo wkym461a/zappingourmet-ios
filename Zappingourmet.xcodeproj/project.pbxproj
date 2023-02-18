@@ -15,6 +15,7 @@
 		D13A2E662995A66800373F9F /* ZappingourmetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E652995A66800373F9F /* ZappingourmetTests.swift */; };
 		D13A2E702995A66800373F9F /* ZappingourmetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E6F2995A66800373F9F /* ZappingourmetUITests.swift */; };
 		D13A2E722995A66800373F9F /* ZappingourmetUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E712995A66800373F9F /* ZappingourmetUITestsLaunchTests.swift */; };
+		D13FEA9229A0606E00876DB3 /* ExUIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13FEA9129A0606E00876DB3 /* ExUIImageView.swift */; };
 		D14BE621299910BE00F0B774 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D14BE61C2998E90300F0B774 /* CoreLocation.framework */; };
 		D14BE6232999B7F800F0B774 /* PickerInputControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14BE6222999B7F700F0B774 /* PickerInputControl.swift */; };
 		D14F9916299B3F830070E555 /* ExUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14F9915299B3F830070E555 /* ExUIColor.swift */; };
@@ -47,7 +48,6 @@
 		D1EF48ED29989D6D00A5AF8D /* ShopSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1EF48EC29989D6D00A5AF8D /* ShopSearch.storyboard */; };
 		D1EF48EF29989D7F00A5AF8D /* ShopSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF48EE29989D7F00A5AF8D /* ShopSearchViewController.swift */; };
 		D1EF48F129989DDC00A5AF8D /* ShopSearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF48F029989DDC00A5AF8D /* ShopSearchPresenter.swift */; };
-		D1FB09A329987A63009E4527 /* ExData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FB09A229987A63009E4527 /* ExData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +80,7 @@
 		D13A2E6B2995A66800373F9F /* ZappingourmetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZappingourmetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D13A2E6F2995A66800373F9F /* ZappingourmetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZappingourmetUITests.swift; sourceTree = "<group>"; };
 		D13A2E712995A66800373F9F /* ZappingourmetUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZappingourmetUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D13FEA9129A0606E00876DB3 /* ExUIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUIImageView.swift; sourceTree = "<group>"; };
 		D14BE61C2998E90300F0B774 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D14BE6222999B7F700F0B774 /* PickerInputControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerInputControl.swift; sourceTree = "<group>"; };
 		D14F9915299B3F830070E555 /* ExUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUIColor.swift; sourceTree = "<group>"; };
@@ -111,7 +112,6 @@
 		D1EF48EC29989D6D00A5AF8D /* ShopSearch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ShopSearch.storyboard; sourceTree = "<group>"; };
 		D1EF48EE29989D7F00A5AF8D /* ShopSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopSearchViewController.swift; sourceTree = "<group>"; };
 		D1EF48F029989DDC00A5AF8D /* ShopSearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopSearchPresenter.swift; sourceTree = "<group>"; };
-		D1FB09A229987A63009E4527 /* ExData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,8 +287,8 @@
 			isa = PBXGroup;
 			children = (
 				D1E5081A299855BA006E5AA3 /* ExUserDefaults.swift */,
-				D1FB09A229987A63009E4527 /* ExData.swift */,
 				D14F9915299B3F830070E555 /* ExUIColor.swift */,
+				D13FEA9129A0606E00876DB3 /* ExUIImageView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -454,7 +454,6 @@
 				D1E5081B299855BA006E5AA3 /* ExUserDefaults.swift in Sources */,
 				D1EF48EF29989D7F00A5AF8D /* ShopSearchViewController.swift in Sources */,
 				D17ACC472995C97800E056B6 /* HotPepperAPI.swift in Sources */,
-				D1FB09A329987A63009E4527 /* ExData.swift in Sources */,
 				D19CF887299B2ED10096C1B2 /* ShopDetailTagCollectionViewCell.swift in Sources */,
 				D13A2E4C2995A66500373F9F /* AppDelegate.swift in Sources */,
 				D13A2E4E2995A66500373F9F /* SceneDelegate.swift in Sources */,
@@ -464,6 +463,7 @@
 				D1BEF18629976EF400F6F851 /* ShopListCollectionViewCell.swift in Sources */,
 				D1BEF1892997BA5800F6F851 /* ShopImageView.swift in Sources */,
 				D17ACC6129964C0400E056B6 /* HotPepperGourmetSearch.swift in Sources */,
+				D13FEA9229A0606E00876DB3 /* ExUIImageView.swift in Sources */,
 				D19C6432299BB7250000C576 /* HotPepperGenreMasterResults.swift in Sources */,
 				D14BE6232999B7F800F0B774 /* PickerInputControl.swift in Sources */,
 				D19CF88A299B32060096C1B2 /* ShopDetailTagCollectionViewFlowLayout.swift in Sources */,
@@ -656,7 +656,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2.3;
+				MARKETING_VERSION = 0.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.wkym461a.Zappingourmet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -687,7 +687,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2.3;
+				MARKETING_VERSION = 0.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.wkym461a.Zappingourmet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

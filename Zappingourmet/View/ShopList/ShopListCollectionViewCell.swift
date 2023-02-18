@@ -36,13 +36,18 @@ final class ShopListCollectionViewCell: UICollectionViewCell {
     // MARK: - Public
     
     func updateUI(shop: Shop) {
-        self.shopImageView.image = UIImage(data: .fromURL(shop.photoURL))
+        self.shopImageView.loadImage(contentOf: shop.photoURL)
         self.catchLabel.text = shop.`catch`
         
-        if let logoImage = (shop.logoURL != nil) ? UIImage(data: .fromURL(shop.logoURL!)) : UIImage(named: "AppIcon") {
-            self.logoImageView.image = logoImage
-            let estimatedWidth = self.logoImageView.frame.height / logoImage.size.height * logoImage.size.width
-            self.logoImageViewWidthConstraint.constant = min(estimatedWidth, self.logoImageViewMaxWidth)
+        if let logoURL = shop.logoURL {
+            self.logoImageView.loadImage(contentOf: logoURL) { succeeded, image in
+                guard succeeded, let image = image else {
+                    return
+                }
+                
+                let estimatedWidth = self.logoImageView.frame.height / image.size.height * image.size.width
+                self.logoImageViewWidthConstraint.constant = min(estimatedWidth, self.logoImageViewMaxWidth)
+            }
         }
         self.nameLabel.text = shop.name
         self.accessLabel.text = shop.accessShort ?? shop.access

@@ -59,16 +59,24 @@ final class ShopDetailViewController: UIViewController {
         self.setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.updateUI()
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
         self.tagCollectionViewHeightConstraint.constant = self.tagCollectionView.contentSize.height
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        self.updateUI()
+        if self.tagCollectionView.bounds.size.height != self.tagCollectionView.contentSize.height {
+            self.tagCollectionViewHeightConstraint.constant = self.tagCollectionView.contentSize.height
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -182,11 +190,10 @@ extension ShopDetailViewController: ShopDetailViewable {
             return
         }
         
-        self.headerImageView.image = UIImage(data: .fromURL(shop.photoURL))
+        self.headerImageView.loadImage(contentOf: shop.photoURL)
         self.nameLabel.text = shop.name
         self.openLabel.text = shop.open
         
-        self.accessLabel.text = shop.access
         self.detailMemoLabel.text = (shop.detailMemo.count > 0) ? shop.detailMemo : "なし"
         let shopURLString = shop.url.absoluteString
         let attributeShopURLString: NSMutableAttributedString = .init(string: shopURLString)
@@ -197,6 +204,7 @@ extension ShopDetailViewController: ShopDetailViewable {
         )
         self.shopURLButton.setAttributedTitle(attributeShopURLString, for: .normal)
         
+        self.accessLabel.text = shop.access
         self.addressLabel.text = shop.address
     }
     
@@ -237,6 +245,10 @@ extension ShopDetailViewController: UICollectionViewDelegate {
 extension ShopDetailViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize.zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize.zero
     }
     
