@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct Shop: Codable {
     
@@ -140,6 +141,13 @@ struct Shop: Codable {
     var `catch`: String
     var tags: [String]
     var detailMemo: String
+    
+    var coordinate: CLLocationCoordinate2D {
+        return .init(
+            latitude: .init(self.latitude),
+            longitude: .init(self.longitude)
+        )
+    }
     
     func getAccessPreferShort() -> String {
         guard let short = self.accessShort?.trimmingCharacters(in: .whitespacesAndNewlines), short.count > 0 else {

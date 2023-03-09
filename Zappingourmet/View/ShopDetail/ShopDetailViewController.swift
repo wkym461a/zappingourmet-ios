@@ -114,60 +114,17 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
         guard let shop = self.presenter?.getItem() else {
             return
         }
-        let shopCoordinate: CLLocationCoordinate2D = .init(
-            latitude: .init(shop.latitude),
-            longitude: .init(shop.longitude)
-        )
         
-        var region = self.mapView.region
-        region.center = shopCoordinate
-        region.span = .init(
-            latitudeDelta: .init(0.02),
-            longitudeDelta: .init(0.02)
-        )
-        self.mapView.region = region
-        
-        let userCoordinate = self.mapView.userLocation.coordinate
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = shopCoordinate
-        self.mapView.addAnnotation(annotation)
-        
-        let userPlacemark: MKMapItem = .init(
-            placemark: MKPlacemark(
-                coordinate: userCoordinate,
-                addressDictionary: nil
-            )
-        )
-        let shopPlacemark: MKMapItem = .init(
-            placemark: MKPlacemark(
-                coordinate: shopCoordinate,
-                addressDictionary: nil
-            )
-        )
-        
-        let directionsRequest = MKDirections.Request()
-        directionsRequest.transportType = .walking
-        directionsRequest.source = userPlacemark
-        directionsRequest.destination = shopPlacemark
-        let direction = MKDirections(request: directionsRequest)
-        direction.calculate { response, error in
-            if let error = error {
-                print(#function, error)
+        self.mapView.getRoutesFromCurrentLocation(to: shop.coordinate) { routes in
+            guard let route = routes.first else {
                 return
             }
-            
-            guard let route = response?.routes.first else {
-                print(#function, "response.routes not found")
-                return
-            }
-            
             self.mapView.addOverlay(route.polyline, level: .aboveRoads)
             
-            if let firstOverlay = self.mapView.overlays.first {
-                let rect = self.mapView.overlays.reduce(firstOverlay.boundingMapRect, { $0.union($1.boundingMapRect) })
-                self.mapView.setVisibleMapRect(rect, edgePadding: self.mapViewOverlaysEdgePadding, animated: false)
-            }
+            self.mapView.setVisibleOverlays(
+                edgePadding: self.mapViewOverlaysEdgePadding,
+                animated: false
+            )
         }
     }
     

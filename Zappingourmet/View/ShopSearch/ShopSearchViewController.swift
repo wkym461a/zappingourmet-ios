@@ -173,13 +173,6 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
         self.mapView.addOverlay(circle)
     }
     
-    private func setVisibleMapViewOverlays(animated: Bool) {
-        if let firstOverlay = self.mapView.overlays.filter({ $0 is MKCircle }).first {
-            let rect = self.mapView.overlays.reduce(firstOverlay.boundingMapRect, { $0.union($1.boundingMapRect) })
-            self.mapView.setVisibleMapRect(rect, edgePadding: self.mapViewOverlaysEdgePadding, animated: animated)
-        }
-    }
-    
     private func goAlertWhenFailedToGetLocation() {
         let alert = UIAlertController.messageAlert(
             title: "位置情報の取得に失敗",
@@ -236,7 +229,10 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     
     @IBAction private func centeringCurrentLocation(_ sender: UIButton) {
         self.presenter?.locationManagerAuthFilter { _ in
-            self.setVisibleMapViewOverlays(animated: true)
+            self.mapView.setVisibleOverlays(
+                edgePadding: self.mapViewOverlaysEdgePadding,
+                animated: true
+            )
         }
     }
     
@@ -287,7 +283,10 @@ extension ShopSearchViewController: MKMapViewDelegate {
         self.refreshMapViewOverlays()
         
         if !self.isInitializedMapView {
-            self.setVisibleMapViewOverlays(animated: false)
+            self.mapView.setVisibleOverlays(
+                edgePadding: self.mapViewOverlaysEdgePadding,
+                animated: false
+            )
             
             self.isInitializedMapView = true
         }
@@ -358,7 +357,10 @@ extension ShopSearchViewController: UIPickerViewDelegate {
             
             self.presenter?.locationManagerAuthFilter { _ in
                 self.refreshMapViewOverlays()
-                self.setVisibleMapViewOverlays(animated: true)
+                self.mapView.setVisibleOverlays(
+                    edgePadding: self.mapViewOverlaysEdgePadding,
+                    animated: true
+                )
             }
             return
             
