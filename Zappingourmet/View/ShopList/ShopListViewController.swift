@@ -84,10 +84,10 @@ final class ShopListViewController: UIViewController, ViewControllerMakable {
     
     private func setupUI() {
         var navigationItemTitle = ""
-        if let searchRangeName = self.presenter?.getSearchRangeName() {
+        if let searchRangeName = self.presenter?.getFetchShopsParamSearchRange()?.name {
             navigationItemTitle += "\(searchRangeName)以内の"
         }
-        navigationItemTitle += self.presenter?.getSearchGenreName() ?? "検索結果"
+        navigationItemTitle += self.presenter?.getFetchShopsParamGenre()?.name ?? "検索結果"
         self.navigationItem.title = navigationItemTitle
         
         self.collectionView.dataSource = self

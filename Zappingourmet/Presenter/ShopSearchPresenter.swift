@@ -17,9 +17,7 @@ protocol ShopSearchPresentable: AnyObject {
     func getCurrentLocation() -> CLLocation?
     
     func getHotPepperGourmetSearchRange(index: Int) -> HotPepperGourmetSearchRange?
-    func getHotPepperGourmetSearchRangeName(index: Int) -> String?
     func getHotPepperGourmetSearchRangesCount() -> Int
-    func getHotPepperGourmetSearchRangeValue(index: Int) -> Int?
     
     func fetchHotPepperGenres()
     func getHotPepperGenre(index: Int) -> Genre
@@ -99,16 +97,8 @@ extension ShopSearchPresenter: ShopSearchPresentable {
         return HotPepperGourmetSearchRange.allCases[index]
     }
     
-    func getHotPepperGourmetSearchRangeName(index: Int) -> String? {
-        return HotPepperGourmetSearchRange.allCases[index].name
-    }
-    
     func getHotPepperGourmetSearchRangesCount() -> Int {
         return HotPepperGourmetSearchRange.allCases.count
-    }
-    
-    func getHotPepperGourmetSearchRangeValue(index: Int) -> Int? {
-        return HotPepperGourmetSearchRange.allCases[index].rangeValue
     }
     
     func fetchHotPepperGenres() {

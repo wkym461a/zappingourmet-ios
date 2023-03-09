@@ -166,7 +166,7 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     private func refreshMapViewOverlays() {
         self.mapView.removeOverlays(self.mapView.overlays)
         
-        let rangeValue = self.presenter?.getHotPepperGourmetSearchRangeValue(index: self.rangePickerControl.picker.selectedRow(inComponent: 0)) ?? 0
+        let rangeValue = self.presenter?.getHotPepperGourmetSearchRange(index: self.rangePickerControl.picker.selectedRow(inComponent: 0))?.rangeValue ?? 0
         let circle = MKCircle(
             center: self.mapView.userLocation.coordinate,
             radius: CLLocationDistance(rangeValue)
@@ -254,7 +254,7 @@ extension ShopSearchViewController: ShopSearchViewable {
     func updateUI() {
         let selectedRangeIndex = self.rangePickerControl.picker.selectedRow(inComponent: 0)
         if let count = self.presenter?.getHotPepperGourmetSearchRangesCount(), count > 0 {
-            self.rangeValueLabel.text = self.presenter?.getHotPepperGourmetSearchRangeName(index: selectedRangeIndex)
+            self.rangeValueLabel.text = self.presenter?.getHotPepperGourmetSearchRange(index: selectedRangeIndex)?.name
         }
         
         let selectedGenreIndex = self.genrePickerControl.picker.selectedRow(inComponent: 0)
@@ -343,7 +343,7 @@ extension ShopSearchViewController: UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch pickerView.tag {
         case 1:
-            return self.presenter?.getHotPepperGourmetSearchRangeName(index: row)
+            return self.presenter?.getHotPepperGourmetSearchRange(index: row)?.name
             
         case 2:
             return self.presenter?.getHotPepperGenre(index: row).name

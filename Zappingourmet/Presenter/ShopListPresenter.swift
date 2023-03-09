@@ -31,8 +31,8 @@ protocol ShopListPresentable: AnyObject {
     func getShopsCount() -> Int
     func getShop(index: Int) -> Shop
     
-    func getSearchRangeName() -> String?
-    func getSearchGenreName() -> String?
+    func getFetchShopsParamSearchRange() -> HotPepperGourmetSearchRange?
+    func getFetchShopsParamGenre() -> Genre?
     func getAvailableShopsCount() -> Int
     func getIsFetchedAllAvailableShops() -> Bool
     
@@ -58,9 +58,9 @@ final class ShopListPresenter {
         self.shops = []
     }
     
-    private func getSearchGenre() -> Genre? {
-        return (self.fetchShopsParams.genre?.code != Genre.none.code) ? self.fetchShopsParams.genre : nil
-    }
+//    private func getSearchGenre() -> Genre? {
+//        return (self.fetchShopsParams.genre?.code != Genre.none.code) ? self.fetchShopsParams.genre : nil
+//    }
     
 }
 
@@ -83,7 +83,7 @@ extension ShopListPresenter: ShopListPresentable {
                 lat: self.fetchShopsParams.latitude,
                 lng: self.fetchShopsParams.longitude,
                 range: self.fetchShopsParams.searchRange,
-                genre: self.getSearchGenre()?.code,
+                genre: self.getFetchShopsParamGenre()?.code,
                 start: self.fetchStartIndex,
                 count: self.fetchCount
             )
@@ -136,12 +136,12 @@ extension ShopListPresenter: ShopListPresentable {
         return self.shops[index]
     }
     
-    func getSearchRangeName() -> String? {
-        return self.fetchShopsParams.searchRange?.name
+    func getFetchShopsParamSearchRange() -> HotPepperGourmetSearchRange? {
+        return self.fetchShopsParams.searchRange
     }
     
-    func getSearchGenreName() -> String? {
-        return self.getSearchGenre()?.name
+    func getFetchShopsParamGenre() -> Genre? {
+        return (self.fetchShopsParams.genre?.code != Genre.none.code) ? self.fetchShopsParams.genre : nil
     }
     
     func getAvailableShopsCount() -> Int {
