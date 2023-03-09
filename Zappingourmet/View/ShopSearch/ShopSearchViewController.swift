@@ -181,16 +181,12 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     }
     
     private func goAlertWhenFailedToGetLocation() {
-        let alertController = UIAlertController(
+        let alert = UIAlertController.messageAlert(
             title: "位置情報の取得に失敗",
-            message: "位置情報サービスを有効化するか、位置情報が取得できる場所で使用してください。",
-            preferredStyle: .alert
+            message: "位置情報サービスを有効化するか、位置情報が取得できる場所で使用してください。"
         )
         
-        let cancelAction = UIAlertAction(title: "閉じる", style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Action
@@ -263,26 +259,22 @@ extension ShopSearchViewController: ShopSearchViewable {
     }
     
     func openSettings() {
-        let alertController = UIAlertController(
+        let alert = UIAlertController.confirmActionAlert(
             title: "位置情報の設定",
             message: "周辺のレストランを検索するためには、位置情報の使用を許可してください。",
-            preferredStyle: .alert
-        )
-
-        let openSettingsAction = UIAlertAction(title: "設定を開く", style: .default) { _ in
+            confirmTitle: "設定を開く"
+            
+        ) { _ in
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url)
 
             } else {
-                print("Can't open Settings")
+                let errorAlert = UIAlertController.messageAlert(title: "設定が開けません", message: "")
+                self.present(errorAlert, animated: true, completion: nil)
             }
         }
-        alertController.addAction(openSettingsAction)
 
-        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
-
-        present(alertController, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
 }
