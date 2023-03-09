@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D113EC2129B96E310072B689 /* ViewControllerMakable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D113EC2029B96E310072B689 /* ViewControllerMakable.swift */; };
 		D113EC2329B9ABB80072B689 /* ExNSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D113EC2229B9ABB80072B689 /* ExNSObject.swift */; };
+		D113EC2529B9FA8B0072B689 /* ExUIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D113EC2429B9FA8B0072B689 /* ExUIAlertController.swift */; };
 		D13A2E4C2995A66500373F9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E4B2995A66500373F9F /* AppDelegate.swift */; };
 		D13A2E4E2995A66500373F9F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E4D2995A66500373F9F /* SceneDelegate.swift */; };
 		D13A2E562995A66500373F9F /* Zappingourmet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E542995A66500373F9F /* Zappingourmet.xcdatamodeld */; };
@@ -72,6 +73,7 @@
 /* Begin PBXFileReference section */
 		D113EC2029B96E310072B689 /* ViewControllerMakable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerMakable.swift; sourceTree = "<group>"; };
 		D113EC2229B9ABB80072B689 /* ExNSObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNSObject.swift; sourceTree = "<group>"; };
+		D113EC2429B9FA8B0072B689 /* ExUIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUIAlertController.swift; sourceTree = "<group>"; };
 		D13A2E482995A66500373F9F /* Zappingourmet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zappingourmet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D13A2E4B2995A66500373F9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D13A2E4D2995A66500373F9F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 				D14F9915299B3F830070E555 /* ExUIColor.swift */,
 				D13FEA9129A0606E00876DB3 /* ExUIImageView.swift */,
 				D113EC2229B9ABB80072B689 /* ExNSObject.swift */,
+				D113EC2429B9FA8B0072B689 /* ExUIAlertController.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -481,6 +484,7 @@
 				D150C96B299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift in Sources */,
 				D1C320CA2997665B00D5C7EA /* ShopListViewController.swift in Sources */,
 				D17ACC6329964DDB00E056B6 /* HotPepperTargetType.swift in Sources */,
+				D113EC2529B9FA8B0072B689 /* ExUIAlertController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
