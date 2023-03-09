@@ -14,12 +14,12 @@ final class HotPepperAPI {
     
     // MARK: - Static
     
-    static let shared = HotPepperAPI()
+    static let shared = HotPepperAPI(MoyaProvider.neverStub)
+//    static let stubbed = HotPepperAPI(MoyaProvider.immediatelyStub)
     
     // MARK: - Property
     
-    private let provider = MoyaProvider<MultiTarget>()
-    private let stubbingProvider = MoyaProvider<MultiTarget>(stubClosure: MoyaProvider.immediatelyStub)
+    private let provider: MoyaProvider<MultiTarget>
     
     private let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
@@ -36,15 +36,10 @@ final class HotPepperAPI {
             .eraseToAnyPublisher()
     }
     
-    func requestStub<T: HotPepperTargetType>(target: T) -> AnyPublisher<T.Response, Error> {
-        return self.stubbingProvider.requestPublisher(MultiTarget(target))
-            .map { $0.data }
-            .decode(type: T.Response.self, decoder: self.decoder)
-            .eraseToAnyPublisher()
-    }
-    
     // MARK: - Private
     
-    private init() {}
+    private init(_ stubClosure: @escaping MoyaProvider<MultiTarget>.StubClosure) {
+        self.provider = MoyaProvider<MultiTarget>(stubClosure: stubClosure)
+    }
     
 }
