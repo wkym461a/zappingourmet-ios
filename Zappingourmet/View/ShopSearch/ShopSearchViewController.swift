@@ -8,6 +8,8 @@
 import UIKit
 import MapKit
 
+struct ShopSearchViewControllerParams {}
+
 protocol ShopSearchViewable: AnyObject {
     
     func updateUI()
@@ -15,7 +17,9 @@ protocol ShopSearchViewable: AnyObject {
     
 }
 
-final class ShopSearchViewController: UIViewController {
+final class ShopSearchViewController: UIViewController, ViewControllerMakable {
+    
+    typealias Params = ShopSearchViewControllerParams
     
     // MARK: - Outlet
     
@@ -35,6 +39,8 @@ final class ShopSearchViewController: UIViewController {
     @IBOutlet private weak var searchButton: UIButton!
     
     // MARK: - Property
+    
+    internal var params: ShopSearchViewControllerParams?
     
     private var presenter: ShopSearchPresentable?
     
@@ -159,7 +165,7 @@ final class ShopSearchViewController: UIViewController {
     private func refreshMapViewOverlays() {
         self.mapView.removeOverlays(self.mapView.overlays)
         
-        let rangeValue = self.presenter?.getHotPepperGourmetSearchRangeValue(index: self.rangePickerControl.picker.selectedRow(inComponent: 0)) ?? 0
+        let rangeValue = self.presenter?.getHotPepperGourmetSearchRange(index: self.rangePickerControl.picker.selectedRow(inComponent: 0))?.rangeValue ?? 0
         let circle = MKCircle(
             center: self.mapView.userLocation.coordinate,
             radius: CLLocationDistance(rangeValue)
@@ -187,11 +193,6 @@ final class ShopSearchViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    private func goShopList() {
-        let shopList = UIStoryboard(name: Constant.StoryboardName.ShopList, bundle: nil).instantiateInitialViewController()!
-        self.navigationController?.pushViewController(shopList, animated: true)
-    }
-    
     // MARK: - Action
     
     @objc private func dismissPickerInput() {
@@ -212,21 +213,25 @@ final class ShopSearchViewController: UIViewController {
     
     @IBAction private func searchShops(_ sender: UIButton) {
         self.presenter?.locationManagerAuthStatusActions { _ in
-            guard self.presenter?.setHotPepperGourmetSearchCoordinate() == true else {
+            guard
+                let presenter = self.presenter,
+                let currentLocation = presenter.getCurrentLocation()
+            
+            else {
                 self.goAlertWhenFailedToGetLocation()
                 return
             }
             
-            self.presenter?.setHotPepperGourmetSearchRange(
-                selectedIndex: self.rangePickerControl.picker.selectedRow(inComponent: 0)
-            )
-            self.presenter?.setHotPepperGourmetSearchGenre(
-                selectedIndex: self.genrePickerControl.picker.selectedRow(inComponent: 0)
-            )
+            presenter.stopUpdatingLocation()
             
-            self.presenter?.stopUpdatingLocation()
-            
-            self.goShopList()
+            let shopListParams = ShopListViewControllerParams(
+                latitude: currentLocation.coordinate.latitude,
+                longitude: currentLocation.coordinate.longitude,
+                searchRange: presenter.getHotPepperGourmetSearchRange(index: self.rangePickerControl.picker.selectedRow(inComponent: 0)),
+                genre: presenter.getHotPepperGenre(index: self.genrePickerControl.picker.selectedRow(inComponent: 0))
+            )
+            let shopList = ShopListViewController.makeViewController(params: shopListParams)
+            self.navigationController?.pushViewController(shopList, animated: true)
             
         } unauthorized: { _ in
             self.openSettings()
@@ -248,7 +253,7 @@ extension ShopSearchViewController: ShopSearchViewable {
     func updateUI() {
         let selectedRangeIndex = self.rangePickerControl.picker.selectedRow(inComponent: 0)
         if let count = self.presenter?.getHotPepperGourmetSearchRangesCount(), count > 0 {
-            self.rangeValueLabel.text = self.presenter?.getHotPepperGourmetSearchRangeName(index: selectedRangeIndex)
+            self.rangeValueLabel.text = self.presenter?.getHotPepperGourmetSearchRange(index: selectedRangeIndex)?.name
         }
         
         let selectedGenreIndex = self.genrePickerControl.picker.selectedRow(inComponent: 0)
@@ -337,7 +342,7 @@ extension ShopSearchViewController: UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch pickerView.tag {
         case 1:
-            return self.presenter?.getHotPepperGourmetSearchRangeName(index: row)
+            return self.presenter?.getHotPepperGourmetSearchRange(index: row)?.name
             
         case 2:
             return self.presenter?.getHotPepperGenre(index: row).name
