@@ -10,7 +10,6 @@ import Foundation
 protocol ShopDetailPresentable: AnyObject {
     
     func getItem() -> Shop
-    func removeShopDetailItem()
     
 }
 
@@ -19,10 +18,10 @@ final class ShopDetailPresenter {
     private weak var view: ShopDetailViewable?
     private var item: Shop
     
-    init(_ view: ShopDetailViewable) {
+    init(_ view: ShopDetailViewable, item: Shop?) {
         self.view = view
         
-        self.item = UserDefaults.standard.load(Shop.self, key: Constant.UserDefaultsReservedKey.ShopDetailItem_Shop) ?? .default
+        self.item = item ?? .default
     }
     
 }
@@ -33,10 +32,6 @@ extension ShopDetailPresenter: ShopDetailPresentable {
     
     func getItem() -> Shop {
         return self.item
-    }
-    
-    func removeShopDetailItem() {
-        UserDefaults.standard.removeObject(forKey: Constant.UserDefaultsReservedKey.ShopDetailItem_Shop)
     }
     
 }

@@ -9,12 +9,27 @@ import Foundation
 import Combine
 import CoreLocation
 
+struct ShopListPresenterFetchShopsParams {
+    
+    static let `default` = ShopListPresenterFetchShopsParams(
+        latitude: 0,
+        longitude: 0,
+        searchRange: .oneThousandMeters,
+        genre: nil
+    )
+    
+    let latitude: Double
+    let longitude: Double
+    let searchRange: HotPepperGourmetSearchRange?
+    let genre: Genre?
+    
+}
+
 protocol ShopListPresentable: AnyObject {
     
     func fetchShops()
     func getShopsCount() -> Int
     func getShop(index: Int) -> Shop
-    func setShopDetailItem(index: Int)
     
     func getSearchRangeName() -> String?
     func getSearchGenreName() -> String?
@@ -26,6 +41,7 @@ protocol ShopListPresentable: AnyObject {
 final class ShopListPresenter {
     
     private weak var view: ShopListViewable?
+    private var fetchShopsParams: ShopListPresenterFetchShopsParams
     private var shops: [Shop]
     
     private var isFetching: Bool = false
@@ -35,10 +51,15 @@ final class ShopListPresenter {
     private let fetchCount: Int = 10
     private var isFetchedAllAvailableShops: Bool = false
     
-    init(_ view: ShopListViewable) {
+    init(_ view: ShopListViewable, fetchShopsParams: ShopListPresenterFetchShopsParams?) {
         self.view = view
+        self.fetchShopsParams = fetchShopsParams ?? .default
         
         self.shops = []
+    }
+    
+    private func getSearchGenre() -> Genre? {
+        return (self.fetchShopsParams.genre?.code != Genre.none.code) ? self.fetchShopsParams.genre : nil
     }
     
 }
@@ -57,14 +78,12 @@ extension ShopListPresenter: ShopListPresentable {
         }
         self.isFetching = true
         
-        let searchRangeCode = UserDefaults.standard.integer(forKey: Constant.UserDefaultsReservedKey.SearchRange_Int)
-        let searchGenre = UserDefaults.standard.load(Genre.self, key: Constant.UserDefaultsReservedKey.SearchGenre_Genre)
         self.cancellable = HotPepperAPI.shared.request(
             target: HotPepperGourmetSearch(
-                lat: UserDefaults.standard.double(forKey: Constant.UserDefaultsReservedKey.SearchLatitude_Double),
-                lng: UserDefaults.standard.double(forKey: Constant.UserDefaultsReservedKey.SearchLongitude_Double),
-                range: HotPepperGourmetSearchRange(code: searchRangeCode),
-                genre: (searchGenre?.code != Genre.none.code) ? searchGenre?.code : nil,
+                lat: self.fetchShopsParams.latitude,
+                lng: self.fetchShopsParams.longitude,
+                range: self.fetchShopsParams.searchRange,
+                genre: self.getSearchGenre()?.code,
                 start: self.fetchStartIndex,
                 count: self.fetchCount
             )
@@ -117,18 +136,12 @@ extension ShopListPresenter: ShopListPresentable {
         return self.shops[index]
     }
     
-    func setShopDetailItem(index: Int) {
-        UserDefaults.standard.save(self.shops[index], key: Constant.UserDefaultsReservedKey.ShopDetailItem_Shop)
-    }
-    
     func getSearchRangeName() -> String? {
-        let searchRangeCode = UserDefaults.standard.integer(forKey: Constant.UserDefaultsReservedKey.SearchRange_Int)
-        return HotPepperGourmetSearchRange(code: searchRangeCode)?.name
+        return self.fetchShopsParams.searchRange?.name
     }
     
     func getSearchGenreName() -> String? {
-        let searchGenre = UserDefaults.standard.load(Genre.self, key: Constant.UserDefaultsReservedKey.SearchGenre_Genre)
-        return (searchGenre?.code != Genre.none.code) ? searchGenre?.name : nil
+        return self.getSearchGenre()?.name
     }
     
     func getAvailableShopsCount() -> Int {

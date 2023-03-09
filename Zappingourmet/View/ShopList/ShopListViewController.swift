@@ -7,19 +7,33 @@
 
 import UIKit
 
+struct ShopListViewControllerParams {
+    
+    let latitude: Double
+    let longitude: Double
+    let searchRange: HotPepperGourmetSearchRange?
+    let genre: Genre?
+    
+}
+
 protocol ShopListViewable: AnyObject {
     
     func updateUI()
     
 }
 
-final class ShopListViewController: UIViewController {
+final class ShopListViewController: UIViewController, ViewControllerMakable {
+    
+    typealias Params = ShopListViewControllerParams
     
     // MARK: - Outlet
     
     @IBOutlet private weak var collectionView: UICollectionView!
     
     // MARK: - Property
+    
+    internal static var storyboardName: String = Constant.StoryboardName.ShopList
+    internal var params: ShopListViewControllerParams?
     
     private var presenter: ShopListPresentable?
     
@@ -50,7 +64,9 @@ final class ShopListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.presenter = ShopListPresenter(self)
+        self.presenter = ShopListPresenter(self, fetchShopsParams: self.getFetchShopsParams())
+        self.params = nil
+        
         self.presenter?.fetchShops()
         
         self.setupUI()
@@ -88,6 +104,19 @@ final class ShopListViewController: UIViewController {
         
         let flowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         flowLayout.estimatedItemSize = .zero
+    }
+    
+    private func getFetchShopsParams() -> ShopListPresenterFetchShopsParams? {
+        guard let params = self.params else {
+            return nil
+        }
+        
+        return ShopListPresenterFetchShopsParams(
+            latitude: params.latitude,
+            longitude: params.longitude,
+            searchRange: params.searchRange,
+            genre: params.genre
+        )
     }
     
     // MARK: - Action
@@ -171,9 +200,12 @@ extension ShopListViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.presenter?.setShopDetailItem(index: indexPath.row)
+        guard let shop = self.presenter?.getShop(index: indexPath.row) else {
+            return
+        }
         
-        let shopDetail = UIStoryboard(name: Constant.StoryboardName.ShopDetail, bundle: nil).instantiateInitialViewController()!
+        let shopDetailParams = ShopDetailViewControllerParams(item: shop)
+        let shopDetail = ShopDetailViewController.makeViewController(params: shopDetailParams)
         self.navigationController?.pushViewController(shopDetail, animated: true)
         
         collectionView.deselectItem(at: indexPath, animated: true)

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D113EC2129B96E310072B689 /* ViewControllerMakable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D113EC2029B96E310072B689 /* ViewControllerMakable.swift */; };
 		D13A2E4C2995A66500373F9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E4B2995A66500373F9F /* AppDelegate.swift */; };
 		D13A2E4E2995A66500373F9F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E4D2995A66500373F9F /* SceneDelegate.swift */; };
 		D13A2E562995A66500373F9F /* Zappingourmet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D13A2E542995A66500373F9F /* Zappingourmet.xcdatamodeld */; };
@@ -68,6 +69,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D113EC2029B96E310072B689 /* ViewControllerMakable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerMakable.swift; sourceTree = "<group>"; };
 		D13A2E482995A66500373F9F /* Zappingourmet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zappingourmet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D13A2E4B2995A66500373F9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D13A2E4D2995A66500373F9F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 		D1C320BF29974ED500D5C7EA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D113EC2029B96E310072B689 /* ViewControllerMakable.swift */,
 				D1EF48EB29989D5B00A5AF8D /* ShopSearch */,
 				D1C320C6299763FE00D5C7EA /* ShopList */,
 				D1E5081229984E33006E5AA3 /* ShopDetail */,
@@ -462,6 +465,7 @@
 				D17ACC7929973D6400E056B6 /* Shop.swift in Sources */,
 				D1BEF18629976EF400F6F851 /* ShopListCollectionViewCell.swift in Sources */,
 				D1BEF1892997BA5800F6F851 /* ShopImageView.swift in Sources */,
+				D113EC2129B96E310072B689 /* ViewControllerMakable.swift in Sources */,
 				D17ACC6129964C0400E056B6 /* HotPepperGourmetSearch.swift in Sources */,
 				D13FEA9229A0606E00876DB3 /* ExUIImageView.swift in Sources */,
 				D19C6432299BB7250000C576 /* HotPepperGenreMasterResults.swift in Sources */,

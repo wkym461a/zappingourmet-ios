@@ -8,13 +8,22 @@
 import UIKit
 import MapKit
 
+struct ShopDetailViewControllerParams {
+    
+    let item: Shop
+    
+}
+
 protocol ShopDetailViewable: AnyObject {
     
     func updateUI()
     
 }
 
-final class ShopDetailViewController: UIViewController {
+final class ShopDetailViewController: UIViewController, ViewControllerMakable {
+    
+    typealias Params = ShopDetailViewControllerParams
+    
     
     // MARK: - Outlet
     
@@ -32,6 +41,9 @@ final class ShopDetailViewController: UIViewController {
     @IBOutlet private weak var addressLabel: UILabel!
     
     // MARK: - Property
+    
+    internal static var storyboardName: String = Constant.StoryboardName.ShopDetail
+    internal var params: ShopDetailViewControllerParams?
     
     private var presenter: ShopDetailPresentable?
     
@@ -54,7 +66,8 @@ final class ShopDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.presenter = ShopDetailPresenter(self)
+        self.presenter = ShopDetailPresenter(self, item: self.params?.item)
+        self.params = nil
         
         self.setupUI()
     }
@@ -77,12 +90,6 @@ final class ShopDetailViewController: UIViewController {
         if self.tagCollectionView.bounds.size.height != self.tagCollectionView.contentSize.height {
             self.tagCollectionViewHeightConstraint.constant = self.tagCollectionView.contentSize.height
         }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        self.presenter?.removeShopDetailItem()
     }
     
     // MARK: - Public

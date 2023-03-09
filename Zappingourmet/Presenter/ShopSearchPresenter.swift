@@ -16,6 +16,7 @@ protocol ShopSearchPresentable: AnyObject {
     func stopUpdatingLocation()
     func getCurrentLocation() -> CLLocation?
     
+    func getHotPepperGourmetSearchRange(index: Int) -> HotPepperGourmetSearchRange?
     func getHotPepperGourmetSearchRangeName(index: Int) -> String?
     func getHotPepperGourmetSearchRangesCount() -> Int
     func getHotPepperGourmetSearchRangeValue(index: Int) -> Int?
@@ -23,10 +24,6 @@ protocol ShopSearchPresentable: AnyObject {
     func fetchHotPepperGenres()
     func getHotPepperGenre(index: Int) -> Genre
     func getHotPepperGenresCount() -> Int
-    
-    func setHotPepperGourmetSearchCoordinate() -> Bool
-    func setHotPepperGourmetSearchRange(selectedIndex: Int)
-    func setHotPepperGourmetSearchGenre(selectedIndex: Int)
     
     func locationManagerAuthStatusActions(authorized authAction: ((CLAuthorizationStatus) -> Void)?, unauthorized unauthAction: ((CLAuthorizationStatus?) -> Void)?)
     func locationManagerAuthFilter(authorized authAction: ((CLAuthorizationStatus) -> Void)?)
@@ -98,6 +95,10 @@ extension ShopSearchPresenter: ShopSearchPresentable {
         return self.currentLocation
     }
     
+    func getHotPepperGourmetSearchRange(index: Int) -> HotPepperGourmetSearchRange? {
+        return HotPepperGourmetSearchRange.allCases[index]
+    }
+    
     func getHotPepperGourmetSearchRangeName(index: Int) -> String? {
         return HotPepperGourmetSearchRange.allCases[index].name
     }
@@ -149,26 +150,6 @@ extension ShopSearchPresenter: ShopSearchPresentable {
     
     func getHotPepperGenresCount() -> Int {
         return self.genres.count
-    }
-    
-    func setHotPepperGourmetSearchCoordinate() -> Bool {
-        if let location = self.currentLocation {
-            UserDefaults.standard.set(Double(location.coordinate.latitude), forKey: Constant.UserDefaultsReservedKey.SearchLatitude_Double)
-            UserDefaults.standard.set(Double(location.coordinate.longitude), forKey: Constant.UserDefaultsReservedKey.SearchLongitude_Double)
-            
-            return true
-        
-        } else {
-            return false
-        }
-    }
-    
-    func setHotPepperGourmetSearchRange(selectedIndex: Int) {
-        UserDefaults.standard.set(HotPepperGourmetSearchRange.allCases[selectedIndex].code, forKey: Constant.UserDefaultsReservedKey.SearchRange_Int)
-    }
-    
-    func setHotPepperGourmetSearchGenre(selectedIndex: Int) {
-        UserDefaults.standard.save(self.genres[selectedIndex], key: Constant.UserDefaultsReservedKey.SearchGenre_Genre)
     }
     
     func locationManagerAuthStatusActions(authorized authAction: ((CLAuthorizationStatus) -> Void)?, unauthorized unauthAction: ((CLAuthorizationStatus?) -> Void)? = nil) {
