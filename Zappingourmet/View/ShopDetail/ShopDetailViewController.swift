@@ -42,7 +42,6 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
     
     // MARK: - Property
     
-    internal static var storyboardName: String = Constant.StoryboardName.ShopDetail
     internal var params: ShopDetailViewControllerParams?
     
     private var presenter: ShopDetailPresentable?

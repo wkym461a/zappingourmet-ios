@@ -40,7 +40,6 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     
     // MARK: - Property
     
-    internal static var storyboardName: String = Constant.StoryboardName.ShopSearch
     internal var params: ShopSearchViewControllerParams?
     
     private var presenter: ShopSearchPresentable?

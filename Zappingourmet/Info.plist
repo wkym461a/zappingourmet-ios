@@ -20,7 +20,7 @@
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
 					<key>UISceneStoryboardFile</key>
-					<string>ShopSearch</string>
+					<string>ShopSearchViewController</string>
 				</dict>
 			</array>
 		</dict>

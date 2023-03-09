@@ -32,7 +32,6 @@ final class ShopListViewController: UIViewController, ViewControllerMakable {
     
     // MARK: - Property
     
-    internal static var storyboardName: String = Constant.StoryboardName.ShopList
     internal var params: ShopListViewControllerParams?
     
     private var presenter: ShopListPresentable?

@@ -12,8 +12,8 @@ import CoreLocation
 struct ShopListPresenterFetchShopsParams {
     
     static let `default` = ShopListPresenterFetchShopsParams(
-        latitude: 0,
-        longitude: 0,
+        latitude: 35.68385063,
+        longitude: 139.75397279,
         searchRange: .oneThousandMeters,
         genre: nil
     )
@@ -57,10 +57,6 @@ final class ShopListPresenter {
         
         self.shops = []
     }
-    
-//    private func getSearchGenre() -> Genre? {
-//        return (self.fetchShopsParams.genre?.code != Genre.none.code) ? self.fetchShopsParams.genre : nil
-//    }
     
 }
 
