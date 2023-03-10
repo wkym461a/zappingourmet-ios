@@ -9,9 +9,25 @@ import MapKit
 
 extension MKMapView {
     
-    func setVisibleOverlays(edgePadding: UIEdgeInsets, animated: Bool) {
-        if let firstOverlay = self.overlays.filter({ $0 is MKCircle }).first {
-            let rect = self.overlays.reduce(firstOverlay.boundingMapRect, { $0.union($1.boundingMapRect) })
+    func setVisibleRects(edgePadding: UIEdgeInsets, animated: Bool) {
+        let overlayRects = self.overlays.map { $0.boundingMapRect }
+        let annotationRects = self.annotations.map {
+            let width: Double = 400
+            let height: Double = 400
+            
+            var origin = MKMapPoint($0.coordinate)
+            origin.x -= width / 2
+            origin.y -= height / 2
+            
+            return MKMapRect(
+                origin: origin,
+                size: .init(width: width, height: height)
+            )
+        }
+        
+        let visibleRects = overlayRects + annotationRects
+        if let firstRect = visibleRects.first {
+            let rect = visibleRects.reduce(firstRect, { $0.union($1) })
             self.setVisibleMapRect(rect, edgePadding: edgePadding, animated: animated)
         }
     }

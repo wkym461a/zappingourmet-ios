@@ -229,7 +229,7 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     
     @IBAction private func centeringCurrentLocation(_ sender: UIButton) {
         self.presenter?.locationManagerAuthFilter { _ in
-            self.mapView.setVisibleOverlays(
+            self.mapView.setVisibleRects(
                 edgePadding: self.mapViewOverlaysEdgePadding,
                 animated: true
             )
@@ -283,7 +283,7 @@ extension ShopSearchViewController: MKMapViewDelegate {
         self.refreshMapViewOverlays()
         
         if !self.isInitializedMapView {
-            self.mapView.setVisibleOverlays(
+            self.mapView.setVisibleRects(
                 edgePadding: self.mapViewOverlaysEdgePadding,
                 animated: false
             )
@@ -357,7 +357,7 @@ extension ShopSearchViewController: UIPickerViewDelegate {
             
             self.presenter?.locationManagerAuthFilter { _ in
                 self.refreshMapViewOverlays()
-                self.mapView.setVisibleOverlays(
+                self.mapView.setVisibleRects(
                     edgePadding: self.mapViewOverlaysEdgePadding,
                     animated: true
                 )

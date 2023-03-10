@@ -121,7 +121,7 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
             }
             self.mapView.addOverlay(route.polyline, level: .aboveRoads)
             
-            self.mapView.setVisibleOverlays(
+            self.mapView.setVisibleRects(
                 edgePadding: self.mapViewOverlaysEdgePadding,
                 animated: false
             )
