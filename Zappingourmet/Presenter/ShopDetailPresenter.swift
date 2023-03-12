@@ -20,8 +20,9 @@ final class ShopDetailPresenter {
     
     init(_ view: ShopDetailViewable, item: Shop?) {
         self.view = view
-        
         self.item = item ?? .default
+        
+        self.view?.updateUI(shop: self.item)
     }
     
 }

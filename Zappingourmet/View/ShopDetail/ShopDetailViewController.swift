@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import MapKit
 
 struct ShopDetailViewControllerParams {
     
@@ -16,7 +15,7 @@ struct ShopDetailViewControllerParams {
 
 protocol ShopDetailViewable: AnyObject {
     
-    func updateUI()
+    func updateUI(shop: Shop)
     
 }
 
@@ -37,7 +36,7 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
     @IBOutlet private weak var shopURLButton: UIButton!
     
     @IBOutlet private weak var accessLabel: UILabel!
-    @IBOutlet private weak var mapView: MKMapView!
+    @IBOutlet private weak var mapView: ShopDetailMapView!
     @IBOutlet private weak var addressLabel: UILabel!
     
     // MARK: - Property
@@ -56,10 +55,6 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
         return layout
     }
     
-    private var mapViewOverlaysEdgePadding: UIEdgeInsets {
-        return .init(top: 24, left: 24, bottom: 24, right: 24)
-    }
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -69,12 +64,6 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
         self.params = nil
         
         self.setupUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.updateUI()
     }
     
     override func viewWillLayoutSubviews() {
@@ -103,29 +92,6 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
             forCellWithReuseIdentifier: "tagCell"
         )
         self.tagCollectionView.collectionViewLayout = self.tagCollectionViewFlowLayout
-        
-        self.mapView.delegate = self
-        self.mapView.showsUserLocation = true
-        self.mapView.layer.cornerRadius = 8
-        self.createMapViewRoute()
-    }
-    
-    private func createMapViewRoute() {
-        guard let shop = self.presenter?.getItem() else {
-            return
-        }
-        
-        self.mapView.getRoutesFromCurrentLocation(to: shop.coordinate) { routes in
-            guard let route = routes.first else {
-                return
-            }
-            self.mapView.addOverlay(route.polyline, level: .aboveRoads)
-            
-            self.mapView.setVisibleRects(
-                edgePadding: self.mapViewOverlaysEdgePadding,
-                animated: false
-            )
-        }
     }
     
     // MARK: - Action
@@ -148,11 +114,7 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
 
 extension ShopDetailViewController: ShopDetailViewable {
     
-    func updateUI() {
-        guard let shop = self.presenter?.getItem() else {
-            return
-        }
-        
+    func updateUI(shop: Shop) {
         self.headerImageView.loadImage(contentOf: shop.photoURL)
         self.nameLabel.text = shop.name
         self.openLabel.text = shop.open
@@ -161,6 +123,7 @@ extension ShopDetailViewController: ShopDetailViewable {
         self.shopURLButton.setAttributedTitle(shop.url.absoluteString.underlined, for: .normal)
         
         self.accessLabel.text = shop.access
+        self.mapView.updateUI(destination: shop.coordinate)
         self.addressLabel.text = shop.address
     }
     
@@ -199,33 +162,13 @@ extension ShopDetailViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension ShopDetailViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize.zero
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return .zero
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize.zero
-    }
-    
-}
-
-// MARK: - MKMapViewDelegate
-
-extension ShopDetailViewController: MKMapViewDelegate {
-    
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        switch overlay {
-        case is MKPolyline:
-            let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
-            renderer.strokeColor = Constant.Color.baseOrange
-            renderer.lineWidth = 3.0
-            return renderer
-            
-        default:
-            return MKOverlayRenderer()
-            
-        }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return .zero
     }
     
 }

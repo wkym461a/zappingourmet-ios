@@ -112,7 +112,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ckv-mV-OmB">
+                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ckv-mV-OmB" customClass="ShopDetailMapView" customModule="Zappingourmet" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="911" width="382" height="254.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="Ckv-mV-OmB" secondAttribute="height" multiplier="3:2" id="qH4-mX-Sfm"/>
