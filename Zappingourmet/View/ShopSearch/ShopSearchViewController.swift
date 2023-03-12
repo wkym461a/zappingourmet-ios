@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import MapKit
 
 struct ShopSearchViewControllerParams {}
 
@@ -27,7 +26,7 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     @IBOutlet private weak var creditButton: UIButton!
     @IBOutlet private weak var subtitleAndCreditBottomConstraint: NSLayoutConstraint!
     
-    @IBOutlet private weak var mapView: MKMapView!
+    @IBOutlet private weak var mapView: ShopSearchMapView!
     @IBOutlet private weak var centeringCurrentLocationButton: UIButton!
     
     @IBOutlet private weak var rangePickerControl: PickerInputControl!
@@ -45,13 +44,6 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     private var presenter: ShopSearchPresentable?
     
     private var subtitleBottomAndCreditTopConstraint: NSLayoutConstraint?
-    
-    private var circle: MKCircle?
-    private var isInitializedMapView: Bool = false
-    
-    private var mapViewOverlaysEdgePadding: UIEdgeInsets {
-        return .init(top: 20, left: 20, bottom: 20, right: 20)
-    }
     
     // MARK: - Lifecycle
     
@@ -98,9 +90,8 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
         gesture.cancelsTouchesInView = false
         self.view.addGestureRecognizer(gesture)
         
-        self.mapView.delegate = self
-        self.mapView.showsUserLocation = true
-        self.mapView.layer.cornerRadius = 8
+        let rangeValue = self.presenter?.getHotPepperGourmetSearchRange(index: self.rangePickerControl.picker.selectedRow(inComponent: 0))?.rangeValue ?? 0
+        self.mapView.rangeValue = rangeValue
         
         self.centeringCurrentLocationButton.backgroundColor = Constant.Color.baseOrange
         self.centeringCurrentLocationButton.layer.cornerRadius = 22
@@ -161,17 +152,6 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
         }
     }
     
-    private func refreshMapViewOverlays() {
-        self.mapView.removeOverlays(self.mapView.overlays)
-        
-        let rangeValue = self.presenter?.getHotPepperGourmetSearchRange(index: self.rangePickerControl.picker.selectedRow(inComponent: 0))?.rangeValue ?? 0
-        let circle = MKCircle(
-            center: self.mapView.userLocation.coordinate,
-            radius: CLLocationDistance(rangeValue)
-        )
-        self.mapView.addOverlay(circle)
-    }
-    
     private func goAlertWhenFailedToGetLocation() {
         let alert = UIAlertController.messageAlert(
             title: "位置情報の取得に失敗",
@@ -220,10 +200,7 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     
     @IBAction private func centeringCurrentLocation(_ sender: UIButton) {
         self.presenter?.authorizedFilter { _ in
-            self.mapView.setVisibleRects(
-                edgePadding: self.mapViewOverlaysEdgePadding,
-                animated: true
-            )
+            self.mapView.refreshVisibleRect(animated: true)
         }
     }
     
@@ -259,38 +236,6 @@ extension ShopSearchViewController: ShopSearchViewable {
         }
 
         self.present(alert, animated: true, completion: nil)
-    }
-    
-}
-
-// MARK: - MKMapViewDelegate
-
-extension ShopSearchViewController: MKMapViewDelegate {
-    
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        self.refreshMapViewOverlays()
-        
-        if !self.isInitializedMapView {
-            self.mapView.setVisibleRects(
-                edgePadding: self.mapViewOverlaysEdgePadding,
-                animated: false
-            )
-            
-            self.isInitializedMapView = true
-        }
-    }
-    
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        switch overlay {
-        case is MKCircle:
-            let circleView: MKCircleRenderer = MKCircleRenderer(overlay: overlay)
-            circleView.fillColor = Constant.Color.baseOrange
-            circleView.alpha = 0.4
-            return circleView
-        
-        default:
-            return MKOverlayRenderer()
-        }
     }
     
 }
@@ -344,11 +289,10 @@ extension ShopSearchViewController: UIPickerViewDelegate {
             self.updateUI()
             
             self.presenter?.authorizedFilter { _ in
-                self.refreshMapViewOverlays()
-                self.mapView.setVisibleRects(
-                    edgePadding: self.mapViewOverlaysEdgePadding,
-                    animated: true
-                )
+                let rangeValue = self.presenter?.getHotPepperGourmetSearchRange(index: self.rangePickerControl.picker.selectedRow(inComponent: 0))?.rangeValue ?? 0
+                self.mapView.updateUI(rangeValue: rangeValue)
+                
+                self.mapView.refreshVisibleRect(animated: true)
             }
             return
             
