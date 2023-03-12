@@ -45,16 +45,6 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
     
     private var presenter: ShopDetailPresentable?
     
-    private var tagCollectionViewFlowLayout: ShopDetailTagCollectionViewFlowLayout {
-        let layout = ShopDetailTagCollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.minimumInteritemSpacing = 8
-        layout.minimumLineSpacing = 8
-        layout.sectionInset = .zero
-        return layout
-    }
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -91,7 +81,7 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
             UINib(nibName: "ShopDetailTagCollectionViewCell", bundle: nil),
             forCellWithReuseIdentifier: "tagCell"
         )
-        self.tagCollectionView.collectionViewLayout = self.tagCollectionViewFlowLayout
+        self.tagCollectionView.collectionViewLayout = ShopDetailTagCollectionViewFlowLayout.default
     }
     
     // MARK: - Action
