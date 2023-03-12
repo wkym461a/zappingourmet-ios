@@ -9,9 +9,15 @@ import MapKit
 
 final class ShopDetailMapView: MKMapView {
     
+    // MARK: - Outlet
+    
+    // MARK: - Property
+    
     private var visibleEdgePadding: UIEdgeInsets {
         return .init(top: 24, left: 24, bottom: 24, right: 24)
     }
+    
+    // MARK: - Lifecycle
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,11 +25,15 @@ final class ShopDetailMapView: MKMapView {
         self.setupUI()
     }
     
+    // MARK: - Public
+    
     func updateUI(destination: CLLocationCoordinate2D) {
         self.removeOverlays(self.overlays)
         
         self.showRoute(destination: destination)
     }
+    
+    // MARK: - Private
     
     private func setupUI() {
         self.delegate = self
@@ -44,6 +54,8 @@ final class ShopDetailMapView: MKMapView {
             )
         }
     }
+    
+    // MARK: - Action
     
 }
 

@@ -47,6 +47,7 @@
 		D1C320CA2997665B00D5C7EA /* ShopListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C320C92997665B00D5C7EA /* ShopListViewController.swift */; };
 		D1CBC2C229BD983A002825B7 /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CBC2C129BD983A002825B7 /* Radar.swift */; };
 		D1CBC2CA29BDD39E002825B7 /* ShopDetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CBC2C929BDD39E002825B7 /* ShopDetailMapView.swift */; };
+		D1CBC2CC29BDE999002825B7 /* ExUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CBC2CB29BDE999002825B7 /* ExUIViewController.swift */; };
 		D1E5081429984E46006E5AA3 /* ShopDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1E5081329984E46006E5AA3 /* ShopDetailViewController.storyboard */; };
 		D1E5081629984E5E006E5AA3 /* ShopDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E5081529984E5E006E5AA3 /* ShopDetailViewController.swift */; };
 		D1E5081829984FAB006E5AA3 /* ShopDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E5081729984FAB006E5AA3 /* ShopDetailPresenter.swift */; };
@@ -118,6 +119,7 @@
 		D1C320C92997665B00D5C7EA /* ShopListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListViewController.swift; sourceTree = "<group>"; };
 		D1CBC2C129BD983A002825B7 /* Radar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radar.swift; sourceTree = "<group>"; };
 		D1CBC2C929BDD39E002825B7 /* ShopDetailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailMapView.swift; sourceTree = "<group>"; };
+		D1CBC2CB29BDE999002825B7 /* ExUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUIViewController.swift; sourceTree = "<group>"; };
 		D1E5081329984E46006E5AA3 /* ShopDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ShopDetailViewController.storyboard; sourceTree = "<group>"; };
 		D1E5081529984E5E006E5AA3 /* ShopDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailViewController.swift; sourceTree = "<group>"; };
 		D1E5081729984FAB006E5AA3 /* ShopDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailPresenter.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 				D113EC2229B9ABB80072B689 /* ExNSObject.swift */,
 				D113EC2429B9FA8B0072B689 /* ExUIAlertController.swift */,
 				D113EC2629BA8C190072B689 /* ExMKMapView.swift */,
+				D1CBC2CB29BDE999002825B7 /* ExUIViewController.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 				D17ACC6E2996FF3D00E056B6 /* HotPepperGourmetSearchResults.swift in Sources */,
 				D1E5081D29986479006E5AA3 /* Constant.swift in Sources */,
 				D1BEF183299769B300F6F851 /* ShopListPresenter.swift in Sources */,
+				D1CBC2CC29BDE999002825B7 /* ExUIViewController.swift in Sources */,
 				D14F9916299B3F830070E555 /* ExUIColor.swift in Sources */,
 				D1E5081B299855BA006E5AA3 /* ExUserDefaults.swift in Sources */,
 				D1EF48EF29989D7F00A5AF8D /* ShopSearchViewController.swift in Sources */,

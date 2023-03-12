@@ -97,15 +97,10 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
     // MARK: - Action
     
     @IBAction private func openShopURL(_ sender: Any) {
-        guard
-            let shopURL = self.presenter?.getItem().url,
-            UIApplication.shared.canOpenURL(shopURL)
-            
-        else {
-            return
-        }
-        
-        UIApplication.shared.open(shopURL)
+        self.openURLSafely(
+            self.presenter?.getItem().url,
+            failed: .messageAlert(title: "店舗URLが開けません", message: "")
+        )
     }
     
 }

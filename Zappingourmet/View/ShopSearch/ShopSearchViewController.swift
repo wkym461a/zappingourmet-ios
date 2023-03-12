@@ -188,15 +188,7 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     }
     
     @IBAction private func openCreditURL(_ sender: UIButton) {
-        guard
-            let url = Constant.creditURL,
-            UIApplication.shared.canOpenURL(url)
-            
-        else {
-            return
-        }
-        
-        UIApplication.shared.open(url)
+        self.openURLSafely(Constant.creditURL)
     }
     
     @IBAction private func searchShops(_ sender: UIButton) {
@@ -260,13 +252,10 @@ extension ShopSearchViewController: ShopSearchViewable {
             confirmTitle: "設定を開く"
             
         ) { _ in
-            if let url = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(url)
-
-            } else {
-                let errorAlert = UIAlertController.messageAlert(title: "設定が開けません", message: "")
-                self.present(errorAlert, animated: true, completion: nil)
-            }
+            self.openURLSafely(
+                URL(string: UIApplication.openSettingsURLString),
+                failed: .messageAlert(title: "設定が開けません", message: "")
+            )
         }
 
         self.present(alert, animated: true, completion: nil)
