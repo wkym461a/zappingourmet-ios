@@ -5,13 +5,11 @@
 //  Created by 若山大和 on 2023/02/12.
 //
 
-import Foundation
 import CoreLocation
 import Combine
 
-protocol ShopSearchPresentable: AnyObject {
+protocol ShopSearchPresentable {
     
-    func setupLocationManager()
     func startUpdatingLocation()
     func stopUpdatingLocation()
     func getCurrentLocation() -> CLLocation?
@@ -23,47 +21,21 @@ protocol ShopSearchPresentable: AnyObject {
     func getHotPepperGenre(index: Int) -> Genre
     func getHotPepperGenresCount() -> Int
     
-    func locationManagerAuthStatusActions(authorized authAction: ((CLAuthorizationStatus) -> Void)?, unauthorized unauthAction: ((CLAuthorizationStatus?) -> Void)?)
-    func locationManagerAuthFilter(authorized authAction: ((CLAuthorizationStatus) -> Void)?)
+    func authorizationStatusActions(authorized: ((CLAuthorizationStatus) -> Void)?, unauthorized: ((CLAuthorizationStatus) -> Void)?)
+    func authorizedFilter(_ action: ((CLAuthorizationStatus) -> Void))
     
 }
 
-final class ShopSearchPresenter: NSObject {
+final class ShopSearchPresenter {
     
     private weak var view: ShopSearchViewable?
     private var genres: [Genre]
     
     private var cancellable: AnyCancellable?
-    private var locationManager: CLLocationManager?
-    private var currentLocation: CLLocation?
-    
-    private var locationManagerAuthorizedAction: ((CLAuthorizationStatus) -> Void)?
-    private var locationManagerUnauthorizedAction: ((CLAuthorizationStatus?) -> Void)?
     
     init(_ view: ShopSearchViewable) {
         self.view = view
-        
         self.genres = []
-    }
-    
-    private func locationManagerAuthStatusActionsResolver() {
-        switch self.locationManager?.authorizationStatus {
-        case .notDetermined:
-            self.locationManager?.requestWhenInUseAuthorization()
-            
-        case .authorizedAlways, .authorizedWhenInUse:
-            self.locationManager?.startUpdatingLocation()
-            self.locationManagerAuthorizedAction?(self.locationManager!.authorizationStatus)
-            
-            self.locationManagerAuthorizedAction = nil
-            self.locationManagerUnauthorizedAction = nil
-        
-        default:
-            self.locationManagerUnauthorizedAction?(self.locationManager?.authorizationStatus)
-            
-            self.locationManagerAuthorizedAction = nil
-            self.locationManagerUnauthorizedAction = nil
-        }
     }
     
 }
@@ -72,25 +44,16 @@ final class ShopSearchPresenter: NSObject {
 
 extension ShopSearchPresenter: ShopSearchPresentable {
     
-    func setupLocationManager() {
-        if self.locationManager != nil {
-            return
-        }
-        
-        self.locationManager = CLLocationManager()
-        self.locationManager?.delegate = self
-    }
-    
     func startUpdatingLocation() {
-        self.locationManager?.startUpdatingLocation()
+        Radar.shared.start()
     }
     
     func stopUpdatingLocation() {
-        self.locationManager?.stopUpdatingLocation()
+        Radar.shared.stop()
     }
     
     func getCurrentLocation() -> CLLocation? {
-        return self.currentLocation
+        return Radar.shared.currentLocation
     }
     
     func getHotPepperGourmetSearchRange(index: Int) -> HotPepperGourmetSearchRange? {
@@ -142,41 +105,12 @@ extension ShopSearchPresenter: ShopSearchPresentable {
         return self.genres.count
     }
     
-    func locationManagerAuthStatusActions(authorized authAction: ((CLAuthorizationStatus) -> Void)?, unauthorized unauthAction: ((CLAuthorizationStatus?) -> Void)? = nil) {
-        self.locationManagerAuthorizedAction = authAction
-        self.locationManagerUnauthorizedAction = unauthAction
-        
-        self.locationManagerAuthStatusActionsResolver()
+    func authorizationStatusActions(authorized: ((CLAuthorizationStatus) -> Void)?, unauthorized: ((CLAuthorizationStatus) -> Void)? = nil) {
+        Radar.shared.authorizationStatusActions(authorized: authorized, unauthorized: unauthorized)
     }
     
-    func locationManagerAuthFilter(authorized authAction: ((CLAuthorizationStatus) -> Void)?) {
-        switch self.locationManager?.authorizationStatus {
-        case .authorizedAlways, .authorizedWhenInUse:
-            authAction?(self.locationManager!.authorizationStatus)
-        
-        default:
-            return
-        }
-    }
-    
-}
-
-// MARK: - CLLocationManagerDelegate
-
-extension ShopSearchPresenter: CLLocationManagerDelegate {
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        self.locationManagerAuthStatusActionsResolver()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.currentLocation = locations.first
-        
-        self.view?.updateUI()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(#function, error)
+    func authorizedFilter(_ action: ((CLAuthorizationStatus) -> Void)) {
+        Radar.shared.authorizedFilter(action)
     }
     
 }

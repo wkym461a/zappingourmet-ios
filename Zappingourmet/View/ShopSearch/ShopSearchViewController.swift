@@ -59,7 +59,6 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
         super.viewDidLoad()
         
         self.presenter = ShopSearchPresenter(self)
-        self.presenter?.setupLocationManager()
         self.presenter?.fetchHotPepperGenres()
         
         self.setupUI()
@@ -74,7 +73,7 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.presenter?.locationManagerAuthStatusActions { _ in
+        self.presenter?.authorizationStatusActions { _ in
             self.view.endEditing(true)
             self.presenter?.startUpdatingLocation()
             
@@ -201,7 +200,7 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     }
     
     @IBAction private func searchShops(_ sender: UIButton) {
-        self.presenter?.locationManagerAuthStatusActions { _ in
+        self.presenter?.authorizationStatusActions { _ in
             guard
                 let presenter = self.presenter,
                 let currentLocation = presenter.getCurrentLocation()
@@ -228,7 +227,7 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     }
     
     @IBAction private func centeringCurrentLocation(_ sender: UIButton) {
-        self.presenter?.locationManagerAuthFilter { _ in
+        self.presenter?.authorizedFilter { _ in
             self.mapView.setVisibleRects(
                 edgePadding: self.mapViewOverlaysEdgePadding,
                 animated: true
@@ -355,7 +354,7 @@ extension ShopSearchViewController: UIPickerViewDelegate {
         case 1:
             self.updateUI()
             
-            self.presenter?.locationManagerAuthFilter { _ in
+            self.presenter?.authorizedFilter { _ in
                 self.refreshMapViewOverlays()
                 self.mapView.setVisibleRects(
                     edgePadding: self.mapViewOverlaysEdgePadding,
