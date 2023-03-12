@@ -158,14 +158,7 @@ extension ShopDetailViewController: ShopDetailViewable {
         self.openLabel.text = shop.open
         
         self.detailMemoLabel.text = (shop.detailMemo.count > 0) ? shop.detailMemo : "なし"
-        let shopURLString = shop.url.absoluteString
-        let attributeShopURLString: NSMutableAttributedString = .init(string: shopURLString)
-        attributeShopURLString.addAttribute(
-            .underlineStyle,
-            value: NSUnderlineStyle.single.rawValue,
-            range: .init(location: 0, length: shopURLString.count)
-        )
-        self.shopURLButton.setAttributedTitle(attributeShopURLString, for: .normal)
+        self.shopURLButton.setAttributedTitle(shop.url.absoluteString.underlined, for: .normal)
         
         self.accessLabel.text = shop.access
         self.addressLabel.text = shop.address

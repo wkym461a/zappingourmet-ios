@@ -23,6 +23,7 @@
 		D14BE621299910BE00F0B774 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D14BE61C2998E90300F0B774 /* CoreLocation.framework */; };
 		D14BE6232999B7F800F0B774 /* PickerInputControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14BE6222999B7F700F0B774 /* PickerInputControl.swift */; };
 		D14F9916299B3F830070E555 /* ExUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14F9915299B3F830070E555 /* ExUIColor.swift */; };
+		D1506DA829BD845400CA8D1D /* ExString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1506DA729BD845400CA8D1D /* ExString.swift */; };
 		D150C96B299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D150C969299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift */; };
 		D150C96C299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = D150C96A299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib */; };
 		D150C96E299E495900CF95B1 /* HotPepperResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D150C96D299E495900CF95B1 /* HotPepperResponse.swift */; };
@@ -92,6 +93,7 @@
 		D14BE61C2998E90300F0B774 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D14BE6222999B7F700F0B774 /* PickerInputControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerInputControl.swift; sourceTree = "<group>"; };
 		D14F9915299B3F830070E555 /* ExUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUIColor.swift; sourceTree = "<group>"; };
+		D1506DA729BD845400CA8D1D /* ExString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExString.swift; sourceTree = "<group>"; };
 		D150C969299E0F9100CF95B1 /* ShopListCollectionViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListCollectionViewFooter.swift; sourceTree = "<group>"; };
 		D150C96A299E0F9100CF95B1 /* ShopListCollectionViewFooter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopListCollectionViewFooter.xib; sourceTree = "<group>"; };
 		D150C96D299E495900CF95B1 /* HotPepperResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperResponse.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 		D1E5081929985595006E5AA3 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				D1506DA729BD845400CA8D1D /* ExString.swift */,
 				D1E5081A299855BA006E5AA3 /* ExUserDefaults.swift */,
 				D14F9915299B3F830070E555 /* ExUIColor.swift */,
 				D13FEA9129A0606E00876DB3 /* ExUIImageView.swift */,
@@ -482,6 +485,7 @@
 				D19CF88A299B32060096C1B2 /* ShopDetailTagCollectionViewFlowLayout.swift in Sources */,
 				D1EF48F129989DDC00A5AF8D /* ShopSearchPresenter.swift in Sources */,
 				D113EC2329B9ABB80072B689 /* ExNSObject.swift in Sources */,
+				D1506DA829BD845400CA8D1D /* ExString.swift in Sources */,
 				D1E5081629984E5E006E5AA3 /* ShopDetailViewController.swift in Sources */,
 				D113EC2729BA8C190072B689 /* ExMKMapView.swift in Sources */,
 				D19C6430299BB4A30000C576 /* HotPepperGenreMaster.swift in Sources */,
