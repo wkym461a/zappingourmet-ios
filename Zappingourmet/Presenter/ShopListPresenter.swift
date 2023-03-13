@@ -9,22 +9,6 @@ import Foundation
 import Combine
 import CoreLocation
 
-struct ShopListPresenterFetchShopsParams {
-    
-    static let `default` = ShopListPresenterFetchShopsParams(
-        latitude: 35.68385063,
-        longitude: 139.75397279,
-        searchRange: .oneThousandMeters,
-        genre: nil
-    )
-    
-    let latitude: Double
-    let longitude: Double
-    let searchRange: HotPepperGourmetSearchRange?
-    let genre: Genre?
-    
-}
-
 protocol ShopListPresentable: AnyObject {
     
     func fetchShops()
@@ -40,8 +24,22 @@ protocol ShopListPresentable: AnyObject {
 
 final class ShopListPresenter {
     
+    struct FetchShopsParams {
+        static let `default` = FetchShopsParams(
+            latitude: 35.68385063,
+            longitude: 139.75397279,
+            searchRange: .oneThousandMeters,
+            genre: nil
+        )
+        
+        let latitude: Double
+        let longitude: Double
+        let searchRange: HotPepperGourmetSearchRange?
+        let genre: Genre?
+    }
+    
     private weak var view: ShopListViewable?
-    private var fetchShopsParams: ShopListPresenterFetchShopsParams
+    private var fetchShopsParams: FetchShopsParams
     private var shops: [Shop]
     
     private var isFetching: Bool = false
@@ -51,7 +49,7 @@ final class ShopListPresenter {
     private let fetchCount: Int = 10
     private var isFetchedAllAvailableShops: Bool = false
     
-    init(_ view: ShopListViewable, fetchShopsParams: ShopListPresenterFetchShopsParams?) {
+    init(_ view: ShopListViewable, fetchShopsParams: FetchShopsParams?) {
         self.view = view
         self.fetchShopsParams = fetchShopsParams ?? .default
         

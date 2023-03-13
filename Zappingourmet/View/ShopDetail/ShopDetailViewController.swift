@@ -6,26 +6,22 @@
 //
 
 import UIKit
-import MapKit
-
-struct ShopDetailViewControllerParams {
-    
-    let item: Shop
-    
-}
 
 protocol ShopDetailViewable: AnyObject {
     
-    func updateUI()
+    func updateUI(shop: Shop)
     
 }
 
 final class ShopDetailViewController: UIViewController, ViewControllerMakable {
     
-    typealias Params = ShopDetailViewControllerParams
-    
+    struct Params {
+        let item: Shop
+    }
     
     // MARK: - Outlet
+    
+    @IBOutlet private weak var scrollView: UIScrollView!
     
     @IBOutlet private weak var headerImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
@@ -37,28 +33,16 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
     @IBOutlet private weak var shopURLButton: UIButton!
     
     @IBOutlet private weak var accessLabel: UILabel!
-    @IBOutlet private weak var mapView: MKMapView!
+    @IBOutlet private weak var mapView: ShopDetailMapView!
     @IBOutlet private weak var addressLabel: UILabel!
     
     // MARK: - Property
     
-    internal var params: ShopDetailViewControllerParams?
+    internal var params: Params?
     
     private var presenter: ShopDetailPresentable?
     
-    private var tagCollectionViewFlowLayout: ShopDetailTagCollectionViewFlowLayout {
-        let layout = ShopDetailTagCollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.minimumInteritemSpacing = 8
-        layout.minimumLineSpacing = 8
-        layout.sectionInset = .zero
-        return layout
-    }
-    
-    private var mapViewOverlaysEdgePadding: UIEdgeInsets {
-        return .init(top: 24, left: 24, bottom: 24, right: 24)
-    }
+    private var headerImageViewDefaultHeight: CGFloat = 0
     
     // MARK: - Lifecycle
     
@@ -69,12 +53,6 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
         self.params = nil
         
         self.setupUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.updateUI()
     }
     
     override func viewWillLayoutSubviews() {
@@ -96,50 +74,26 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
     // MARK: - Private
     
     private func setupUI() {
+        self.scrollView.delegate = self
+        
+        self.headerImageViewDefaultHeight = self.headerImageView.frame.height
+        
         self.tagCollectionView.dataSource = self
         self.tagCollectionView.delegate = self
         self.tagCollectionView.register(
             UINib(nibName: "ShopDetailTagCollectionViewCell", bundle: nil),
             forCellWithReuseIdentifier: "tagCell"
         )
-        self.tagCollectionView.collectionViewLayout = self.tagCollectionViewFlowLayout
-        
-        self.mapView.delegate = self
-        self.mapView.showsUserLocation = true
-        self.mapView.layer.cornerRadius = 8
-        self.createMapViewRoute()
-    }
-    
-    private func createMapViewRoute() {
-        guard let shop = self.presenter?.getItem() else {
-            return
-        }
-        
-        self.mapView.getRoutesFromCurrentLocation(to: shop.coordinate) { routes in
-            guard let route = routes.first else {
-                return
-            }
-            self.mapView.addOverlay(route.polyline, level: .aboveRoads)
-            
-            self.mapView.setVisibleRects(
-                edgePadding: self.mapViewOverlaysEdgePadding,
-                animated: false
-            )
-        }
+        self.tagCollectionView.collectionViewLayout = ShopDetailTagCollectionViewFlowLayout.default
     }
     
     // MARK: - Action
     
     @IBAction private func openShopURL(_ sender: Any) {
-        guard
-            let shopURL = self.presenter?.getItem().url,
-            UIApplication.shared.canOpenURL(shopURL)
-            
-        else {
-            return
-        }
-        
-        UIApplication.shared.open(shopURL)
+        self.openURLSafely(
+            self.presenter?.getItem().url,
+            failed: .messageAlert(title: "店舗URLが開けません", message: "")
+        )
     }
     
 }
@@ -148,27 +102,36 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
 
 extension ShopDetailViewController: ShopDetailViewable {
     
-    func updateUI() {
-        guard let shop = self.presenter?.getItem() else {
-            return
-        }
-        
+    func updateUI(shop: Shop) {
         self.headerImageView.loadImage(contentOf: shop.photoURL)
         self.nameLabel.text = shop.name
         self.openLabel.text = shop.open
         
         self.detailMemoLabel.text = (shop.detailMemo.count > 0) ? shop.detailMemo : "なし"
-        let shopURLString = shop.url.absoluteString
-        let attributeShopURLString: NSMutableAttributedString = .init(string: shopURLString)
-        attributeShopURLString.addAttribute(
-            .underlineStyle,
-            value: NSUnderlineStyle.single.rawValue,
-            range: .init(location: 0, length: shopURLString.count)
-        )
-        self.shopURLButton.setAttributedTitle(attributeShopURLString, for: .normal)
+        self.shopURLButton.setAttributedTitle(shop.url.absoluteString.underlined, for: .normal)
         
         self.accessLabel.text = shop.access
+        self.mapView.updateUI(destination: shop.coordinate)
         self.addressLabel.text = shop.address
+    }
+    
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension ShopDetailViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset
+        if offset.y >= 0.0 {
+            self.headerImageView.layer.transform = CATransform3DIdentity
+            return
+        }
+        
+        var transform = CATransform3DTranslate(CATransform3DIdentity, 0, offset.y / 2, 0)
+        let scale = 1 + (-offset.y / self.headerImageViewDefaultHeight)
+        transform = CATransform3DScale(transform, scale, scale, 1)
+        self.headerImageView.layer.transform = transform
     }
     
 }
@@ -206,33 +169,13 @@ extension ShopDetailViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension ShopDetailViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize.zero
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return .zero
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize.zero
-    }
-    
-}
-
-// MARK: - MKMapViewDelegate
-
-extension ShopDetailViewController: MKMapViewDelegate {
-    
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        switch overlay {
-        case is MKPolyline:
-            let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
-            renderer.strokeColor = Constant.Color.baseOrange
-            renderer.lineWidth = 3.0
-            return renderer
-            
-        default:
-            return MKOverlayRenderer()
-            
-        }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return .zero
     }
     
 }

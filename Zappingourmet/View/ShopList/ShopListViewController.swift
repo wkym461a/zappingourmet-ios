@@ -7,15 +7,6 @@
 
 import UIKit
 
-struct ShopListViewControllerParams {
-    
-    let latitude: Double
-    let longitude: Double
-    let searchRange: HotPepperGourmetSearchRange?
-    let genre: Genre?
-    
-}
-
 protocol ShopListViewable: AnyObject {
     
     func updateUI()
@@ -24,7 +15,12 @@ protocol ShopListViewable: AnyObject {
 
 final class ShopListViewController: UIViewController, ViewControllerMakable {
     
-    typealias Params = ShopListViewControllerParams
+    struct Params {
+        let latitude: Double
+        let longitude: Double
+        let searchRange: HotPepperGourmetSearchRange?
+        let genre: Genre?
+    }
     
     // MARK: - Outlet
     
@@ -32,30 +28,25 @@ final class ShopListViewController: UIViewController, ViewControllerMakable {
     
     // MARK: - Property
     
-    internal var params: ShopListViewControllerParams?
+    internal var params: Params?
     
     private var presenter: ShopListPresentable?
     
     private struct CollectionViewConstants {
-
         static let numberOfCellColumns: Int = 1
         static let interCellColumnSpacing: CGFloat = 16
         static let interCellRowSpacing: CGFloat = 16
         static let contentsEdgeInsets: UIEdgeInsets = .init(top: 16, left: 16, bottom: 16, right: 16)
-
     }
     
-    private var collectionViewCellWidth: CGFloat {
+    private var collectionViewCellSize: CGSize {
         let contentsLeftRightMargin = CollectionViewConstants.contentsEdgeInsets.left + CollectionViewConstants.contentsEdgeInsets.right
         let numberOfCellColumns = max(CollectionViewConstants.numberOfCellColumns, 1)
         let interCellsColumnMargin = (numberOfCellColumns > 1) ? CollectionViewConstants.interCellColumnSpacing * CGFloat(numberOfCellColumns - 1) : 0
         let horizontalMargin = contentsLeftRightMargin + interCellsColumnMargin
+        let cellWidth = (self.collectionView.frame.width - horizontalMargin) / CGFloat(numberOfCellColumns)
         
-        return (self.collectionView.frame.width - horizontalMargin) / CGFloat(numberOfCellColumns)
-    }
-    
-    private var collectionViewCellHeight: CGFloat {
-        return self.collectionViewCellWidth
+        return .init(width: cellWidth, height: cellWidth)
     }
     
     // MARK: - Lifecycle
@@ -69,12 +60,6 @@ final class ShopListViewController: UIViewController, ViewControllerMakable {
         self.presenter?.fetchShops()
         
         self.setupUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.updateUI()
     }
     
     // MARK: - Public
@@ -105,12 +90,12 @@ final class ShopListViewController: UIViewController, ViewControllerMakable {
         flowLayout.estimatedItemSize = .zero
     }
     
-    private func getFetchShopsParams() -> ShopListPresenterFetchShopsParams? {
+    private func getFetchShopsParams() -> ShopListPresenter.FetchShopsParams? {
         guard let params = self.params else {
             return nil
         }
         
-        return ShopListPresenterFetchShopsParams(
+        return ShopListPresenter.FetchShopsParams(
             latitude: params.latitude,
             longitude: params.longitude,
             searchRange: params.searchRange,
@@ -165,7 +150,9 @@ extension ShopListViewController: UICollectionViewDataSource {
             guard
                 let isFetchedAllAvailableShops = self.presenter?.getIsFetchedAllAvailableShops(),
                 let availableShopsCount = self.presenter?.getAvailableShopsCount(),
-                let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "shopListFooter", for: indexPath) as? ShopListCollectionViewFooter else {
+                let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "shopListFooter", for: indexPath) as? ShopListCollectionViewFooter
+            
+            else {
                 return UICollectionReusableView()
             }
             
@@ -203,7 +190,7 @@ extension ShopListViewController: UICollectionViewDelegate {
             return
         }
         
-        let shopDetailParams = ShopDetailViewControllerParams(item: shop)
+        let shopDetailParams = ShopDetailViewController.Params(item: shop)
         let shopDetail = ShopDetailViewController.makeViewController(params: shopDetailParams)
         self.navigationController?.pushViewController(shopDetail, animated: true)
         
@@ -217,10 +204,7 @@ extension ShopListViewController: UICollectionViewDelegate {
 extension ShopListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(
-            width: self.collectionViewCellWidth,
-            height: self.collectionViewCellHeight
-        )
+        return self.collectionViewCellSize
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
