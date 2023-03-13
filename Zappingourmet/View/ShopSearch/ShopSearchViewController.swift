@@ -7,8 +7,6 @@
 
 import UIKit
 
-struct ShopSearchViewControllerParams {}
-
 protocol ShopSearchViewable: AnyObject {
     
     func updateUI()
@@ -17,7 +15,7 @@ protocol ShopSearchViewable: AnyObject {
 
 final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     
-    typealias Params = ShopSearchViewControllerParams
+    struct Params {}
     
     // MARK: - Outlet
     
@@ -38,7 +36,7 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     
     // MARK: - Property
     
-    internal var params: ShopSearchViewControllerParams?
+    internal var params: Params?
     
     private var presenter: ShopSearchPresentable?
     
@@ -177,7 +175,7 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
                 return
             }
             
-            let shopListParams = ShopListViewControllerParams(
+            let shopListParams = ShopListViewController.Params(
                 latitude: currentLocation.coordinate.latitude,
                 longitude: currentLocation.coordinate.longitude,
                 searchRange: self.selectedSearchRange,

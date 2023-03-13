@@ -7,12 +7,6 @@
 
 import UIKit
 
-struct ShopDetailViewControllerParams {
-    
-    let item: Shop
-    
-}
-
 protocol ShopDetailViewable: AnyObject {
     
     func updateUI(shop: Shop)
@@ -21,8 +15,9 @@ protocol ShopDetailViewable: AnyObject {
 
 final class ShopDetailViewController: UIViewController, ViewControllerMakable {
     
-    typealias Params = ShopDetailViewControllerParams
-    
+    struct Params {
+        let item: Shop
+    }
     
     // MARK: - Outlet
     
@@ -41,7 +36,7 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
     
     // MARK: - Property
     
-    internal var params: ShopDetailViewControllerParams?
+    internal var params: Params?
     
     private var presenter: ShopDetailPresentable?
     

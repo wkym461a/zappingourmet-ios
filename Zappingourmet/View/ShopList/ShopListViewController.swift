@@ -7,15 +7,6 @@
 
 import UIKit
 
-struct ShopListViewControllerParams {
-    
-    let latitude: Double
-    let longitude: Double
-    let searchRange: HotPepperGourmetSearchRange?
-    let genre: Genre?
-    
-}
-
 protocol ShopListViewable: AnyObject {
     
     func updateUI()
@@ -24,7 +15,12 @@ protocol ShopListViewable: AnyObject {
 
 final class ShopListViewController: UIViewController, ViewControllerMakable {
     
-    typealias Params = ShopListViewControllerParams
+    struct Params {
+        let latitude: Double
+        let longitude: Double
+        let searchRange: HotPepperGourmetSearchRange?
+        let genre: Genre?
+    }
     
     // MARK: - Outlet
     
@@ -32,7 +28,7 @@ final class ShopListViewController: UIViewController, ViewControllerMakable {
     
     // MARK: - Property
     
-    internal var params: ShopListViewControllerParams?
+    internal var params: Params?
     
     private var presenter: ShopListPresentable?
     
@@ -105,12 +101,12 @@ final class ShopListViewController: UIViewController, ViewControllerMakable {
         flowLayout.estimatedItemSize = .zero
     }
     
-    private func getFetchShopsParams() -> ShopListPresenterFetchShopsParams? {
+    private func getFetchShopsParams() -> ShopListPresenter.FetchShopsParams? {
         guard let params = self.params else {
             return nil
         }
         
-        return ShopListPresenterFetchShopsParams(
+        return ShopListPresenter.FetchShopsParams(
             latitude: params.latitude,
             longitude: params.longitude,
             searchRange: params.searchRange,
@@ -203,7 +199,7 @@ extension ShopListViewController: UICollectionViewDelegate {
             return
         }
         
-        let shopDetailParams = ShopDetailViewControllerParams(item: shop)
+        let shopDetailParams = ShopDetailViewController.Params(item: shop)
         let shopDetail = ShopDetailViewController.makeViewController(params: shopDetailParams)
         self.navigationController?.pushViewController(shopDetail, animated: true)
         
