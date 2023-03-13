@@ -5,70 +5,44 @@
 //  Created by 若山大和 on 2023/02/12.
 //
 
-import Foundation
 import CoreLocation
 import Combine
 
-protocol ShopSearchPresentable: AnyObject {
+protocol ShopSearchPresentable {
     
-    func setupLocationManager()
+    func getHotPepperGourmetSearchRange(index: Int) -> HotPepperGourmetSearchRange?
+    func getHotPepperGourmetSearchRangesCount() -> Int
+    func getSelectedSearchRange() -> HotPepperGourmetSearchRange
+    func updateSelectedSearchRange(index: Int)
+    
+    func fetchHotPepperGenres()
+    func getHotPepperGenre(index: Int) -> Genre?
+    func getHotPepperGenresCount() -> Int
+    func getSelectedGenre() -> Genre
+    func updateSelectedGenre(index: Int)
+    
     func startUpdatingLocation()
     func stopUpdatingLocation()
     func getCurrentLocation() -> CLLocation?
-    
-    func getHotPepperGourmetSearchRangeName(index: Int) -> String?
-    func getHotPepperGourmetSearchRangesCount() -> Int
-    func getHotPepperGourmetSearchRangeValue(index: Int) -> Int?
-    
-    func fetchHotPepperGenres()
-    func getHotPepperGenre(index: Int) -> Genre
-    func getHotPepperGenresCount() -> Int
-    
-    func setHotPepperGourmetSearchCoordinate() -> Bool
-    func setHotPepperGourmetSearchRange(selectedIndex: Int)
-    func setHotPepperGourmetSearchGenre(selectedIndex: Int)
-    
-    func locationManagerAuthStatusActions(authorized authAction: ((CLAuthorizationStatus) -> Void)?, unauthorized unauthAction: ((CLAuthorizationStatus?) -> Void)?)
-    func locationManagerAuthFilter(authorized authAction: ((CLAuthorizationStatus) -> Void)?)
+    func authorizationStatusActions(authorized: ((CLAuthorizationStatus) -> Void)?, unauthorized: ((CLAuthorizationStatus) -> Void)?)
+    func authorizedFilter(_ action: ((CLAuthorizationStatus) -> Void))
     
 }
 
-final class ShopSearchPresenter: NSObject {
+final class ShopSearchPresenter {
     
     private weak var view: ShopSearchViewable?
+    private var selectedSearchRangeIndex: Int
+    private var selectedGenreIndex: Int
     private var genres: [Genre]
     
     private var cancellable: AnyCancellable?
-    private var locationManager: CLLocationManager?
-    private var currentLocation: CLLocation?
     
-    private var locationManagerAuthorizedAction: ((CLAuthorizationStatus) -> Void)?
-    private var locationManagerUnauthorizedAction: ((CLAuthorizationStatus?) -> Void)?
-    
-    init(_ view: ShopSearchViewable) {
+    init(_ view: ShopSearchViewable, selectedSearchRangeIndex: Int = 0, selectedGenreIndex: Int = 0) {
         self.view = view
-        
-        self.genres = []
-    }
-    
-    private func locationManagerAuthStatusActionsResolver() {
-        switch self.locationManager?.authorizationStatus {
-        case .notDetermined:
-            self.locationManager?.requestWhenInUseAuthorization()
-            
-        case .authorizedAlways, .authorizedWhenInUse:
-            self.locationManager?.startUpdatingLocation()
-            self.locationManagerAuthorizedAction?(self.locationManager!.authorizationStatus)
-            
-            self.locationManagerAuthorizedAction = nil
-            self.locationManagerUnauthorizedAction = nil
-        
-        default:
-            self.locationManagerUnauthorizedAction?(self.locationManager?.authorizationStatus)
-            
-            self.locationManagerAuthorizedAction = nil
-            self.locationManagerUnauthorizedAction = nil
-        }
+        self.selectedSearchRangeIndex = selectedSearchRangeIndex
+        self.selectedGenreIndex = selectedGenreIndex
+        self.genres = [.none]
     }
     
 }
@@ -77,37 +51,32 @@ final class ShopSearchPresenter: NSObject {
 
 extension ShopSearchPresenter: ShopSearchPresentable {
     
-    func setupLocationManager() {
-        if self.locationManager != nil {
-            return
+    func getHotPepperGourmetSearchRange(index: Int) -> HotPepperGourmetSearchRange? {
+        guard 0 ..< HotPepperGourmetSearchRange.allCases.count ~= index else {
+            return nil
         }
         
-        self.locationManager = CLLocationManager()
-        self.locationManager?.delegate = self
-    }
-    
-    func startUpdatingLocation() {
-        self.locationManager?.startUpdatingLocation()
-    }
-    
-    func stopUpdatingLocation() {
-        self.locationManager?.stopUpdatingLocation()
-    }
-    
-    func getCurrentLocation() -> CLLocation? {
-        return self.currentLocation
-    }
-    
-    func getHotPepperGourmetSearchRangeName(index: Int) -> String? {
-        return HotPepperGourmetSearchRange.allCases[index].name
+        return HotPepperGourmetSearchRange.allCases[index]
     }
     
     func getHotPepperGourmetSearchRangesCount() -> Int {
         return HotPepperGourmetSearchRange.allCases.count
     }
     
-    func getHotPepperGourmetSearchRangeValue(index: Int) -> Int? {
-        return HotPepperGourmetSearchRange.allCases[index].rangeValue
+    func getSelectedSearchRange() -> HotPepperGourmetSearchRange {
+        return HotPepperGourmetSearchRange.allCases[self.selectedSearchRangeIndex]
+    }
+    
+    func updateSelectedSearchRange(index: Int) {
+        guard 0 ..< HotPepperGourmetSearchRange.allCases.count ~= index else {
+            return
+        }
+        
+        self.selectedSearchRangeIndex = index
+        self.view?.updateUI(
+            selectedSearchRange: HotPepperGourmetSearchRange.allCases[self.selectedSearchRangeIndex],
+            selectedGenre: nil
+        )
     }
     
     func fetchHotPepperGenres() {
@@ -137,13 +106,20 @@ extension ShopSearchPresenter: ShopSearchPresentable {
             }
             
             self.genres = hpGenres.map { Genre.fromHotPepperGenre($0) }
-            self.genres.insert(Genre.none, at: 0)
+            self.genres.insert(.none, at: 0)
             
-            self.view?.updateUI()
+            self.view?.updateUI(
+                selectedSearchRange: HotPepperGourmetSearchRange.allCases[self.selectedSearchRangeIndex],
+                selectedGenre: self.genres[self.selectedGenreIndex]
+            )
         }
     }
     
-    func getHotPepperGenre(index: Int) -> Genre {
+    func getHotPepperGenre(index: Int) -> Genre? {
+        guard 0 ..< self.genres.count ~= index else {
+            return nil
+        }
+        
         return self.genres[index]
     }
     
@@ -151,61 +127,40 @@ extension ShopSearchPresenter: ShopSearchPresentable {
         return self.genres.count
     }
     
-    func setHotPepperGourmetSearchCoordinate() -> Bool {
-        if let location = self.currentLocation {
-            UserDefaults.standard.set(Double(location.coordinate.latitude), forKey: Constant.UserDefaultsReservedKey.SearchLatitude_Double)
-            UserDefaults.standard.set(Double(location.coordinate.longitude), forKey: Constant.UserDefaultsReservedKey.SearchLongitude_Double)
-            
-            return true
-        
-        } else {
-            return false
-        }
+    func getSelectedGenre() -> Genre {
+        return self.genres[self.selectedGenreIndex]
     }
     
-    func setHotPepperGourmetSearchRange(selectedIndex: Int) {
-        UserDefaults.standard.set(HotPepperGourmetSearchRange.allCases[selectedIndex].code, forKey: Constant.UserDefaultsReservedKey.SearchRange_Int)
-    }
-    
-    func setHotPepperGourmetSearchGenre(selectedIndex: Int) {
-        UserDefaults.standard.save(self.genres[selectedIndex], key: Constant.UserDefaultsReservedKey.SearchGenre_Genre)
-    }
-    
-    func locationManagerAuthStatusActions(authorized authAction: ((CLAuthorizationStatus) -> Void)?, unauthorized unauthAction: ((CLAuthorizationStatus?) -> Void)? = nil) {
-        self.locationManagerAuthorizedAction = authAction
-        self.locationManagerUnauthorizedAction = unauthAction
-        
-        self.locationManagerAuthStatusActionsResolver()
-    }
-    
-    func locationManagerAuthFilter(authorized authAction: ((CLAuthorizationStatus) -> Void)?) {
-        switch self.locationManager?.authorizationStatus {
-        case .authorizedAlways, .authorizedWhenInUse:
-            authAction?(self.locationManager!.authorizationStatus)
-        
-        default:
+    func updateSelectedGenre(index: Int) {
+        guard 0 ..< self.genres.count ~= index else {
             return
         }
-    }
-    
-}
-
-// MARK: - CLLocationManagerDelegate
-
-extension ShopSearchPresenter: CLLocationManagerDelegate {
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        self.locationManagerAuthStatusActionsResolver()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.currentLocation = locations.first
         
-        self.view?.updateUI()
+        self.selectedGenreIndex = index
+        self.view?.updateUI(
+            selectedSearchRange: nil,
+            selectedGenre: self.genres[self.selectedGenreIndex]
+        )
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(#function, error)
+    func startUpdatingLocation() {
+        Radar.shared.start()
+    }
+    
+    func stopUpdatingLocation() {
+        Radar.shared.stop()
+    }
+    
+    func getCurrentLocation() -> CLLocation? {
+        return Radar.shared.currentLocation
+    }
+    
+    func authorizationStatusActions(authorized: ((CLAuthorizationStatus) -> Void)?, unauthorized: ((CLAuthorizationStatus) -> Void)? = nil) {
+        Radar.shared.authorizationStatusActions(authorized: authorized, unauthorized: unauthorized)
+    }
+    
+    func authorizedFilter(_ action: ((CLAuthorizationStatus) -> Void)) {
+        Radar.shared.authorizedFilter(action)
     }
     
 }

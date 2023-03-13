@@ -9,6 +9,16 @@ import UIKit
 
 final class ShopDetailTagCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
+    static var `default`: Self {
+        let layout = Self()
+        layout.scrollDirection = .vertical
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layout.minimumInteritemSpacing = 8
+        layout.minimumLineSpacing = 8
+        layout.sectionInset = .zero
+        return layout
+    }
+    
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         let attributes = super.layoutAttributesForElements(in: rect)
         
