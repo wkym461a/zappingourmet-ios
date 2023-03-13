@@ -223,6 +223,7 @@
                         <outlet property="mapView" destination="Fon-Hm-zkj" id="IEe-te-rRZ"/>
                         <outlet property="nameLabel" destination="ztL-FW-nFj" id="x3U-ju-82n"/>
                         <outlet property="openLabel" destination="hhH-gr-CFQ" id="QDb-Rn-QFS"/>
+                        <outlet property="scrollView" destination="2ke-6E-DXx" id="93M-Jj-vZ7"/>
                         <outlet property="shopURLButton" destination="pSj-sQ-Ami" id="wNh-fn-y0f"/>
                         <outlet property="tagCollectionView" destination="kqn-MI-w2W" id="ZgI-ek-ftX"/>
                         <outlet property="tagCollectionViewHeightConstraint" destination="B8W-JL-viE" id="5h8-71-4SF"/>

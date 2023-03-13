@@ -21,6 +21,8 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
     
     // MARK: - Outlet
     
+    @IBOutlet private weak var scrollView: UIScrollView!
+    
     @IBOutlet private weak var headerImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var openLabel: UILabel!
@@ -39,6 +41,8 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
     internal var params: Params?
     
     private var presenter: ShopDetailPresentable?
+    
+    private var headerImageViewDefaultHeight: CGFloat = 0
     
     // MARK: - Lifecycle
     
@@ -70,6 +74,10 @@ final class ShopDetailViewController: UIViewController, ViewControllerMakable {
     // MARK: - Private
     
     private func setupUI() {
+        self.scrollView.delegate = self
+        
+        self.headerImageViewDefaultHeight = self.headerImageView.frame.height
+        
         self.tagCollectionView.dataSource = self
         self.tagCollectionView.delegate = self
         self.tagCollectionView.register(
@@ -105,6 +113,25 @@ extension ShopDetailViewController: ShopDetailViewable {
         self.accessLabel.text = shop.access
         self.mapView.updateUI(destination: shop.coordinate)
         self.addressLabel.text = shop.address
+    }
+    
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension ShopDetailViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset
+        if offset.y >= 0.0 {
+            self.headerImageView.layer.transform = CATransform3DIdentity
+            return
+        }
+        
+        var transform = CATransform3DTranslate(CATransform3DIdentity, 0, offset.y / 2, 0)
+        let scale = 1 + (-offset.y / self.headerImageViewDefaultHeight)
+        transform = CATransform3DScale(transform, scale, scale, 1)
+        self.headerImageView.layer.transform = transform
     }
     
 }
