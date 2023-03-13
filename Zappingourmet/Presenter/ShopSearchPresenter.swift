@@ -18,7 +18,7 @@ protocol ShopSearchPresentable {
     func getHotPepperGourmetSearchRangesCount() -> Int
     
     func fetchHotPepperGenres()
-    func getHotPepperGenre(index: Int) -> Genre
+    func getHotPepperGenre(index: Int) -> Genre?
     func getHotPepperGenresCount() -> Int
     
     func authorizationStatusActions(authorized: ((CLAuthorizationStatus) -> Void)?, unauthorized: ((CLAuthorizationStatus) -> Void)?)
@@ -35,7 +35,7 @@ final class ShopSearchPresenter {
     
     init(_ view: ShopSearchViewable) {
         self.view = view
-        self.genres = []
+        self.genres = [.none]
     }
     
 }
@@ -57,6 +57,10 @@ extension ShopSearchPresenter: ShopSearchPresentable {
     }
     
     func getHotPepperGourmetSearchRange(index: Int) -> HotPepperGourmetSearchRange? {
+        guard 0 ..< HotPepperGourmetSearchRange.allCases.count ~= index else {
+            return nil
+        }
+        
         return HotPepperGourmetSearchRange.allCases[index]
     }
     
@@ -91,13 +95,17 @@ extension ShopSearchPresenter: ShopSearchPresentable {
             }
             
             self.genres = hpGenres.map { Genre.fromHotPepperGenre($0) }
-            self.genres.insert(Genre.none, at: 0)
+            self.genres.insert(.none, at: 0)
             
             self.view?.updateUI()
         }
     }
     
-    func getHotPepperGenre(index: Int) -> Genre {
+    func getHotPepperGenre(index: Int) -> Genre? {
+        guard 0 ..< self.genres.count ~= index else {
+            return nil
+        }
+        
         return self.genres[index]
     }
     

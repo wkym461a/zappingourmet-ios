@@ -12,7 +12,6 @@ struct ShopSearchViewControllerParams {}
 protocol ShopSearchViewable: AnyObject {
     
     func updateUI()
-    func openSettings()
     
 }
 
@@ -45,33 +44,23 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     
     private var subtitleBottomAndCreditTopConstraint: NSLayoutConstraint?
     
+    private var selectedSearchRange: HotPepperGourmetSearchRange? {
+        return self.presenter?.getHotPepperGourmetSearchRange(index: self.rangePickerControl.picker.selectedRow(inComponent: 0))
+    }
+    private var selectedGenre: Genre? {
+        return self.presenter?.getHotPepperGenre(index: self.genrePickerControl.picker.selectedRow(inComponent: 0))
+    }
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.presenter = ShopSearchPresenter(self)
+        self.presenter?.startUpdatingLocation()
         self.presenter?.fetchHotPepperGenres()
         
         self.setupUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.updateUI()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        self.presenter?.authorizationStatusActions { _ in
-            self.view.endEditing(true)
-            self.presenter?.startUpdatingLocation()
-            
-        } unauthorized: { _ in
-            self.openSettings()
-        }
     }
     
     // MARK: - Public
@@ -90,8 +79,7 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
         gesture.cancelsTouchesInView = false
         self.view.addGestureRecognizer(gesture)
         
-        let rangeValue = self.presenter?.getHotPepperGourmetSearchRange(index: self.rangePickerControl.picker.selectedRow(inComponent: 0))?.rangeValue ?? 0
-        self.mapView.rangeValue = rangeValue
+        self.mapView.rangeValue = self.selectedSearchRange?.rangeValue ?? 0
         
         self.centeringCurrentLocationButton.backgroundColor = Constant.Color.baseOrange
         self.centeringCurrentLocationButton.layer.cornerRadius = 22
@@ -116,6 +104,22 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
         
         self.searchButton.layer.cornerRadius = 8
         self.searchButton.backgroundColor = Constant.Color.baseOrange
+    }
+    
+    private func openSettings() {
+        let alert = UIAlertController.confirmActionAlert(
+            title: "位置情報の設定",
+            message: "周辺のレストランを検索するためには、位置情報の使用を許可してください。",
+            confirmTitle: "設定を開く"
+            
+        ) { _ in
+            self.openURLSafely(
+                URL(string: UIApplication.openSettingsURLString),
+                failed: .messageAlert(title: "設定が開けません", message: "")
+            )
+        }
+
+        self.present(alert, animated: true, completion: nil)
     }
     
     // Changing AutoLayout when Screen width is small.
@@ -152,15 +156,6 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
         }
     }
     
-    private func goAlertWhenFailedToGetLocation() {
-        let alert = UIAlertController.messageAlert(
-            title: "位置情報の取得に失敗",
-            message: "位置情報サービスを有効化するか、位置情報が取得できる場所で使用してください。"
-        )
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     // MARK: - Action
     
     @objc private func dismissPickerInput() {
@@ -173,22 +168,20 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     
     @IBAction private func searchShops(_ sender: UIButton) {
         self.presenter?.authorizationStatusActions { _ in
-            guard
-                let presenter = self.presenter,
-                let currentLocation = presenter.getCurrentLocation()
-            
-            else {
-                self.goAlertWhenFailedToGetLocation()
+            guard let currentLocation = self.presenter?.getCurrentLocation() else {
+                let alert = UIAlertController.messageAlert(
+                    title: "位置情報の取得に失敗",
+                    message: "位置情報サービスを有効化するか、位置情報が取得できる場所で使用してください。"
+                )
+                self.present(alert, animated: true, completion: nil)
                 return
             }
-            
-            presenter.stopUpdatingLocation()
             
             let shopListParams = ShopListViewControllerParams(
                 latitude: currentLocation.coordinate.latitude,
                 longitude: currentLocation.coordinate.longitude,
-                searchRange: presenter.getHotPepperGourmetSearchRange(index: self.rangePickerControl.picker.selectedRow(inComponent: 0)),
-                genre: presenter.getHotPepperGenre(index: self.genrePickerControl.picker.selectedRow(inComponent: 0))
+                searchRange: self.selectedSearchRange,
+                genre: self.selectedGenre
             )
             let shopList = ShopListViewController.makeViewController(params: shopListParams)
             self.navigationController?.pushViewController(shopList, animated: true)
@@ -211,31 +204,8 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
 extension ShopSearchViewController: ShopSearchViewable {
     
     func updateUI() {
-        let selectedRangeIndex = self.rangePickerControl.picker.selectedRow(inComponent: 0)
-        if let count = self.presenter?.getHotPepperGourmetSearchRangesCount(), count > 0 {
-            self.rangeValueLabel.text = self.presenter?.getHotPepperGourmetSearchRange(index: selectedRangeIndex)?.name
-        }
-        
-        let selectedGenreIndex = self.genrePickerControl.picker.selectedRow(inComponent: 0)
-        if let count = self.presenter?.getHotPepperGenresCount(), count > 0 {
-            self.genreValueLabel.text = self.presenter?.getHotPepperGenre(index: selectedGenreIndex).name
-        }
-    }
-    
-    func openSettings() {
-        let alert = UIAlertController.confirmActionAlert(
-            title: "位置情報の設定",
-            message: "周辺のレストランを検索するためには、位置情報の使用を許可してください。",
-            confirmTitle: "設定を開く"
-            
-        ) { _ in
-            self.openURLSafely(
-                URL(string: UIApplication.openSettingsURLString),
-                failed: .messageAlert(title: "設定が開けません", message: "")
-            )
-        }
-
-        self.present(alert, animated: true, completion: nil)
+        self.rangeValueLabel.text = self.selectedSearchRange?.name
+        self.genreValueLabel.text = self.selectedGenre?.name
     }
     
 }
@@ -269,7 +239,7 @@ extension ShopSearchViewController: UIPickerViewDataSource {
             return self.presenter?.getHotPepperGourmetSearchRange(index: row)?.name
             
         case 2:
-            return self.presenter?.getHotPepperGenre(index: row).name
+            return self.presenter?.getHotPepperGenre(index: row)?.name
             
         default:
             return nil
@@ -289,8 +259,7 @@ extension ShopSearchViewController: UIPickerViewDelegate {
             self.updateUI()
             
             self.presenter?.authorizedFilter { _ in
-                let rangeValue = self.presenter?.getHotPepperGourmetSearchRange(index: self.rangePickerControl.picker.selectedRow(inComponent: 0))?.rangeValue ?? 0
-                self.mapView.updateUI(rangeValue: rangeValue)
+                self.mapView.updateUI(rangeValue: self.selectedSearchRange?.rangeValue ?? 0)
                 
                 self.mapView.refreshVisibleRect(animated: true)
             }
