@@ -10,17 +10,20 @@ import Combine
 
 protocol ShopSearchPresentable {
     
-    func startUpdatingLocation()
-    func stopUpdatingLocation()
-    func getCurrentLocation() -> CLLocation?
-    
     func getHotPepperGourmetSearchRange(index: Int) -> HotPepperGourmetSearchRange?
     func getHotPepperGourmetSearchRangesCount() -> Int
+    func getSelectedSearchRange() -> HotPepperGourmetSearchRange
+    func updateSelectedSearchRange(index: Int)
     
     func fetchHotPepperGenres()
     func getHotPepperGenre(index: Int) -> Genre?
     func getHotPepperGenresCount() -> Int
+    func getSelectedGenre() -> Genre
+    func updateSelectedGenre(index: Int)
     
+    func startUpdatingLocation()
+    func stopUpdatingLocation()
+    func getCurrentLocation() -> CLLocation?
     func authorizationStatusActions(authorized: ((CLAuthorizationStatus) -> Void)?, unauthorized: ((CLAuthorizationStatus) -> Void)?)
     func authorizedFilter(_ action: ((CLAuthorizationStatus) -> Void))
     
@@ -29,12 +32,16 @@ protocol ShopSearchPresentable {
 final class ShopSearchPresenter {
     
     private weak var view: ShopSearchViewable?
+    private var selectedSearchRangeIndex: Int
+    private var selectedGenreIndex: Int
     private var genres: [Genre]
     
     private var cancellable: AnyCancellable?
     
-    init(_ view: ShopSearchViewable) {
+    init(_ view: ShopSearchViewable, selectedSearchRangeIndex: Int = 0, selectedGenreIndex: Int = 0) {
         self.view = view
+        self.selectedSearchRangeIndex = selectedSearchRangeIndex
+        self.selectedGenreIndex = selectedGenreIndex
         self.genres = [.none]
     }
     
@@ -43,18 +50,6 @@ final class ShopSearchPresenter {
 // MARK: - ShopSearchPresentable
 
 extension ShopSearchPresenter: ShopSearchPresentable {
-    
-    func startUpdatingLocation() {
-        Radar.shared.start()
-    }
-    
-    func stopUpdatingLocation() {
-        Radar.shared.stop()
-    }
-    
-    func getCurrentLocation() -> CLLocation? {
-        return Radar.shared.currentLocation
-    }
     
     func getHotPepperGourmetSearchRange(index: Int) -> HotPepperGourmetSearchRange? {
         guard 0 ..< HotPepperGourmetSearchRange.allCases.count ~= index else {
@@ -66,6 +61,22 @@ extension ShopSearchPresenter: ShopSearchPresentable {
     
     func getHotPepperGourmetSearchRangesCount() -> Int {
         return HotPepperGourmetSearchRange.allCases.count
+    }
+    
+    func getSelectedSearchRange() -> HotPepperGourmetSearchRange {
+        return HotPepperGourmetSearchRange.allCases[self.selectedSearchRangeIndex]
+    }
+    
+    func updateSelectedSearchRange(index: Int) {
+        guard 0 ..< HotPepperGourmetSearchRange.allCases.count ~= index else {
+            return
+        }
+        
+        self.selectedSearchRangeIndex = index
+        self.view?.updateUI(
+            selectedSearchRange: HotPepperGourmetSearchRange.allCases[self.selectedSearchRangeIndex],
+            selectedGenre: nil
+        )
     }
     
     func fetchHotPepperGenres() {
@@ -97,7 +108,10 @@ extension ShopSearchPresenter: ShopSearchPresentable {
             self.genres = hpGenres.map { Genre.fromHotPepperGenre($0) }
             self.genres.insert(.none, at: 0)
             
-            self.view?.updateUI()
+            self.view?.updateUI(
+                selectedSearchRange: HotPepperGourmetSearchRange.allCases[self.selectedSearchRangeIndex],
+                selectedGenre: self.genres[self.selectedGenreIndex]
+            )
         }
     }
     
@@ -111,6 +125,34 @@ extension ShopSearchPresenter: ShopSearchPresentable {
     
     func getHotPepperGenresCount() -> Int {
         return self.genres.count
+    }
+    
+    func getSelectedGenre() -> Genre {
+        return self.genres[self.selectedGenreIndex]
+    }
+    
+    func updateSelectedGenre(index: Int) {
+        guard 0 ..< self.genres.count ~= index else {
+            return
+        }
+        
+        self.selectedGenreIndex = index
+        self.view?.updateUI(
+            selectedSearchRange: nil,
+            selectedGenre: self.genres[self.selectedGenreIndex]
+        )
+    }
+    
+    func startUpdatingLocation() {
+        Radar.shared.start()
+    }
+    
+    func stopUpdatingLocation() {
+        Radar.shared.stop()
+    }
+    
+    func getCurrentLocation() -> CLLocation? {
+        return Radar.shared.currentLocation
     }
     
     func authorizationStatusActions(authorized: ((CLAuthorizationStatus) -> Void)?, unauthorized: ((CLAuthorizationStatus) -> Void)? = nil) {

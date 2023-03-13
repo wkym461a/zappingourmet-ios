@@ -31,10 +31,12 @@ final class ShopSearchMapView: MKMapView {
     
     // MARK: - Public
     
-    func updateUI(rangeValue: Int) {
+    func updateUI(rangeValue: Int? = nil) {
         self.removeOverlays(self.overlays)
         
-        self.rangeValue = rangeValue
+        if let rangeValue = rangeValue {
+            self.rangeValue = rangeValue
+        }
         self.showUserLocationRange()
     }
     
@@ -70,11 +72,11 @@ final class ShopSearchMapView: MKMapView {
 extension ShopSearchMapView: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        self.showUserLocationRange()
+        self.updateUI()
         
         if !self.isInitialized {
             self.refreshVisibleRect(animated: false)
-            
+
             self.isInitialized = true
         }
     }

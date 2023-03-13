@@ -9,7 +9,7 @@ import UIKit
 
 protocol ShopSearchViewable: AnyObject {
     
-    func updateUI()
+    func updateUI(selectedSearchRange: HotPepperGourmetSearchRange?, selectedGenre: Genre?)
     
 }
 
@@ -42,19 +42,16 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     
     private var subtitleBottomAndCreditTopConstraint: NSLayoutConstraint?
     
-    private var selectedSearchRange: HotPepperGourmetSearchRange? {
-        return self.presenter?.getHotPepperGourmetSearchRange(index: self.rangePickerControl.picker.selectedRow(inComponent: 0))
-    }
-    private var selectedGenre: Genre? {
-        return self.presenter?.getHotPepperGenre(index: self.genrePickerControl.picker.selectedRow(inComponent: 0))
-    }
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.presenter = ShopSearchPresenter(self)
+        self.presenter = ShopSearchPresenter(
+            self,
+            selectedSearchRangeIndex: self.rangePickerControl.picker.selectedRow(inComponent: 0),
+            selectedGenreIndex: self.genrePickerControl.picker.selectedRow(inComponent: 0)
+        )
         self.presenter?.startUpdatingLocation()
         self.presenter?.fetchHotPepperGenres()
         
@@ -77,7 +74,7 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
         gesture.cancelsTouchesInView = false
         self.view.addGestureRecognizer(gesture)
         
-        self.mapView.rangeValue = self.selectedSearchRange?.rangeValue ?? 0
+        self.mapView.rangeValue = self.presenter?.getSelectedSearchRange().rangeValue ?? 0
         
         self.centeringCurrentLocationButton.backgroundColor = Constant.Color.baseOrange
         self.centeringCurrentLocationButton.layer.cornerRadius = 22
@@ -157,6 +154,18 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
     // MARK: - Action
     
     @objc private func dismissPickerInput() {
+        if self.rangePickerControl.isFirstResponder {
+            let selectedIndex = self.rangePickerControl.picker.selectedRow(inComponent: 0)
+            self.rangePickerControl.picker.selectRow(selectedIndex, inComponent: 0, animated: false)
+            self.presenter?.updateSelectedSearchRange(index: selectedIndex)
+        }
+        
+        if self.genrePickerControl.isFirstResponder {
+            let selectedIndex = self.genrePickerControl.picker.selectedRow(inComponent: 0)
+            self.genrePickerControl.picker.selectRow(selectedIndex, inComponent: 0, animated: false)
+            self.presenter?.updateSelectedGenre(index: selectedIndex)
+        }
+        
         self.view.endEditing(true)
     }
     
@@ -178,8 +187,8 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
             let shopListParams = ShopListViewController.Params(
                 latitude: currentLocation.coordinate.latitude,
                 longitude: currentLocation.coordinate.longitude,
-                searchRange: self.selectedSearchRange,
-                genre: self.selectedGenre
+                searchRange: self.presenter?.getSelectedSearchRange(),
+                genre: self.presenter?.getSelectedGenre()
             )
             let shopList = ShopListViewController.makeViewController(params: shopListParams)
             self.navigationController?.pushViewController(shopList, animated: true)
@@ -201,9 +210,20 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
 
 extension ShopSearchViewController: ShopSearchViewable {
     
-    func updateUI() {
-        self.rangeValueLabel.text = self.selectedSearchRange?.name
-        self.genreValueLabel.text = self.selectedGenre?.name
+    func updateUI(selectedSearchRange: HotPepperGourmetSearchRange? = nil, selectedGenre: Genre? = nil) {
+        if let selectedSearchRange = selectedSearchRange {
+            self.rangeValueLabel.text = selectedSearchRange.name
+            
+            self.presenter?.authorizedFilter { _ in
+                self.mapView.updateUI(rangeValue: selectedSearchRange.rangeValue)
+                
+                self.mapView.refreshVisibleRect(animated: true)
+            }
+        }
+        
+        if let selectedGenre = selectedGenre {
+            self.genreValueLabel.text = selectedGenre.name
+        }
     }
     
 }
@@ -254,17 +274,11 @@ extension ShopSearchViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch pickerView.tag {
         case 1:
-            self.updateUI()
-            
-            self.presenter?.authorizedFilter { _ in
-                self.mapView.updateUI(rangeValue: self.selectedSearchRange?.rangeValue ?? 0)
-                
-                self.mapView.refreshVisibleRect(animated: true)
-            }
+            self.presenter?.updateSelectedSearchRange(index: row)
             return
             
         case 2:
-            self.updateUI()
+            self.presenter?.updateSelectedGenre(index: row)
             return
             
         default:
