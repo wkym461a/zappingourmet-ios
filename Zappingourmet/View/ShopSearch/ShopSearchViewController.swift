@@ -99,6 +99,10 @@ final class ShopSearchViewController: UIViewController, ViewControllerMakable {
         
         self.searchButton.layer.cornerRadius = 8
         self.searchButton.backgroundColor = Constant.Color.baseOrange
+        
+        let appIconAnimationView = AppIconAnimationView(frame: self.navigationController?.view.bounds ?? self.view.bounds)
+        self.navigationController?.view.addSubview(appIconAnimationView)
+        appIconAnimationView.startAnimation()
     }
     
     private func openSettings() {
